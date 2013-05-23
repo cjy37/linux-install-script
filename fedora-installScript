@@ -1,0 +1,187 @@
+#!/bin/sh
+#------------------------------------------
+#      CentOS asp.net InstallScript
+#      copyright https://github.com/cjy37
+#      email: rocky.cn@foxmail.com
+#------------------------------------------
+function setupLibs()
+{
+	yum -y update
+	yum -y groupinstall "Development Tools"
+	echo "Install the public Libs"
+	echo "------------------------------------"
+	sudo yum -y install libjpeg libjpeg-devel libpng libpng-devel curl curl-devel wget gif* libtiff* libjpeg* vim 
+	return 0
+}
+function setupMono()
+{
+	sudo yum -y install mono-basic mono-basic-devel mono-core mono-data mono-devel mono-mvc mono-mvc-devel mono-web mono-web-devel
+	return 0
+}
+function setupMysql()
+{
+	echo "install mysql"
+	echo "------------------------------------"
+	sudo yum -y install mariadb mariadb-devel mariadb-libs mariadb-server
+	chkconfig --level 2345 mysqld on
+	sudo service mysqld start
+	echo "Mysql: Please Ender user(root) password"
+	read -e PWD
+	sudo mysqladmin -uroot password "$PWD"
+	return 0
+}
+function setupNginx()
+{
+	echo "install nginx"
+	echo "------------------------------------"
+	sudo yum -y install nginx
+	return 0
+}
+function setupHaproxy()
+{
+	echo "install haproxy"
+	echo "------------------------------------"
+	sudo yum -y install haproxy
+	return 0
+}
+function setupRedis()
+{
+	echo "install Redis"
+	echo "------------------------------------"
+	sudo yum -y install redis
+	return 0
+}
+function setupJws()
+{
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/conf.zip
+	if [ -f conf.zip ]; then
+			unzip -o conf.zip
+	fi
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /wwwroot/htdocs/www ]; then
+	  mkdir -pv /wwwroot/htdocs/www
+	fi
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+	if [ ! -d /usr/local/webserver/jexus ]; then
+	  mkdir -pv /usr/local/webserver/jexus
+	  echo  "sh /usr/local/webserver/jexus/jws.start" >> /etc/rc.local
+	fi
+
+	echo "install jexus5"
+	echo "------------------------------------"
+
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/jexus-5.0.1.tar.gz
+	if [ -f jexus-5.0.1.tar.gz ]; then
+	  tar -xf jexus-5.0.1.tar.gz
+	  cp -r -f /tmp/downloads/jexus-5.0.1/* /usr/local/webserver/jexus/
+		cp -r -f /tmp/downloads/conf/jws.conf /usr/local/webserver/jexus/jws.conf
+		cp -r -f /tmp/downloads/conf/jws.default /usr/local/webserver/jexus/siteconf/default
+	  cd /usr/local/webserver/jexus
+	  ./jws.regsvr
+	  ldconfig
+		/usr/local/webserver/jexus/jws.start
+	fi
+	return 0
+}
+
+function showMenu()
+{
+	clear
+	echo
+	echo "--------------------------------------------------------------"
+	echo "|      CentOS Install Helper                                 |"
+	echo "|      copyright https://github.com/cjy37                    |"
+	echo "--------------------------------------------------------------"
+	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"
+	echo "|      b. Install Web Server   [d,e,g,k,l]                   |"
+	echo "|      c. Install MySQL    [d,h,l]                           |"
+	echo "|      d. Install Libs     [Public Libs]                     |"
+	echo "|      e. Install mono                                       |"
+	echo "|      g. Install jexus v5                                   |"
+	echo "|      h. Install mysql v5.5                                 |"
+	echo "|      j. Install nginx                                      |"
+	echo "|      k. Install haproxy                                    |"
+	echo "|      l. Install Redis                                      |"
+	echo "|      x. Exit                                               |"
+	echo "-------------------------------------------------------------"
+	echo
+	return 0
+}
+
+function selectCmd()
+{
+	alias cp='cp'
+	showMenu
+	echo "Please select a serial number for installation"
+	echo "When your manual installation, Please install the [d] first:"
+	echo "[f][g] be dependent on [e]:"
+	read -n 1 M
+	echo
+
+	if [ "$M" = "x" ]; then
+		exit 1
+	elif [ "$M" = "a" ]; then
+		 echo "Installing ALL... [d,e,g,h,k,l]"
+		 echo "------------------------------------"
+		 setupLibs
+		 setupLibgdiplus
+		 setupMono
+		 setupJws
+		 setupMysql
+		 setupHaproxy
+		 setupRedis
+	elif [ "$M" = "b" ]; then
+		 echo "Installing Web Server ... [d,e,g,k,l]"
+		 echo "------------------------------------"
+		 setupLibs
+		 setupLibgdiplus
+		 setupMono
+		 setupJws
+		 setupHaproxy
+		 setupRedis
+	elif [ "$M" = "c" ]; then
+		 echo "Installing MySQL ... [d,h,l]"
+		 echo "------------------------------------"
+		 setupLibs
+		 setupMysql
+		 setupRedis
+	elif [ "$M" = "d" ]; then
+		 setupLibs
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "e" ]; then
+		 setupMono
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "g" ]; then
+		 setupJws
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "h" ]; then
+		 setupMysql
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "j" ]; then
+		 setupNginx
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "k" ]; then
+		 setupHaproxy
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "l" ]; then
+		 setupRedis
+     read -n 1 -p "Press <Enter> to continue..."
+	else
+		 echo "Select Error!"
+     read -n 1 -p "Press <Enter> to continue..."
+	fi
+
+	selectCmd
+	return 0
+}
+cd /tmp
+selectCmd
