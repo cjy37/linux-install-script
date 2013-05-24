@@ -211,7 +211,7 @@ function setupMysql()
 
 		# config:
 		cp -r -f /tmp/downloads/conf/my.cnf /etc/my.cnf
-    chmod +x scripts/mysql_install_db
+		chmod +x scripts/mysql_install_db
 		scripts/mysql_install_db --user=mysql --basedir=/usr/local/webserver/mysql --datadir=/wwwroot/mysql/
 
 		echo "setup mysql succeed"
@@ -391,23 +391,19 @@ function setupJws()
 	fi
 	if [ ! -d /usr/local/webserver/jexus ]; then
 	  mkdir -pv /usr/local/webserver/jexus
-	  echo  "sh /usr/local/webserver/jexus/jws.start" >> /etc/rc.local
+	  echo  "/usr/local/webserver/jexus/jws start" >> /etc/rc.local
 	fi
 
-	echo "install jexus5"
+	echo "install jexus5.3.1"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/jexus-5.0.1.tar.gz
-	if [ -f jexus-5.0.1.tar.gz ]; then
-	  tar -xf jexus-5.0.1.tar.gz
-	  cp -r -f /tmp/downloads/jexus-5.0.1/* /usr/local/webserver/jexus/
-		cp -r -f /tmp/downloads/conf/jws.conf /usr/local/webserver/jexus/jws.conf
-		cp -r -f /tmp/downloads/conf/jws.default /usr/local/webserver/jexus/siteconf/default
-	  cd /usr/local/webserver/jexus
-	  ./jws.regsvr
-	  ldconfig
-		/usr/local/webserver/jexus/jws.start
+	wget -c http://www.linuxdot.net/down/jexus-5.3.1.tar.gz
+	if [ -f jexus-5.3.1.tar.gz ]; then
+	  tar -xf jexus-5.3.1.tar.gz
+	  cd jexus-5.3.1
+	  sudo ./install /usr/local/webserver/jexus
+	  /usr/local/webserver/jexus/jws start
 	fi
 	return 0
 }
