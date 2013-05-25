@@ -20,7 +20,7 @@ chmod +x centos-installScript
 
 ### Fedora: 
 ```
-chmod +x fedora-installScript`
+chmod +x fedora-installScript
 ./fedora-installScript
 ```
 ![screen shot](https://raw.github.com/cjy37/linux-asp.net-installScript/master/fedora-install.png)
