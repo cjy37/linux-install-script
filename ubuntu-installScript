@@ -1,0 +1,572 @@
+#!/bin/sh
+#------------------------------------------
+#      CentOS asp.net InstallScript
+#      copyright https://github.com/cjy37
+#      email: rocky.cn@foxmail.com
+#------------------------------------------
+
+function setupLibs()
+{
+	sudo apt-get update
+    sudo apt-get upgrade
+
+	echo "Install the public Libs"
+	echo "------------------------------------"
+
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /wwwroot/htdocs/www ]; then
+	  mkdir -pv /wwwroot/htdocs/www
+	fi
+
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+
+
+
+	#if [ -f yum.zip ]; then
+	#		unzip -o yum.zip
+	#fi
+
+
+
+	#cp -r -f /tmp/downloads/conf/yum.conf /etc/yum.conf
+	#cp -r -f /tmp/downloads/yum /tmp
+
+	cd /tmp
+	sudo apt-get install build-essential
+	sudo apt-get install automake autoconf
+	sudo apt-get install bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
+	sudo apt-get install libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
+
+	
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/conf.zip
+	if [ -f conf.zip ]; then
+			unzip -o conf.zip
+	fi
+
+	echo "install libiconv"
+	echo "------------------------------------"
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/libiconv-1.13.1.tar.gz
+	if [ -f libiconv-1.13.1.tar.gz ]; then
+	  tar xvf libiconv-1.13.1.tar.gz
+	  cd libiconv-1.13.1
+	  ./configure --prefix=/usr
+	  make && sudo make install
+	  ldconfig
+	fi
+
+	echo "install mcrypt"
+	echo "------------------------------------"
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/mcrypt-2.6.8.tar.gz
+	if [ -f mcrypt-2.6.8.tar.gz ]; then
+	  tar xvf mcrypt-2.6.8.tar.gz
+	  cd mcrypt-2.6.8
+	  ./configure --prefix=/usr
+	  make && sudo make install
+	  ldconfig
+	fi
+
+	return 0
+}
+
+function setupLibgdiplus()
+{
+	echo "install libgdiplus"
+	echo "------------------------------------"
+	cd /tmp/downloads
+	wget http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.tar.bz2
+	if [ -f libgdiplus-2.10.tar.bz2 ]; then
+		tar -jxvf libgdiplus-2.10.tar.bz2
+		cd libgdiplus-2.10
+		./configure --prefix=/usr
+		make && sudo make install
+	fi
+	ldconfig
+	ldconfig -p |grep libgdiplus
+
+	return 0
+}
+
+function setupMemcached()
+{
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+
+	echo "install memcached"
+	echo "------------------------------------"
+
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/memcached-1.4.6.tar.gz
+	if [ -f memcached-1.4.6.tar.gz ]; then
+	  tar xvf memcached-1.4.6.tar.gz
+	  cd memcached-1.4.6
+	  ./configure --prefix=/usr/local/webserver/memcached
+	  make && sudo make install
+	  ldconfig
+	  cp -r -f /tmp/downloads/conf/memcached /etc/init.d/memcached
+	  chmod 755 /etc/init.d/memcached
+	  chkconfig --add memcached
+	  chkconfig memcached on
+	  service memcached start
+	fi
+	return 0
+}
+
+function setupMono()
+{
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /wwwroot/htdocs/www ]; then
+	  mkdir -pv /wwwroot/htdocs/www
+	fi
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+
+	echo "install mono"
+	echo "------------------------------------"
+
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
+	wget -c http://flex-ui-libs.googlecode.com/files/mono-2.10.8.tar.bz2
+	if [ -f mono-2.10.8.tar.bz2 ]; then
+	  tar -jvxf mono-2.10.8.tar.bz2
+	  cd mono-2.10.8
+	  ./configure --prefix=/usr
+	  cp -r -f /tmp/downloads/conf/config.h eglib/config.h
+	  make && sudo make install
+	  ldconfig
+	fi
+
+	cd /tmp/downloads
+	if [ -f aspx-info.tar.gz ]; then
+	  tar xvf aspx-info.tar.gz
+	  cd aspx-info
+	  cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
+	fi
+
+  return 0
+}
+
+function setupMysql()
+{
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+	if [ ! -d /usr/local/webserver/mysql ]; then
+	  mkdir -pv /usr/local/webserver/mysql
+	  mkdir -pv /usr/local/webserver/mysql/etc
+	  mkdir -pv /usr/local/webserver/mysql/bin
+	fi
+	if [ ! -d /wwwroot/mysql ]; then
+	  mkdir -pv /wwwroot/mysql
+
+	  groupadd -g 3306 mysql
+	  useradd -u 3306 -g mysql -M -s /sbin/nologin mysql
+	  chown -R mysql:mysql /wwwroot/mysql/
+	fi
+
+	echo "install mysql"
+	echo "------------------------------------"
+
+	sudo apt-get install python-software-properties
+	sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+	sudo add-apt-repository 'deb http://mirrors.ustc.edu.cn/mariadb/repo/5.5/ubuntu precise main'
+	
+	sudo apt-get update
+	sudo apt-get install mariadb-server
+
+	return 0
+}
+
+function setupNginx()
+{
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /wwwroot/htdocs/www ]; then
+	  mkdir -pv /wwwroot/htdocs/www
+	fi
+
+	#/wwwroot/logs
+	if [ ! -d /wwwroot/logs ]; then
+	  mkdir -pv /wwwroot/logs
+	fi
+
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+	if [ ! -d /usr/local/webserver/nginx ]; then
+
+	  mkdir -pv /usr/local/webserver/nginx
+	fi
+
+	echo "install nginx"
+	echo "------------------------------------"
+
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/nginx-1.1.1.tar.gz
+	if [ -f nginx-1.1.1.tar.gz ]; then
+	  tar xvf nginx-1.1.1.tar.gz
+	  cd nginx-1.1.1
+	  ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module
+	  make && sudo make install
+	  ldconfig
+
+    cp -r -f /tmp/downloads/conf/fastcgi_params /usr/local/webserver/nginx/conf/fastcgi_params
+    cp -r -f /tmp/downloads/conf/nginx.conf /usr/local/webserver/nginx/conf/nginx.conf
+
+		cp -r -f /tmp/downloads/conf/nginx /etc/init.d/nginx
+	  chmod +x /etc/init.d/nginx
+		chkconfig --add nginx
+		chkconfig --level 2345 nginx on
+		/etc/init.d/nginx start
+
+	fi
+	return 0
+}
+
+function setupXsp()
+{
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /wwwroot/htdocs/www ]; then
+	  mkdir -pv /wwwroot/htdocs/www
+	fi
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+
+	echo "install xsp"
+	echo "------------------------------------"
+
+	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/xsp-2.10.2.tar.bz2
+	if [ -f xsp-2.10.2.tar.bz2 ]; then
+	  tar -jvxf xsp-2.10.2.tar.bz2
+	  cd xsp-2.10.2
+	  ./configure --prefix=/usr
+	  make && sudo make install
+	  ldconfig
+
+	  cp -r -f /tmp/downloads/conf/fcgi_mono /etc/init.d/fcgi_mono
+	  chmod +x /etc/init.d/fcgi_mono
+		chkconfig --add fcgi_mono
+		chkconfig --level 2345 fcgi_mono on
+		/etc/init.d/fcgi_mono start
+	fi
+	return 0
+}
+
+function setupHaproxy()
+{
+	echo "install haproxy"
+	echo "------------------------------------"
+
+	if [ ! -d /usr/local/webserver/haproxy ]; then
+	  echo "/usr/local/webserver/haproxy/sbin/haproxy -f /usr/local/webserver/haproxy/conf/haproxy.cfg &" >> /etc/rc.local
+	fi
+	if [ ! -d /usr/local/webserver/haproxy ]; then
+	  mkdir -pv /usr/local/webserver/haproxy
+	fi
+	if [ ! -d /usr/local/webserver/haproxy/conf ]; then
+	  mkdir -pv /usr/local/webserver/haproxy/conf
+	fi
+
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/haproxy-1.4.22.tar.gz
+	if [ -f haproxy-1.4.22.tar.gz ]; then
+		tar zxvf haproxy-1.4.22.tar.gz
+		cd haproxy-1.4.22
+		make TARGET=linux26 PREFIX=/usr/local/webserver/haproxy
+		sudo make install PREFIX=/usr/local/webserver/haproxy
+		ldconfig
+		cp -r -f /tmp/downloads/conf/haproxy.cfg /usr/local/webserver/haproxy/conf/haproxy.cfg
+	fi
+	return 0
+}
+
+function setupRedis()
+{
+	echo "install Redis"
+	echo "------------------------------------"
+
+	cd /tmp/downloads
+	wget -c http://flex-ui-libs.googlecode.com/files/redis-2.4.4.tar.gz
+	if [ -f redis-2.4.4.tar.gz ]; then
+	  tar zxvf redis-2.4.4.tar.gz
+	  cd redis-2.4.4
+	  make
+	  sudo make install PREFIX=/usr/local
+	  ldconfig
+	  mkdir /etc/redis
+	  cp -r -f /tmp/downloads/conf/redis.conf /etc/redis/redis.conf
+
+	  mkdir  /var/lib/redis
+		cp -r -f /tmp/downloads/conf/redis-server.sh /etc/init.d/redis
+		# cp -r -f redis-server.sh /etc/init.d/redis
+		chmod +x /etc/init.d/redis
+		chkconfig --add redis
+		chkconfig --level 2345 redis on
+		/etc/init.d/redis start
+	fi
+	return 0
+}
+
+function setupJws()
+{
+	if [ ! -d /usr/local/webserver ]; then
+	  mkdir -pv /usr/local/webserver
+	fi
+	if [ ! -d /wwwroot/htdocs/www ]; then
+	  mkdir -pv /wwwroot/htdocs/www
+	fi
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+	if [ ! -d /usr/local/webserver/jexus ]; then
+	  mkdir -pv /usr/local/webserver/jexus
+	  echo  "/usr/local/webserver/jexus/jws start" >> /etc/rc.local
+	fi
+
+	echo "install jexus5.3.1"
+	echo "------------------------------------"
+
+	cd /tmp/downloads
+	wget -c http://www.linuxdot.net/down/jexus-5.3.1.tar.gz
+	if [ -f jexus-5.3.1.tar.gz ]; then
+	  tar -xf jexus-5.3.1.tar.gz
+	  cd jexus-5.3.1
+	  sudo ./install /usr/local/webserver/jexus
+	  /usr/local/webserver/jexus/jws start
+	fi
+	return 0
+}
+
+function setupGtkSharp()
+{
+	cd /tmp/downloads
+	#=========================================================
+	echo "/opt/gtk/lib" > /etc/ld.so.conf.d/gtk.conf
+	export LD_LIBRARY_PATH=/opt/gtk/lib:$LD_LIBRARY_PATH
+	export PKG_CONFIG_PATH=/usr/lib/pkgconfig
+	export PKG_CONFIG_PATH=/opt/gtk/lib/pkgconfig:$PKG_CONFIG_PATH
+	ldconfig
+	#=========================================================
+	wget http://flex-ui-libs.googlecode.com/files/glib-2.13.7.tar.bz2
+	tar xvfj  glib-2.13.7.tar.bz2
+	cd glib-2.13.7
+	./configure --prefix=/opt/gtk --with-libiconv=gnu && make && sudo make install
+	ldconfig
+	cd ..
+
+	wget http://flex-ui-libs.googlecode.com/files/atk-1.19.6.tar.bz2
+	tar xvfj atk-1.19.6.tar.bz2
+	cd atk-1.19.6
+	./configure --prefix=/opt/gtk && make && sudo make install
+	cd ..
+
+	wget http://flex-ui-libs.googlecode.com/files/pixman-0.22.2.tar.gz
+	tar xvfz pixman-0.22.2.tar.gz
+	cd pixman-0.22.2
+	./configure --prefix=/opt/gtk && make && sudo make install
+	cd ..
+
+	wget http://flex-ui-libs.googlecode.com/files/cairo-1.8.10.tar.gz
+	tar xvfz cairo-1.8.10.tar.gz
+	cd cairo-1.8.10
+	./configure --prefix=/opt/gtk && make && sudo make install
+	cd ..
+
+	wget http://flex-ui-libs.googlecode.com/files/pango-1.17.3.tar.bz2
+	tar xvfj pango-1.17.3.tar.bz2
+	cd pango-1.17.3
+	./configure --prefix=/opt/gtk && make && sudo make install
+	ldconfig
+	cd ..
+
+	wget http://flex-ui-libs.googlecode.com/files/gtk+-2.12.0.tar.bz2
+	tar xvfj gtk+-2.12.0.tar.bz2
+	cd gtk+-2.12.0
+	./configure --prefix=/opt/gtk --with-x --without-libjasper && make && sudo make install
+	ldconfig
+	cd ..
+
+	wget http://flex-ui-libs.googlecode.com/files/gtk-sharp-2.12.11.tar.bz2
+	tar xvfj gtk-sharp-2.12.11.tar.bz2
+	cd gtk-sharp-2.12.11
+	./configure --prefix=/usr && make && sudo make install
+	cd ..
+
+	return 0
+}
+
+function setupCutyCapt()
+{
+	cd /tmp
+	wget http://ftp.riken.go.jp/Linux/atrpms/el5-i386/atrpms/testing/qt44-4.4.3-10_4.el5.i386.rpm
+	wget http://ftp.riken.go.jp/Linux/atrpms/el5-i386/atrpms/testing/qt44-x11-4.4.3-10_4.el5.i386.rpm
+	wget http://ftp.riken.go.jp/Linux/atrpms/el5-i386/atrpms/testing/qt44-devel-4.4.3-10_4.el5.i386.rpm
+
+	yum -y install libmng libXi-devel libXinerama-devel libGLU-devel libICE-devel libSM-devel libXcursor-devel libXfixes-devel libXrandr-devel libXt-devel
+
+	rpm -ivh qt44-4.4.3-10* qt44-x11-4.4.3-10* qt44-devel-4.4.3-10*
+
+	ldconfig
+	echo "export QTDIR=/usr/lib/qt44" >> /etc/profile
+	echo "export QTLIB=/usr/lib/qt44/lib" >> /etc/profile
+	echo "export QTINC=/usr/lib/qt44/include" >> /etc/profile
+	echo "export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH" >> /etc/profile
+	echo "export PATH=$QTDIR/bin:$PATH" >> /etc/profile
+	source /etc/profile
+
+	svn co https://cutycapt.svn.sourceforge.net/svnroot/cutycapt
+	mv cutycapt/CutyCapt /usr/local/CutyCapt
+	cd /usr/local/CutyCapt
+	/usr/lib/qt44/bin/qmake
+	make
+
+	wget http://www.flexthinker.com/wp-content/uploads/2009/11/xvfb-run.sh.txt
+	mv ./xvfb-run.sh.txt /usr/local/CutyCapt/xvfb-run.sh
+	chmod u+x /usr/local/CutyCapt/xvfb-run.sh
+
+	yum install fonts-chinese
+
+	#/usr/local/CutyCapt/xvfb-run.sh --server-args="-screen 0, 1024x768x24" /usr/local/CutyCapt/CutyCapt --url=http://www.163.com --out=163.jpg
+
+	return 0
+}
+
+function showMenu()
+{
+	clear
+	echo
+	echo "--------------------------------------------------------------"
+	echo "|      CentOS Install Helper                                 |"
+	echo "|      copyright https://github.com/cjy37                    |"
+	echo "--------------------------------------------------------------"
+	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"
+	echo "|      b. Install Web Server   [d,e,g,k,l]                   |"
+	echo "|      c. Install MySQL    [d,h,l]                           |"
+	echo "|      d. Install Libs     [Public Libs]                     |"
+	echo "|      e. Install mono                                       |"
+	echo "|      f. Install xsp+mono-fastcgi                           |"
+	echo "|      g. Install jexus v5                                   |"
+	echo "|      h. Install mysql v5.5                                 |"
+	echo "|      i. Install memcached                                  |"
+	echo "|      j. Install nginx                                      |"
+	echo "|      k. Install haproxy                                    |"
+	echo "|      l. Install Redis                                      |"
+	echo "|      m. Install CutyCapt                                   |"
+	echo "|      n. Install GtkSharp                                   |"
+	echo "|      x. Exit                                               |"
+	echo "-------------------------------------------------------------"
+	echo
+	return 0
+}
+
+function selectCmd()
+{
+	alias cp='cp'
+	showMenu
+	echo "Please select a serial number for installation"
+	echo "When your manual installation, Please install the [d] first:"
+	echo "[f][g] be dependent on [e]:"
+	read -n 1 M
+	echo
+
+	if [ "$M" = "x" ]; then
+		exit 1
+	elif [ "$M" = "a" ]; then
+		 echo "Installing ALL... [d,e,g,h,k,l]"
+		 echo "------------------------------------"
+		 setupLibs
+		 setupLibgdiplus
+		 setupMono
+		 setupJws
+		 setupMysql
+		 setupHaproxy
+		 setupRedis
+	elif [ "$M" = "b" ]; then
+		 echo "Installing Web Server ... [d,e,g,k,l]"
+		 echo "------------------------------------"
+		 setupLibs
+		 setupLibgdiplus
+		 setupMono
+		 setupJws
+		 setupHaproxy
+		 setupRedis
+	elif [ "$M" = "c" ]; then
+		 echo "Installing MySQL ... [d,h,l]"
+		 echo "------------------------------------"
+		 setupLibs
+		 setupMysql
+		 setupRedis
+	elif [ "$M" = "d" ]; then
+		 setupLibs
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "e" ]; then
+     setupLibgdiplus
+     read -n 1 -p "Press <Enter> to continue..."
+		 setupMono
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "f" ]; then
+		 setupXsp
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "g" ]; then
+		 setupJws
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "h" ]; then
+		 setupMysql
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "i" ]; then
+		 setupMemcached
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "j" ]; then
+		 setupNginx
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "k" ]; then
+		 setupHaproxy
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "l" ]; then
+		 setupRedis
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "m" ]; then
+		 setupCutyCapt
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "n" ]; then
+		 setupGtkSharp
+     read -n 1 -p "Press <Enter> to continue..."
+	else
+		 echo "Select Error!"
+     read -n 1 -p "Press <Enter> to continue..."
+	fi
+
+	selectCmd
+	return 0
+}
+
+
+cd /tmp
+selectCmd
+
+
+
+
