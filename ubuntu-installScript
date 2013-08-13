@@ -82,7 +82,7 @@ function setupLibgdiplus()
 	echo "install libgdiplus"
 	echo "------------------------------------"
 	cd /tmp/downloads
-	wget http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.tar.bz2
+	wget -c http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.tar.bz2
 	
 	if [ -f libgdiplus-2.10.tar.bz2 ]; then
 		tar -jxvf libgdiplus-2.10.tar.bz2
