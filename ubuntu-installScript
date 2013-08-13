@@ -7,8 +7,8 @@
 
 function setupLibs()
 {
-	sudo apt-get update
-        sudo apt-get upgrade
+	sudo apt-get update -y
+        sudo apt-get upgrade -y
 
 	echo "Install the public Libs"
 	echo "------------------------------------"
@@ -188,7 +188,7 @@ function setupMysql()
 	sudo apt-get install -y python-software-properties
 	sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
 	sudo add-apt-repository 'deb http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu precise main'
-	sudo apt-get update
+	sudo apt-get update -y
 	sudo apt-get install -y libmysqlclient18=5.5.32+maria-1~precise mysql-common=5.5.32+maria-1~precise
 	sudo apt-get install -y mariadb-server mariadb-client
 	
