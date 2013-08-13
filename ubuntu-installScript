@@ -36,10 +36,10 @@ function setupLibs()
 	#cp -r -f /tmp/downloads/yum /tmp
 
 	cd /tmp
-	sudo apt-get install build-essential
-	sudo apt-get install automake autoconf
-	sudo apt-get install bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
-	sudo apt-get install libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
+	sudo apt-get install -y build-essential
+	sudo apt-get install -y automake autoconf
+	sudo apt-get install -y bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
+	sudo apt-get install -y libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
 
 	
 	cd /tmp/downloads
@@ -185,12 +185,12 @@ function setupMysql()
 	echo "------------------------------------"
 
 	#apt-install mysql
-	sudo apt-get install python-software-properties
+	sudo apt-get install -y python-software-properties
 	sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
 	sudo add-apt-repository 'deb http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu precise main'
 	sudo apt-get update
-	sudo apt-get install libmysqlclient18=5.5.32+maria-1~precise mysql-common=5.5.32+maria-1~precise
-	sudo apt-get install mariadb-server mariadb-client
+	sudo apt-get install -y libmysqlclient18=5.5.32+maria-1~precise mysql-common=5.5.32+maria-1~precise
+	sudo apt-get install -y mariadb-server mariadb-client
 	
 	return 0
 }
