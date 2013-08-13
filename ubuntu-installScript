@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 #------------------------------------------
-#      CentOS asp.net InstallScript
+#      Ubuntu asp.net InstallScript
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
@@ -8,7 +8,7 @@
 function setupLibs()
 {
 	sudo apt-get update
-    sudo apt-get upgrade
+        sudo apt-get upgrade
 
 	echo "Install the public Libs"
 	echo "------------------------------------"
@@ -81,6 +81,7 @@ function setupLibgdiplus()
 	echo "------------------------------------"
 	cd /tmp/downloads
 	wget http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.tar.bz2
+	
 	if [ -f libgdiplus-2.10.tar.bz2 ]; then
 		tar -jxvf libgdiplus-2.10.tar.bz2
 		cd libgdiplus-2.10
@@ -139,12 +140,12 @@ function setupMono()
 
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
-	wget -c http://flex-ui-libs.googlecode.com/files/mono-2.10.8.tar.bz2
-	if [ -f mono-2.10.8.tar.bz2 ]; then
-	  tar -jvxf mono-2.10.8.tar.bz2
-	  cd mono-2.10.8
+	http://download.mono-project.com/sources/mono/mono-3.2.1.tar.bz2
+	if [ -f mono-3.2.1.tar.bz2 ]; then
+	  tar -jvxf mono-3.2.1.tar.bz2
+	  cd mono-3.2.1
 	  ./configure --prefix=/usr
-	  cp -r -f /tmp/downloads/conf/config.h eglib/config.h
+	  # cp -r -f /tmp/downloads/conf/config.h eglib/config.h
 	  make && sudo make install
 	  ldconfig
 	fi
@@ -183,13 +184,14 @@ function setupMysql()
 	echo "install mysql"
 	echo "------------------------------------"
 
+	#apt-install mysql
 	sudo apt-get install python-software-properties
 	sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-	sudo add-apt-repository 'deb http://mirrors.ustc.edu.cn/mariadb/repo/5.5/ubuntu precise main'
-	
+	sudo add-apt-repository 'deb http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu precise main'
 	sudo apt-get update
-	sudo apt-get install mariadb-server
-
+	sudo apt-get install libmysqlclient18=5.5.32+maria-1~precise mysql-common=5.5.32+maria-1~precise
+	sudo apt-get install mariadb-server mariadb-client
+	
 	return 0
 }
 
@@ -236,41 +238,6 @@ function setupNginx()
 		chkconfig --level 2345 nginx on
 		/etc/init.d/nginx start
 
-	fi
-	return 0
-}
-
-function setupXsp()
-{
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /wwwroot/htdocs/www ]; then
-	  mkdir -pv /wwwroot/htdocs/www
-	fi
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
-
-	echo "install xsp"
-	echo "------------------------------------"
-
-	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-
-	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/xsp-2.10.2.tar.bz2
-	if [ -f xsp-2.10.2.tar.bz2 ]; then
-	  tar -jvxf xsp-2.10.2.tar.bz2
-	  cd xsp-2.10.2
-	  ./configure --prefix=/usr
-	  make && sudo make install
-	  ldconfig
-
-	  cp -r -f /tmp/downloads/conf/fcgi_mono /etc/init.d/fcgi_mono
-	  chmod +x /etc/init.d/fcgi_mono
-		chkconfig --add fcgi_mono
-		chkconfig --level 2345 fcgi_mono on
-		/etc/init.d/fcgi_mono start
 	fi
 	return 0
 }
@@ -350,109 +317,17 @@ function setupJws()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://www.linuxdot.net/down/jexus-5.3.1.tar.gz
-	if [ -f jexus-5.3.1.tar.gz ]; then
-	  tar -xf jexus-5.3.1.tar.gz
-	  cd jexus-5.3.1
-	  sudo ./install /usr/local/webserver/jexus
-	  /usr/local/webserver/jexus/jws start
+	wget -c http://www.linuxdot.net/down/jexus-5.4.3.1.tar.gz
+	if [ -f jexus-5.4.3.1.tar.gz ]; then
+	  tar -xf jexus-5.4.3.1.tar.gz
+	  cd jexus-5.4.3.1
+	  sudo ./install # /usr/local/webserver/jexus
+	  /usr/jexus/jws start
 	fi
 	return 0
 }
 
-function setupGtkSharp()
-{
-	cd /tmp/downloads
-	#=========================================================
-	echo "/opt/gtk/lib" > /etc/ld.so.conf.d/gtk.conf
-	export LD_LIBRARY_PATH=/opt/gtk/lib:$LD_LIBRARY_PATH
-	export PKG_CONFIG_PATH=/usr/lib/pkgconfig
-	export PKG_CONFIG_PATH=/opt/gtk/lib/pkgconfig:$PKG_CONFIG_PATH
-	ldconfig
-	#=========================================================
-	wget http://flex-ui-libs.googlecode.com/files/glib-2.13.7.tar.bz2
-	tar xvfj  glib-2.13.7.tar.bz2
-	cd glib-2.13.7
-	./configure --prefix=/opt/gtk --with-libiconv=gnu && make && sudo make install
-	ldconfig
-	cd ..
 
-	wget http://flex-ui-libs.googlecode.com/files/atk-1.19.6.tar.bz2
-	tar xvfj atk-1.19.6.tar.bz2
-	cd atk-1.19.6
-	./configure --prefix=/opt/gtk && make && sudo make install
-	cd ..
-
-	wget http://flex-ui-libs.googlecode.com/files/pixman-0.22.2.tar.gz
-	tar xvfz pixman-0.22.2.tar.gz
-	cd pixman-0.22.2
-	./configure --prefix=/opt/gtk && make && sudo make install
-	cd ..
-
-	wget http://flex-ui-libs.googlecode.com/files/cairo-1.8.10.tar.gz
-	tar xvfz cairo-1.8.10.tar.gz
-	cd cairo-1.8.10
-	./configure --prefix=/opt/gtk && make && sudo make install
-	cd ..
-
-	wget http://flex-ui-libs.googlecode.com/files/pango-1.17.3.tar.bz2
-	tar xvfj pango-1.17.3.tar.bz2
-	cd pango-1.17.3
-	./configure --prefix=/opt/gtk && make && sudo make install
-	ldconfig
-	cd ..
-
-	wget http://flex-ui-libs.googlecode.com/files/gtk+-2.12.0.tar.bz2
-	tar xvfj gtk+-2.12.0.tar.bz2
-	cd gtk+-2.12.0
-	./configure --prefix=/opt/gtk --with-x --without-libjasper && make && sudo make install
-	ldconfig
-	cd ..
-
-	wget http://flex-ui-libs.googlecode.com/files/gtk-sharp-2.12.11.tar.bz2
-	tar xvfj gtk-sharp-2.12.11.tar.bz2
-	cd gtk-sharp-2.12.11
-	./configure --prefix=/usr && make && sudo make install
-	cd ..
-
-	return 0
-}
-
-function setupCutyCapt()
-{
-	cd /tmp
-	wget http://ftp.riken.go.jp/Linux/atrpms/el5-i386/atrpms/testing/qt44-4.4.3-10_4.el5.i386.rpm
-	wget http://ftp.riken.go.jp/Linux/atrpms/el5-i386/atrpms/testing/qt44-x11-4.4.3-10_4.el5.i386.rpm
-	wget http://ftp.riken.go.jp/Linux/atrpms/el5-i386/atrpms/testing/qt44-devel-4.4.3-10_4.el5.i386.rpm
-
-	yum -y install libmng libXi-devel libXinerama-devel libGLU-devel libICE-devel libSM-devel libXcursor-devel libXfixes-devel libXrandr-devel libXt-devel
-
-	rpm -ivh qt44-4.4.3-10* qt44-x11-4.4.3-10* qt44-devel-4.4.3-10*
-
-	ldconfig
-	echo "export QTDIR=/usr/lib/qt44" >> /etc/profile
-	echo "export QTLIB=/usr/lib/qt44/lib" >> /etc/profile
-	echo "export QTINC=/usr/lib/qt44/include" >> /etc/profile
-	echo "export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH" >> /etc/profile
-	echo "export PATH=$QTDIR/bin:$PATH" >> /etc/profile
-	source /etc/profile
-
-	svn co https://cutycapt.svn.sourceforge.net/svnroot/cutycapt
-	mv cutycapt/CutyCapt /usr/local/CutyCapt
-	cd /usr/local/CutyCapt
-	/usr/lib/qt44/bin/qmake
-	make
-
-	wget http://www.flexthinker.com/wp-content/uploads/2009/11/xvfb-run.sh.txt
-	mv ./xvfb-run.sh.txt /usr/local/CutyCapt/xvfb-run.sh
-	chmod u+x /usr/local/CutyCapt/xvfb-run.sh
-
-	yum install fonts-chinese
-
-	#/usr/local/CutyCapt/xvfb-run.sh --server-args="-screen 0, 1024x768x24" /usr/local/CutyCapt/CutyCapt --url=http://www.163.com --out=163.jpg
-
-	return 0
-}
 
 function showMenu()
 {
@@ -467,15 +342,12 @@ function showMenu()
 	echo "|      c. Install MySQL    [d,h,l]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
 	echo "|      e. Install mono                                       |"
-	echo "|      f. Install xsp+mono-fastcgi                           |"
 	echo "|      g. Install jexus v5                                   |"
 	echo "|      h. Install mysql v5.5                                 |"
 	echo "|      i. Install memcached                                  |"
 	echo "|      j. Install nginx                                      |"
 	echo "|      k. Install haproxy                                    |"
 	echo "|      l. Install Redis                                      |"
-	echo "|      m. Install CutyCapt                                   |"
-	echo "|      n. Install GtkSharp                                   |"
 	echo "|      x. Exit                                               |"
 	echo "-------------------------------------------------------------"
 	echo
@@ -527,9 +399,6 @@ function selectCmd()
      read -n 1 -p "Press <Enter> to continue..."
 		 setupMono
      read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "f" ]; then
-		 setupXsp
-     read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
 		 setupJws
      read -n 1 -p "Press <Enter> to continue..."
@@ -547,12 +416,6 @@ function selectCmd()
      read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "l" ]; then
 		 setupRedis
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "m" ]; then
-		 setupCutyCapt
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "n" ]; then
-		 setupGtkSharp
      read -n 1 -p "Press <Enter> to continue..."
 	else
 		 echo "Select Error!"
