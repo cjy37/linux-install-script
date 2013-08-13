@@ -72,7 +72,8 @@ function setupLibs()
 	  make && sudo make install
 	  ldconfig
 	fi
-
+	setupLibgdiplus
+	
 	return 0
 }
 
@@ -363,7 +364,6 @@ function selectCmd()
 		 echo "Installing ALL... [d,e,g,h,k,l]"
 		 echo "------------------------------------"
 		 setupLibs
-		 setupLibgdiplus
 		 setupMono
 		 setupJws
 		 setupMysql
@@ -373,7 +373,6 @@ function selectCmd()
 		 echo "Installing Web Server ... [d,e,g,k,l]"
 		 echo "------------------------------------"
 		 setupLibs
-		 setupLibgdiplus
 		 setupMono
 		 setupJws
 		 setupHaproxy
@@ -388,8 +387,6 @@ function selectCmd()
 		 setupLibs
      read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "e" ]; then
-     setupLibgdiplus
-     read -n 1 -p "Press <Enter> to continue..."
 		 setupMono
      read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
