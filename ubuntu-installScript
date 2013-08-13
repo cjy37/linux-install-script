@@ -142,10 +142,10 @@ function setupMono()
 
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
-	wget -c http://download.mono-project.com/sources/mono/mono-3.0.12.tar.bz2
-	if [ -f mono-3.0.12.tar.bz2 ]; then
-	  tar -jvxf mono-3.0.12.tar.bz2
-	  cd mono-3.0.12
+	wget -c http://download.mono-project.com/sources/mono/mono-3.2.1.tar.bz2
+	if [ -f mono-3.2.1.tar.bz2 ]; then
+	  tar -jvxf mono-3.2.1.tar.bz2
+	  cd mono-3.2.1
 	  ./configure --prefix=/usr
 	  # cp -r -f /tmp/downloads/conf/config.h eglib/config.h
 	  make && sudo make install
