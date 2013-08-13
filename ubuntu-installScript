@@ -140,7 +140,7 @@ function setupMono()
 
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
-	http://download.mono-project.com/sources/mono/mono-3.2.1.tar.bz2
+	wget -c http://download.mono-project.com/sources/mono/mono-3.2.1.tar.bz2
 	if [ -f mono-3.2.1.tar.bz2 ]; then
 	  tar -jvxf mono-3.2.1.tar.bz2
 	  cd mono-3.2.1
@@ -258,15 +258,7 @@ function setupHaproxy()
 	fi
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/haproxy-1.4.22.tar.gz
-	if [ -f haproxy-1.4.22.tar.gz ]; then
-		tar zxvf haproxy-1.4.22.tar.gz
-		cd haproxy-1.4.22
-		make TARGET=linux26 PREFIX=/usr/local/webserver/haproxy
-		sudo make install PREFIX=/usr/local/webserver/haproxy
-		ldconfig
-		cp -r -f /tmp/downloads/conf/haproxy.cfg /usr/local/webserver/haproxy/conf/haproxy.cfg
-	fi
+	sudo apt-get install haproxy
 	return 0
 }
 
