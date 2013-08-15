@@ -49,30 +49,30 @@ function setupLibs()
 			unzip -o conf.zip
 	fi
 
-	echo "install libiconv"
-	echo "------------------------------------"
-	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/libiconv-1.13.1.tar.gz
-	if [ -f libiconv-1.13.1.tar.gz ]; then
-	  tar xvf libiconv-1.13.1.tar.gz
-	  cd libiconv-1.13.1
-	  ./configure --prefix=/usr
-	  make && sudo make install
-	  ldconfig
-	fi
+	#echo "install libiconv"
+	#echo "------------------------------------"
+	#cd /tmp/downloads
+	#wget -c http://flex-ui-libs.googlecode.com/files/libiconv-1.13.1.tar.gz
+	#if [ -f libiconv-1.13.1.tar.gz ]; then
+	#  tar xvf libiconv-1.13.1.tar.gz
+	#  cd libiconv-1.13.1
+	#  ./configure --prefix=/usr
+	#  make && sudo make install
+	#  ldconfig
+	#fi
 
-	echo "install mcrypt"
-	echo "------------------------------------"
-	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/mcrypt-2.6.8.tar.gz
-	if [ -f mcrypt-2.6.8.tar.gz ]; then
-	  tar xvf mcrypt-2.6.8.tar.gz
-	  cd mcrypt-2.6.8
-	  ./configure --prefix=/usr
-	  make && sudo make install
-	  ldconfig
-	fi
-	setupLibgdiplus
+	#echo "install mcrypt"
+	#echo "------------------------------------"
+	#cd /tmp/downloads
+	#wget -c http://flex-ui-libs.googlecode.com/files/mcrypt-2.6.8.tar.gz
+	#if [ -f mcrypt-2.6.8.tar.gz ]; then
+	#  tar xvf mcrypt-2.6.8.tar.gz
+	#  cd mcrypt-2.6.8
+	#  ./configure --prefix=/usr
+	#  make && sudo make install
+	#  ldconfig
+	#fi
+	#setupLibgdiplus
 	
 	return 0
 }
@@ -136,7 +136,9 @@ function setupMono()
 	if [ ! -d /tmp/downloads ]; then
 	  mkdir -pv /tmp/downloads
 	fi
-
+	
+	
+	
 	echo "install mono"
 	echo "------------------------------------"
 
@@ -336,6 +338,7 @@ function showMenu()
 	echo "|      c. Install MySQL    [d,h,l]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
 	echo "|      e. Install mono                                       |"
+	echo "|	     f. Install Libgdiplus                                 |"
 	echo "|      g. Install jexus v5                                   |"
 	echo "|      h. Install mysql v5.5                                 |"
 	echo "|      i. Install memcached                                  |"
@@ -364,6 +367,7 @@ function selectCmd()
 		 echo "Installing ALL... [d,e,g,h,k,l]"
 		 echo "------------------------------------"
 		 setupLibs
+		 setupLibgdiplus
 		 setupMono
 		 setupJws
 		 setupMysql
@@ -373,6 +377,7 @@ function selectCmd()
 		 echo "Installing Web Server ... [d,e,g,k,l]"
 		 echo "------------------------------------"
 		 setupLibs
+		 setupLibgdiplus
 		 setupMono
 		 setupJws
 		 setupHaproxy
@@ -388,6 +393,9 @@ function selectCmd()
      read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "e" ]; then
 		 setupMono
+     read -n 1 -p "Press <Enter> to continue..."
+        elif [ "$M" = "f" ]; then
+		 setupLibgdiplus
      read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
 		 setupJws
