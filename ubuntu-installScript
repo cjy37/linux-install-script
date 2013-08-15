@@ -149,7 +149,7 @@ function setupMono()
 	  tar -jvxf mono-3.2.1.tar.bz2
 	  cd mono-3.2.1
 	  ./configure --prefix=/usr
-	  cp -r -f /tmp/downloads/conf/config.h eglib/config.h
+	  #cp -r -f /tmp/downloads/conf/config.h eglib/config.h
 	  make && sudo make install
 	  ldconfig
 	fi
