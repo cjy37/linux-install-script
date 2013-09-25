@@ -251,17 +251,6 @@ function setupHaproxy()
 	echo "install haproxy"
 	echo "------------------------------------"
 
-	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  echo "/usr/local/webserver/haproxy/sbin/haproxy -f /usr/local/webserver/haproxy/conf/haproxy.cfg &" >> /etc/rc.local
-	fi
-	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  mkdir -pv /usr/local/webserver/haproxy
-	fi
-	if [ ! -d /usr/local/webserver/haproxy/conf ]; then
-	  mkdir -pv /usr/local/webserver/haproxy/conf
-	fi
-
-	cd /tmp/downloads
 	sudo apt-get install haproxy
 	return 0
 }
@@ -271,25 +260,7 @@ function setupRedis()
 	echo "install Redis"
 	echo "------------------------------------"
 
-	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/redis-2.4.4.tar.gz
-	if [ -f redis-2.4.4.tar.gz ]; then
-	  tar zxvf redis-2.4.4.tar.gz
-	  cd redis-2.4.4
-	  make
-	  sudo make install PREFIX=/usr/local
-	  ldconfig
-	  mkdir /etc/redis
-	  cp -r -f /tmp/downloads/conf/redis.conf /etc/redis/redis.conf
-
-	  mkdir  /var/lib/redis
-		cp -r -f /tmp/downloads/conf/redis-server.sh /etc/init.d/redis
-		# cp -r -f redis-server.sh /etc/init.d/redis
-		chmod +x /etc/init.d/redis
-		chkconfig --add redis
-		chkconfig --level 2345 redis on
-		/etc/init.d/redis start
-	fi
+	sudo apt-get install redis-server
 	return 0
 }
 
