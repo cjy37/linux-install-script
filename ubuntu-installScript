@@ -128,6 +128,22 @@ function setupRedis()
 	return 0
 }
 
+function setupMongoDB()
+{
+	echo "install MongoDB"
+	echo "------------------------------------"
+
+	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+	sudo apt-get update
+	sudo apt-get install mongodb-10gen
+	sudo apt-get install mongodb-10gen=2.4.6
+	echo "mongodb-10gen hold" | sudo dpkg --set-selections
+	sudo service mongodb start
+	#sudo apt-get install mongo
+	#sudo apt-get update -y
+}
+
 function setupMQTTServer()
 {
 	echo "install mosquitto(MQTT Server)"
@@ -215,6 +231,7 @@ function showMenu()
 	echo "|      j. Install Redis                                      |"
 	echo "|      k. Install Node.js                                    |"
 	echo "|      l. Install MQTT Server                                |"
+	echo "|      m. Install MongoDB                                    |"
 	echo "|      x. Exit                                               |"
 	echo "-------------------------------------------------------------"
 	echo
@@ -234,24 +251,24 @@ function selectCmd()
 	if [ "$M" = "x" ]; then
 		exit 1
 	elif [ "$M" = "a" ]; then
-		 echo "Installing ALL... [d,e,g,h,i,j]"
-		 echo "------------------------------------"
-		 setupLibs
-		 setupLibgdiplus
-		 setupMono
-		 setupJws
-		 setupMysql
-		 setupHaproxy
-		 setupRedis
+		echo "Installing ALL... [d,e,g,h,i,j]"
+		echo "------------------------------------"
+		setupLibs
+		setupLibgdiplus
+		setupMono
+		setupJws
+		setupMysql
+		setupHaproxy
+		setupRedis
 	elif [ "$M" = "b" ]; then
-		 echo "Installing Web Server ... [d,e,g,i,j]"
-		 echo "------------------------------------"
-		 setupLibs
-		 setupLibgdiplus
-		 setupMono
-		 setupJws
-		 setupHaproxy
-		 setupRedis
+		echo "Installing Web Server ... [d,e,g,i,j]"
+		echo "------------------------------------"
+		setupLibs
+		setupLibgdiplus
+		setupMono
+		setupJws
+		setupHaproxy
+		setupRedis
 	elif [ "$M" = "c" ]; then
 		 echo "Installing MySQL ... [d,h,j]"
 		 echo "------------------------------------"
@@ -259,37 +276,41 @@ function selectCmd()
 		 setupMysql
 		 setupRedis
 	elif [ "$M" = "d" ]; then
-		 setupLibs
-     read -n 1 -p "Press <Enter> to continue..."
+		setupLibs
+		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "e" ]; then
-		 setupMono
-     read -n 1 -p "Press <Enter> to continue..."
-        elif [ "$M" = "f" ]; then
-		 setupLibgdiplus
-     read -n 1 -p "Press <Enter> to continue..."
+		setupMono
+		read -n 1 -p "Press <Enter> to continue..."
+    elif [ "$M" = "f" ]; then
+		setupLibgdiplus
+		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
-		 setupJws
-     read -n 1 -p "Press <Enter> to continue..."
+		setupJws
+		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "h" ]; then
-		 setupMysql
-     read -n 1 -p "Press <Enter> to continue..."
+		setupMysql
+		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "i" ]; then
-		 setupHaproxy
-     read -n 1 -p "Press <Enter> to continue..."
+		setupHaproxy
+		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "j" ]; then
-		 setupRedis
-     read -n 1 -p "Press <Enter> to continue..."
+		setupRedis
+		read -n 1 -p "Press <Enter> to continue..."
 	#setupNodeJS
 	elif [ "$M" = "k" ]; then
-		 setupNodeJS
-     read -n 1 -p "Press <Enter> to continue..."
+		setupNodeJS
+		read -n 1 -p "Press <Enter> to continue..."
 	#setupMQTTServer
 	elif [ "$M" = "l" ]; then
-		 setupMQTTServer
-     read -n 1 -p "Press <Enter> to continue..."
+		setupMQTTServer
+		read -n 1 -p "Press <Enter> to continue..."
+	#setupMongoDB
+	elif [ "$M" = "m" ]; then
+		setupMongoDB
+		read -n 1 -p "Press <Enter> to continue..."
 	else
-		 echo "Select Error!"
-     read -n 1 -p "Press <Enter> to continue..."
+		echo "Select Error!"
+		read -n 1 -p "Press <Enter> to continue..."
 	fi
 
 	selectCmd
