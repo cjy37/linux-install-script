@@ -13,9 +13,6 @@ function setupLibs()
 	echo "Install the public Libs"
 	echo "------------------------------------"
 
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
 	if [ ! -d /wwwroot/htdocs/www ]; then
 	  mkdir -pv /wwwroot/htdocs/www
 	fi
@@ -61,17 +58,12 @@ function setupLibgdiplus()
 
 function setupMono()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
 	if [ ! -d /wwwroot/htdocs/www ]; then
 	  mkdir -pv /wwwroot/htdocs/www
 	fi
 	if [ ! -d /tmp/downloads ]; then
 	  mkdir -pv /tmp/downloads
 	fi
-	
-	
 	
 	echo "install mono"
 	echo "------------------------------------"
@@ -99,23 +91,8 @@ function setupMono()
 
 function setupMysql()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
 	if [ ! -d /tmp/downloads ]; then
 	  mkdir -pv /tmp/downloads
-	fi
-	if [ ! -d /usr/local/webserver/mysql ]; then
-	  mkdir -pv /usr/local/webserver/mysql
-	  mkdir -pv /usr/local/webserver/mysql/etc
-	  mkdir -pv /usr/local/webserver/mysql/bin
-	fi
-	if [ ! -d /wwwroot/mysql ]; then
-	  mkdir -pv /wwwroot/mysql
-
-	  groupadd -g 3306 mysql
-	  useradd -u 3306 -g mysql -M -s /sbin/nologin mysql
-	  chown -R mysql:mysql /wwwroot/mysql/
 	fi
 
 	echo "install mysql"
@@ -195,18 +172,11 @@ function setupNodeJS()
 
 function setupJws()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
 	if [ ! -d /wwwroot/htdocs/www ]; then
 	  mkdir -pv /wwwroot/htdocs/www
 	fi
 	if [ ! -d /tmp/downloads ]; then
 	  mkdir -pv /tmp/downloads
-	fi
-	if [ ! -d /usr/local/webserver/jexus ]; then
-	  mkdir -pv /usr/local/webserver/jexus
-	  echo  "/usr/local/webserver/jexus/jws start" >> /etc/rc.local
 	fi
 
 	echo "install jexus5.3.1"
@@ -327,7 +297,3 @@ function selectCmd()
 }
 cd /tmp
 selectCmd
-
-
-
-
