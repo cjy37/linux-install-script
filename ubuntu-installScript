@@ -8,7 +8,7 @@
 function setupLibs()
 {
 	sudo apt-get update -y
-        sudo apt-get upgrade -y
+	sudo apt-get upgrade -y
 
 	echo "Install the public Libs"
 	echo "------------------------------------"
@@ -24,56 +24,19 @@ function setupLibs()
 	  mkdir -pv /tmp/downloads
 	fi
 
-
-
-	#if [ -f yum.zip ]; then
-	#		unzip -o yum.zip
-	#fi
-
-
-
-	#cp -r -f /tmp/downloads/conf/yum.conf /etc/yum.conf
-	#cp -r -f /tmp/downloads/yum /tmp
-
 	cd /tmp
 	sudo apt-get install -y vim chkconfig
 	sudo apt-get install -y build-essential
 	sudo apt-get install -y automake autoconf
 	sudo apt-get install -y bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
 	sudo apt-get install -y libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
-	#sudo apt-get install mono-runtime
-	
+
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/conf.zip
 	if [ -f conf.zip ]; then
 			unzip -o conf.zip
 	fi
 
-	#echo "install libiconv"
-	#echo "------------------------------------"
-	#cd /tmp/downloads
-	#wget -c http://flex-ui-libs.googlecode.com/files/libiconv-1.13.1.tar.gz
-	#if [ -f libiconv-1.13.1.tar.gz ]; then
-	#  tar xvf libiconv-1.13.1.tar.gz
-	#  cd libiconv-1.13.1
-	#  ./configure --prefix=/usr
-	#  make && sudo make install
-	#  ldconfig
-	#fi
-
-	#echo "install mcrypt"
-	#echo "------------------------------------"
-	#cd /tmp/downloads
-	#wget -c http://flex-ui-libs.googlecode.com/files/mcrypt-2.6.8.tar.gz
-	#if [ -f mcrypt-2.6.8.tar.gz ]; then
-	#  tar xvf mcrypt-2.6.8.tar.gz
-	#  cd mcrypt-2.6.8
-	#  ./configure --prefix=/usr
-	#  make && sudo make install
-	#  ldconfig
-	#fi
-	#setupLibgdiplus
-	
 	return 0
 }
 
@@ -93,35 +56,6 @@ function setupLibgdiplus()
 	ldconfig
 	ldconfig -p |grep libgdiplus
 
-	return 0
-}
-
-function setupMemcached()
-{
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
-
-	echo "install memcached"
-	echo "------------------------------------"
-
-	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/memcached-1.4.6.tar.gz
-	if [ -f memcached-1.4.6.tar.gz ]; then
-	  tar xvf memcached-1.4.6.tar.gz
-	  cd memcached-1.4.6
-	  ./configure --prefix=/usr/local/webserver/memcached
-	  make && sudo make install
-	  ldconfig
-	  cp -r -f /tmp/downloads/conf/memcached /etc/init.d/memcached
-	  chmod 755 /etc/init.d/memcached
-	  chkconfig --add memcached
-	  chkconfig memcached on
-	  service memcached start
-	fi
 	return 0
 }
 
@@ -149,7 +83,6 @@ function setupMono()
 	  tar -jvxf mono-3.2.1.tar.bz2
 	  cd mono-3.2.1
 	  ./configure --prefix=/usr
-	  #cp -r -f /tmp/downloads/conf/config.h eglib/config.h
 	  make && sudo make install
 	  ldconfig
 	fi
@@ -195,54 +128,8 @@ function setupMysql()
 	sudo apt-get update -y
 	sudo apt-get install -y libmysqlclient18=5.5.32+maria-1~precise mysql-common=5.5.32+maria-1~precise
 	sudo apt-get install -y mariadb-server mariadb-client
-	
-	return 0
-}
-
-function setupNginx()
-{
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /wwwroot/htdocs/www ]; then
-	  mkdir -pv /wwwroot/htdocs/www
-	fi
-
-	#/wwwroot/logs
-	if [ ! -d /wwwroot/logs ]; then
-	  mkdir -pv /wwwroot/logs
-	fi
-
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
-	if [ ! -d /usr/local/webserver/nginx ]; then
-
-	  mkdir -pv /usr/local/webserver/nginx
-	fi
-
-	echo "install nginx"
-	echo "------------------------------------"
-
-	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/nginx-1.1.1.tar.gz
-	if [ -f nginx-1.1.1.tar.gz ]; then
-	  tar xvf nginx-1.1.1.tar.gz
-	  cd nginx-1.1.1
-	  ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module
-	  make && sudo make install
-	  ldconfig
-
-    cp -r -f /tmp/downloads/conf/fastcgi_params /usr/local/webserver/nginx/conf/fastcgi_params
-    cp -r -f /tmp/downloads/conf/nginx.conf /usr/local/webserver/nginx/conf/nginx.conf
-
-		cp -r -f /tmp/downloads/conf/nginx /etc/init.d/nginx
-	  chmod +x /etc/init.d/nginx
-		chkconfig --add nginx
-		chkconfig --level 2345 nginx on
-		/etc/init.d/nginx start
-
-	fi
+	sudo service mysql start
+	mysql -e "USE mysql;GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY 'Ht141421';FLUSH PRIVILEGES;"
 	return 0
 }
 
@@ -261,6 +148,48 @@ function setupRedis()
 	echo "------------------------------------"
 
 	sudo apt-get install redis-server
+	return 0
+}
+
+function setupMQTTServer()
+{
+	echo "install mosquitto(MQTT Server)"
+	echo "------------------------------------"
+
+	sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+	sudo apt-get update
+	sudo apt-get install python-software-properties
+	sudo apt-get install mosquitto
+}
+
+function setupNodeJS()
+{
+	echo "install Node.js"
+	echo "------------------------------------"
+	
+	if [ ! -d /wwwroot ]; then
+	  mkdir -pv /wwwroot
+	fi
+	
+	if [ ! -d /wwwroot/node_mqtt ]; then
+	  mkdir -pv /wwwroot/node_mqtt
+	fi
+	
+	sudo apt-get install python-software-properties python g++ make
+	sudo add-apt-repository ppa:chris-lea/node.js
+	sudo apt-get update
+	sudo apt-get install nodejs
+	
+	cd /wwwroot/node_mqtt
+	
+	echo "npm install forever/mqtt/websocket/websocket-server/socket.io to '/wwwroot/node_mqtt'"
+	
+	npm install forever
+	npm install mqtt
+	npm install websocket
+	npm install websocket-server
+	npm install socket.io
+
 	return 0
 }
 
@@ -288,7 +217,7 @@ function setupJws()
 	if [ -f jexus-5.4.3.1.tar.gz ]; then
 	  tar -xf jexus-5.4.3.1.tar.gz
 	  cd jexus-5.4.3.1
-	  sudo ./install # /usr/local/webserver/jexus
+	  sudo ./install
 	  /usr/jexus/jws start
 	fi
 	return 0
@@ -304,18 +233,18 @@ function showMenu()
 	echo "|      CentOS Install Helper                                 |"
 	echo "|      copyright https://github.com/cjy37                    |"
 	echo "--------------------------------------------------------------"
-	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"
-	echo "|      b. Install Web Server   [d,e,g,k,l]                   |"
-	echo "|      c. Install MySQL    [d,h,l]                           |"
+	echo "|      a. Install Web Server + MySQL [d,e,g,h,i,j]           |"
+	echo "|      b. Install Web Server   [d,e,g,i,j]                   |"
+	echo "|      c. Install MySQL    [d,h,j]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
 	echo "|      e. Install mono                                       |"
 	echo "|	     f. Install Libgdiplus                                 |"
 	echo "|      g. Install jexus v5                                   |"
 	echo "|      h. Install mysql v5.5                                 |"
-	echo "|      i. Install memcached                                  |"
-	echo "|      j. Install nginx                                      |"
-	echo "|      k. Install haproxy                                    |"
-	echo "|      l. Install Redis                                      |"
+	echo "|      i. Install haproxy                                    |"
+	echo "|      j. Install Redis                                      |"
+	echo "|      k. Install Node.js                                    |"
+	echo "|      l. Install MQTT Server                                |"
 	echo "|      x. Exit                                               |"
 	echo "-------------------------------------------------------------"
 	echo
@@ -335,7 +264,7 @@ function selectCmd()
 	if [ "$M" = "x" ]; then
 		exit 1
 	elif [ "$M" = "a" ]; then
-		 echo "Installing ALL... [d,e,g,h,k,l]"
+		 echo "Installing ALL... [d,e,g,h,i,j]"
 		 echo "------------------------------------"
 		 setupLibs
 		 setupLibgdiplus
@@ -345,7 +274,7 @@ function selectCmd()
 		 setupHaproxy
 		 setupRedis
 	elif [ "$M" = "b" ]; then
-		 echo "Installing Web Server ... [d,e,g,k,l]"
+		 echo "Installing Web Server ... [d,e,g,i,j]"
 		 echo "------------------------------------"
 		 setupLibs
 		 setupLibgdiplus
@@ -354,7 +283,7 @@ function selectCmd()
 		 setupHaproxy
 		 setupRedis
 	elif [ "$M" = "c" ]; then
-		 echo "Installing MySQL ... [d,h,l]"
+		 echo "Installing MySQL ... [d,h,j]"
 		 echo "------------------------------------"
 		 setupLibs
 		 setupMysql
@@ -375,16 +304,18 @@ function selectCmd()
 		 setupMysql
      read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "i" ]; then
-		 setupMemcached
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "j" ]; then
-		 setupNginx
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "k" ]; then
 		 setupHaproxy
      read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "l" ]; then
+	elif [ "$M" = "j" ]; then
 		 setupRedis
+     read -n 1 -p "Press <Enter> to continue..."
+	#setupNodeJS
+	elif [ "$M" = "k" ]; then
+		 setupNodeJS
+     read -n 1 -p "Press <Enter> to continue..."
+	#setupMQTTServer
+	elif [ "$M" = "l" ]; then
+		 setupMQTTServer
      read -n 1 -p "Press <Enter> to continue..."
 	else
 		 echo "Select Error!"
@@ -394,8 +325,6 @@ function selectCmd()
 	selectCmd
 	return 0
 }
-
-
 cd /tmp
 selectCmd
 
