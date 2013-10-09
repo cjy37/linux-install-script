@@ -27,7 +27,7 @@ function showMenu()
 	echo "|      l. Install MQTT Server                                |"
 	echo "|      m. Install MongoDB                                    |"
 	echo "|      x. Exit                                               |"
-	echo "-------------------------------------------------------------"
+	echo "--------------------------------------------------------------"
 	echo
 	return 0
 }
