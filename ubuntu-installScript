@@ -143,6 +143,8 @@ function setupHaproxy()
 
 	sudo apt-get install -y haproxy
 	echo "ENABLED=1" > /etc/default/haproxy
+	sudo service mosquitto start
+	
 	return 0
 }
 
@@ -152,6 +154,8 @@ function setupRedis()
 	echo "------------------------------------"
 
 	sudo apt-get install -y redis-server
+	sudo service mosquitto start
+	
 	return 0
 }
 
@@ -180,6 +184,8 @@ function setupMQTTServer()
 	sudo apt-get update -y
 	sudo apt-get install -y python-software-properties
 	sudo apt-get install -y mosquitto
+	sudo cp /etc/mosquitto/mosquitto.conf.example /etc/mosquitto/mosquitto.conf
+	sudo service mosquitto start
 }
 
 function setupNodeJS()
