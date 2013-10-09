@@ -23,7 +23,6 @@ chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 ```
 Function Menu:
-
 a. Install Web Server + MySQL [d,e,g,h,i,j]
 b. Install Web Server   [d,e,g,i,j]        
 c. Install MySQL    [d,h,j]                
