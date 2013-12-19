@@ -97,10 +97,10 @@ function setupMono()
 
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
-	wget -c http://download.mono-project.com/sources/mono/mono-3.2.1.tar.bz2
-	if [ -f mono-3.2.1.tar.bz2 ]; then
-	  tar -jvxf mono-3.2.1.tar.bz2
-	  cd mono-3.2.1
+	wget -c http://download.mono-project.com/sources/mono/mono-3.2.5.tar.bz2
+	if [ -f mono-3.2.5.tar.bz2 ]; then
+	  tar -jvxf mono-3.2.5.tar.bz2
+	  cd mono-3.2.5
 	  ./configure --prefix=/usr
 	  make && sudo make install
 	  ldconfig
