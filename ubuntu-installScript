@@ -83,6 +83,38 @@ function setupLibgdiplus()
 	return 0
 }
 
+function setupNewMono()
+{
+	if [ ! -d /wwwroot/htdocs/www ]; then
+	  mkdir -pv /wwwroot/htdocs/www
+	fi
+	if [ ! -d /tmp/downloads ]; then
+	  mkdir -pv /tmp/downloads
+	fi
+	
+	echo "install mono"
+	echo "------------------------------------"
+        
+        sudo apt-get install mono-complete
+        
+	mkdir /tmp/mono-git-src
+	cd /tmp/mono-git-src
+	git clone git://github.com/mono/mono.git
+	./autogen.sh --prefix=/usr
+	make
+	sudo make install
+	ldconfig
+	
+	cd /tmp/downloads
+	if [ -f aspx-info.tar.gz ]; then
+	  tar xvf aspx-info.tar.gz
+	  cd aspx-info
+	  cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
+	fi
+	
+	return 0
+}
+
 function setupMono()
 {
 	if [ ! -d /wwwroot/htdocs/www ]; then
@@ -94,7 +126,9 @@ function setupMono()
 	
 	echo "install mono"
 	echo "------------------------------------"
-
+        
+        sudo apt-get install mono-complete
+	
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
 	wget -c http://download.mono-project.com/sources/mono/mono-3.2.1.tar.bz2
@@ -260,7 +294,7 @@ function selectCmd()
 		echo "------------------------------------"
 		setupLibs
 		setupLibgdiplus
-		setupMono
+		setupNewMono
 		setupJws
 		setupMysql
 		setupHaproxy
@@ -270,7 +304,7 @@ function selectCmd()
 		echo "------------------------------------"
 		setupLibs
 		setupLibgdiplus
-		setupMono
+		setupNewMono
 		setupJws
 		setupHaproxy
 		setupRedis
@@ -284,7 +318,7 @@ function selectCmd()
 		setupLibs
 		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "e" ]; then
-		setupMono
+		setupNewMono
 		read -n 1 -p "Press <Enter> to continue..."
     elif [ "$M" = "f" ]; then
 		setupLibgdiplus
