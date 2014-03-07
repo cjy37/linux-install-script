@@ -177,8 +177,8 @@ function setupHaproxy()
 	echo "------------------------------------"
 
 	sudo apt-get install -y haproxy
-	sudo echo "ENABLED=1" > /etc/default/haproxy
-	sudo service mosquitto start
+	# sudo echo "ENABLED=1" > /etc/default/haproxy
+	sudo service haproxy start
 	
 	return 0
 }
@@ -189,7 +189,7 @@ function setupRedis()
 	echo "------------------------------------"
 
 	sudo apt-get install -y redis-server
-	sudo service mosquitto start
+	sudo service redis-server start
 	
 	return 0
 }
@@ -254,6 +254,7 @@ function setupNodeJS()
 	return 0
 }
 
+# Install ASP.NET WEB Server
 function setupJws()
 {
 	if [ ! -d /wwwroot/htdocs/www ]; then
