@@ -96,6 +96,7 @@ function setupNewMono()
 	echo "------------------------------------"
         
         sudo apt-get install mono-complete
+        sudo apt-get install git
         
 	mkdir /tmp/mono-git-src
 	cd /tmp/mono-git-src
