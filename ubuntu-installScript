@@ -265,7 +265,7 @@ function setupJws()
 	  sudo mkdir -pv /tmp/downloads
 	fi
 
-	echo "install jexus5.3.1"
+	echo "install jexus"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
