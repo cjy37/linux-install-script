@@ -67,14 +67,14 @@ function setupJws()
 	  echo  "/usr/local/webserver/jexus/jws start" >> /etc/rc.d/rc.local
 	fi
 
-	echo "install jexus5.3.1"
+	echo "install jexus5.5.1"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://www.linuxdot.net/down/jexus-5.3.1.tar.gz
-	if [ -f jexus-5.3.1.tar.gz ]; then
-	  tar -xf jexus-5.3.1.tar.gz
-	  cd jexus-5.3.1
+	wget -c http://linuxdot.net/down/jexus-5.5.1.tar.gz
+	if [ -f jexus-5.5.1.tar.gz ]; then
+	  tar -xf jexus-5.5.1.tar.gz
+	  cd jexus-5.5.1
 	  sudo ./install /usr/local/webserver/jexus
 	  sudo /usr/local/webserver/jexus/jws start
 	fi
