@@ -102,7 +102,7 @@ function setupNewMono()
 	cd /tmp/mono-git-src
 	git clone git://github.com/mono/mono.git
 	cd mono/
-	sudo ./autogen.sh --prefix=/usr --enable-llvm --enable-loadedllvm
+	sudo ./autogen.sh --prefix=/usr
 	sudo make
 	sudo make install
 	sudo ldconfig
@@ -135,7 +135,7 @@ function setupMono()
 	if [ -f mono-3.2.8.tar.gz ]; then
 	  tar -vxf mono-3.2.8.tar.gz
 	  cd mono-mono-3.2.8
-	  sudo ./autogen.sh --prefix=/usr --enable-llvm --enable-loadedllvm
+	  sudo ./autogen.sh --prefix=/usr
 	  sudo make
 	  sudo make install
 	  sudo ldconfig
