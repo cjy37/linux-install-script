@@ -134,7 +134,7 @@ function setupMono()
 	wget -c https://github.com/mono/mono/archive/mono-3.2.8.tar.gz
 	if [ -f mono-3.2.8.tar.gz ]; then
 	  tar -vxf mono-3.2.8.tar.gz
-	  cd mono-3.2.8
+	  cd mono-mono-3.2.8
 	  sudo ./autogen.sh --prefix=/usr --enable-llvm --enable-loadedllvm
 	  sudo make
 	  sudo make install
