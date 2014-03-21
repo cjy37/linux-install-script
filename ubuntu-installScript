@@ -17,15 +17,16 @@ function showMenu()
 	echo "|      b. Install Web Server   [d,e,g,i,j]                   |"
 	echo "|      c. Install MySQL    [d,h,j]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
-	echo "|      e. Install mono                                       |"
-	echo "|      f. Install Libgdiplus                                 |"
-	echo "|      g. Install jexus v5                                   |"
-	echo "|      h. Install mysql v5.5                                 |"
-	echo "|      i. Install haproxy                                    |"
+	echo "|      e. Install Mono for Last releases version             |"
+	echo "|      f. Install Mono for Last version use git              |"
+	echo "|      g. Install Jexus v5 (Mono Web Server)                 |"
+	echo "|      h. Install Mysql v5.5 (MariaDB)                       |"
+	echo "|      i. Install Haproxy                                    |"
 	echo "|      j. Install Redis                                      |"
 	echo "|      k. Install Node.js                                    |"
 	echo "|      l. Install MQTT Server                                |"
 	echo "|      m. Install MongoDB                                    |"
+	echo "|      n. Install Nginx                                      |"
 	echo "|      x. Exit                                               |"
 	echo "--------------------------------------------------------------"
 	echo
@@ -54,7 +55,9 @@ function setupLibs()
 	sudo apt-get install -y automake autoconf
 	sudo apt-get install -y bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
 	sudo apt-get install -y libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
-
+	sudo apt-get install -y mono-complete
+        sudo apt-get install -y git
+        setupLibgdiplus
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/conf.zip
 	if [ -f conf.zip ]; then
@@ -92,17 +95,14 @@ function setupNewMono()
 	  mkdir -pv /tmp/downloads
 	fi
 	
-	echo "install mono"
+	echo "Install mono for Last version use git"
 	echo "------------------------------------"
-        
-        sudo apt-get install mono-complete
-        sudo apt-get install git
-        
+
 	mkdir /tmp/mono-git-src
 	cd /tmp/mono-git-src
 	git clone git://github.com/mono/mono.git
 	cd mono/
-	sudo ./autogen.sh --prefix=/usr
+	sudo ./autogen.sh --prefix=/usr --enable-llvm --enable-loadedllvm
 	sudo make
 	sudo make install
 	sudo ldconfig
@@ -126,19 +126,18 @@ function setupMono()
 	  mkdir -pv /tmp/downloads
 	fi
 	
-	echo "install mono"
+	echo "Install mono for Last releases version"
 	echo "------------------------------------"
-        
-        sudo apt-get install mono-complete
-	
+
 	cd /tmp/downloads
 	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
-	wget -c http://download.mono-project.com/sources/mono/mono-3.2.1.tar.bz2
-	if [ -f mono-3.2.1.tar.bz2 ]; then
-	  tar -jvxf mono-3.2.1.tar.bz2
-	  cd mono-3.2.1
-	  ./configure --prefix=/usr
-	  sudo make && sudo make install
+	wget -c https://github.com/mono/mono/archive/mono-3.2.8.tar.gz
+	if [ -f mono-3.2.8.tar.gz ]; then
+	  tar -vxf mono-3.2.8.tar.gz
+	  cd mono-3.2.8
+	  sudo ./autogen.sh --prefix=/usr --enable-llvm --enable-loadedllvm
+	  sudo make
+	  sudo make install
 	  sudo ldconfig
 	fi
 
@@ -178,7 +177,7 @@ function setupHaproxy()
 	echo "------------------------------------"
 
 	sudo apt-get install -y haproxy
-	# sudo echo "ENABLED=1" > /etc/default/haproxy
+	sudo echo "ENABLED=1" > /etc/default/haproxy
 	sudo service haproxy start
 	
 	return 0
@@ -255,7 +254,14 @@ function setupNodeJS()
 	return 0
 }
 
-# Install ASP.NET WEB Server
+function setupNginx()
+{
+	sudo apt-add-repository ppa:nginx/development
+	sudo apt-get update
+	sudo apt-get install nginx
+}
+
+
 function setupJws()
 {
 	if [ ! -d /wwwroot/htdocs/www ]; then
@@ -296,8 +302,7 @@ function selectCmd()
 		echo "Installing ALL... [d,e,g,h,i,j]"
 		echo "------------------------------------"
 		setupLibs
-		setupLibgdiplus
-		setupNewMono
+		setupMono
 		setupJws
 		setupMysql
 		setupHaproxy
@@ -306,8 +311,7 @@ function selectCmd()
 		echo "Installing Web Server ... [d,e,g,i,j]"
 		echo "------------------------------------"
 		setupLibs
-		setupLibgdiplus
-		setupNewMono
+		setupMono
 		setupJws
 		setupHaproxy
 		setupRedis
@@ -321,10 +325,10 @@ function selectCmd()
 		setupLibs
 		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "e" ]; then
-		setupNewMono
+		setupMono
 		read -n 1 -p "Press <Enter> to continue..."
-    elif [ "$M" = "f" ]; then
-		setupLibgdiplus
+        elif [ "$M" = "f" ]; then
+		setupNewMono
 		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
 		setupJws
@@ -338,17 +342,17 @@ function selectCmd()
 	elif [ "$M" = "j" ]; then
 		setupRedis
 		read -n 1 -p "Press <Enter> to continue..."
-	#setupNodeJS
 	elif [ "$M" = "k" ]; then
 		setupNodeJS
 		read -n 1 -p "Press <Enter> to continue..."
-	#setupMQTTServer
 	elif [ "$M" = "l" ]; then
 		setupMQTTServer
 		read -n 1 -p "Press <Enter> to continue..."
-	#setupMongoDB
 	elif [ "$M" = "m" ]; then
 		setupMongoDB
+		read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "n" ]; then
+		setupNginx
 		read -n 1 -p "Press <Enter> to continue..."
 	else
 		echo "Select Error!"
