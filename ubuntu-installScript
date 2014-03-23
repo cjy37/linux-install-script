@@ -72,16 +72,13 @@ function setupLibgdiplus()
 	echo "install libgdiplus"
 	echo "------------------------------------"
 	cd /tmp/downloads
-	wget -c http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.9.tar.bz2
 	
-	if [ -f libgdiplus-2.10.9.tar.bz2 ]; then
-		tar -jxvf libgdiplus-2.10.9.tar.bz2
-		cd libgdiplus-2.10.9
-		sudo ./configure --prefix=/usr
-		sudo make && sudo make install
+	wget -c http://flex-ui-libs.googlecode.com/files/libgdiplus-2.10.tar.bz2
+	if [ -f libgdiplus-2.10.tar.bz2 ]; then
+		tar -jxvf libgdiplus-2.10.tar.bz2
+		cd libgdiplus-2.10
+		sudo ./configure --prefix=/usr && sudo make && sudo make install && sudo ldconfig && sudo ldconfig -p |grep libgdiplus
 	fi
-	sudo ldconfig
-	sudo ldconfig -p |grep libgdiplus
 
 	return 0
 }
@@ -105,10 +102,7 @@ function setupNewMono()
 	sudo rm -Rf external/Lucene.Net/
 	sudo git submodule init
 	sudo git submodule update
-	sudo ./autogen.sh --prefix=/usr
-	sudo make
-	sudo make install
-	sudo ldconfig
+	sudo ./autogen.sh --prefix=/usr && sudo make && sudo make install && sudo ldconfig
 	
 	cd /tmp/downloads
 	if [ -f aspx-info.tar.gz ]; then
@@ -138,10 +132,7 @@ function setupMono()
 	if [ -f mono-3.2.8.tar.bz2 ]; then
 	  tar -vxf mono-3.2.8.tar.bz2
 	  cd mono-3.2.8
-	  sudo ./autogen.sh --prefix=/usr
-	  sudo make
-	  sudo make install
-	  sudo ldconfig
+	  sudo ./configure --prefix=/usr && sudo make && sudo make install && sudo ldconfig
 	fi
 
 	cd /tmp/downloads
