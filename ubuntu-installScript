@@ -244,7 +244,8 @@ function setupNodeJS()
 	sudo npm install websocket -g
 	sudo npm install websocket-server -g
 	sudo npm install socket.io -g
-
+	sudo npm install log4js -g
+	
 	return 0
 }
 
