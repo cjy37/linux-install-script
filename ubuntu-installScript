@@ -376,5 +376,4 @@ function selectCmd()
 	return 0
 }
 cd /tmp
-sudo su
 selectCmd
