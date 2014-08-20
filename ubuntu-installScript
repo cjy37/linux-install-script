@@ -55,8 +55,8 @@ function setupLibs()
 	sudo apt-get install -y automake autoconf
 	sudo apt-get install -y bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
 	sudo apt-get install -y libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
-	sudo apt-get install -y mono-complete
-    sudo apt-get install -y git
+	#sudo apt-get install -y mono-complete
+    #sudo apt-get install -y git
     #setupLibgdiplus
 	cd /tmp/downloads
 	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/conf.zip
@@ -79,7 +79,11 @@ function setupNewMono()
 	echo "Install mono v3.6+"
 	echo "------------------------------------"
 
-	sudo apt-get -f remove libmono* mono-jay && sudo apt-get autoremove && sudo apt-get update && sudo apt-get install -y mono-complete
+	sudo apt-get -f remove -y libmono* mono-jay
+	sudo apt-get autoremove
+	sudo rm /etc/apt/sources.list.d/mono-xamarin.list
+	sudo apt-get update
+	sudo apt-get install -y mono-complete
 
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
