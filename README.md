@@ -14,11 +14,8 @@ cd linux-asp.net-installScript-master/
 
 ### 1.1 Ubuntu:
 ```
-sudo apt-get install unzip
 cd /tmp
-wget https://github.com/cjy37/linux-asp.net-installScript/archive/master.zip
-unzip master
-cd linux-asp.net-installScript-master/
+wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/ubuntu-installScript
 chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 ```
