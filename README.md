@@ -23,20 +23,23 @@ chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 ```
 Function Menu:                                                         
-a. Install Web Server + MySQL [d,e,g,h,i,j]
-b. Install Web Server   [d,e,g,i,j]        
-c. Install MySQL    [d,h,j]                
-d. Install Libs     [Public Libs]          
-e. Install mono                            
-f. Install Libgdiplus                      
-g. Install jexus v5                        
-h. Install mysql v5.5                      
-i. Install haproxy                         
-j. Install Redis                           
-k. Install Node.js                         
-l. Install MQTT Server                     
-m. Install MongoDB                         
-x. Exit                                    
+```
+a. Install Web Server + MySQL [d,e,g,h,i,j]  
+b. Install Web Server   [d,e,g,i,j]          
+c. Install MySQL    [d,h,j]                  
+d. Install Libs     [Public Libs]            
+e. Install Mono (Last releases version)      
+f. *Update Jexus v5.5.3 (Mono Web Server)    
+g. Install Jexus v5.5.3 (Mono Web Server)    
+h. Install Mysql v5.5 (MariaDB)              
+i. Install Haproxy                           
+j. Install Redis                             
+k. Install Node.js                           
+l. Install MQTT Server                       
+m. Install MongoDB                           
+n. Install Nginx                             
+x. Exit
+```
 
 
 
