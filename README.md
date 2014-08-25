@@ -1,3 +1,6 @@
+1. [HOME](https://github.com/cjy37/linux-asp.net-installScript/wiki)
+2. [NEWS](https://github.com/cjy37/linux-asp.net-installScript/wiki/NEWS)
+
 linux-asp.net-installScript
 ===========================
 
