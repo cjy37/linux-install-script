@@ -80,8 +80,8 @@ function setupNewMono()
 	echo "------------------------------------"
 
 	sudo apt-get -f remove -y libmono* mono-jay
-	sudo apt-get autoremove
-	sudo rm /etc/apt/sources.list.d/mono-xamarin.list
+	sudo apt-get autoremove -y
+	sudo rm -rf /etc/apt/sources.list.d/mono-xamarin.list
 	sudo apt-get update
 	sudo apt-get install -y mono-complete
 
@@ -92,9 +92,9 @@ function setupNewMono()
 	sudo apt-get update
 	sudo apt-get install -y mono-complete
 	
-	echo "Web Root Path: /wwwroot/htdocs/www/"
-	echo "If you need change it. Please vim the nginx/Apache/Jexus config file"
-
+	echo "Install mono completed. info:"
+	mono -V
+	
 	return 0
 }
 
@@ -260,7 +260,7 @@ function updateJws()
 	  tar -xf jexus-5.5.3.tar.gz
 	  cd jexus-5.5.3
 	  sudo /usr/jexus/jws stop
-      sudo ./upgrade
+          sudo ./upgrade
 	  sudo /usr/jexus/jws start
 	  echo "Jexus upgrade to path: /usr/jexus/"
 	  echo "Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
@@ -288,9 +288,44 @@ function setupJws()
 	  cd jexus-5.5.3
 	  sudo ./install
 	  sudo chmod +x /usr/jexus/*
+
+	  echo "######################
+# Web Site: Default 
+########################################
+
+port=80
+root=/ /wwwroot/htdocs/www
+hosts=*    #OR your.com,*.your.com
+
+# addr=0.0.0.0
+# CheckQuery=false
+# NoLog=true
+# NoFile=/index.aspx
+# Keep_Alive=false
+# UseGZIP=true
+# UseHttps=true
+# DenyFrom=192.168.0.233, 192.168.1.*, 192.168.2.0/24
+# AllowFrom=192.168.*.*
+# DenyDirs=~/cgi, ~/upfiles
+# indexes=myindex.aspx
+# rewrite=^/.+?\.(asp|php|cgi|pl|sh)$ /index.aspx
+
+# reproxy=/bbs/ http://192.168.1.112/bbs/
+
+# Jexus php fastcgi address is '/var/run/jexus/phpsvr'
+#######################################################
+# fastcgi.add=php|socket:/var/run/jexus/phpsvr
+
+# php-fpm listen address is '127.0.0.1:9000'
+############################################
+# fastcgi.add=php|tcp:127.0.0.1:9000
+" > /usr/jexus/siteconf/default
+
+	  echo "Jexus listening port: 80"
 	  sudo /usr/jexus/jws start
 	  echo "Jexus install to path: /usr/jexus/"
 	  echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+	  
 	fi
 	
 	cd /tmp/downloads
@@ -299,6 +334,8 @@ function setupJws()
 	  tar xvf aspx-info.tar.gz
 	  cd aspx-info
 	  sudo cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
+	  echo "Web Root Path: /wwwroot/htdocs/www/"
+	  echo "If you need change it. Please vim the Jexus config file(/usr/jexus/siteconf/*)"
 	fi
 	
 	return 0
