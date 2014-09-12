@@ -27,6 +27,7 @@ function showMenu()
 	echo "|      l. Install MQTT Server                                |"
 	echo "|      m. Install MongoDB                                    |"
 	echo "|      n. Install Nginx                                      |"
+	echo "|      o. *Update Mono (After v3.6.0)                        |"
 	echo "|      x. Exit                                               |"
 	echo "--------------------------------------------------------------"
 	echo
@@ -56,8 +57,8 @@ function setupLibs()
 	sudo apt-get install -y bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
 	sudo apt-get install -y libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
 	#sudo apt-get install -y mono-complete
-    #sudo apt-get install -y git
-    #setupLibgdiplus
+        #sudo apt-get install -y git
+        #setupLibgdiplus
 	cd /tmp/downloads
 	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/conf.zip
 	if [ -f conf.zip ]; then
@@ -65,6 +66,16 @@ function setupLibs()
 	fi
 
 	return 0
+}
+
+function updateMono()
+{
+	echo "Update mono v3.8+"
+	cd /tmp
+	wget http://download.mono-project.com/repo/xamarin.gpg
+	apt-key add xamarin.gpg
+	echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list
+	sudo apt-get install -y mono-complete
 }
 
 function setupNewMono()
@@ -382,7 +393,7 @@ function selectCmd()
 	elif [ "$M" = "e" ]; then
 		setupNewMono
 		read -n 1 -p "Press <Enter> to continue..."
-    elif [ "$M" = "f" ]; then
+        elif [ "$M" = "f" ]; then
 		updateJws
 		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
@@ -408,6 +419,9 @@ function selectCmd()
 		read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "n" ]; then
 		setupNginx
+		read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "o" ]; then
+		updateMono
 		read -n 1 -p "Press <Enter> to continue..."
 	else
 		echo "Select Error!"
