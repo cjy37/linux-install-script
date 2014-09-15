@@ -341,7 +341,7 @@ hosts=*    #OR your.com,*.your.com
 	fi
 	
 	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/aspx-info.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/blob/master/aspx-info.tar.gz?raw=true
 	if [ -f aspx-info.tar.gz ]; then
 	  tar xvf aspx-info.tar.gz
 	  cd aspx-info
