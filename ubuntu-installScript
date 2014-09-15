@@ -242,6 +242,7 @@ function setupNodeJS()
 	sudo npm install websocket-server -g
 	sudo npm install socket.io@0.9 -g
 	sudo npm install log4js -g
+	sudo npm install pm2 -g --unsafe-perm
 	
 	return 0
 }
