@@ -39,7 +39,7 @@ function setupLibs()
 	yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers patch make jpackage-utils build-essential bzip bison pkgconfig glib-devel httpd-devel libX11-devel fontconfig pango-devel ruby ruby-rdoc gtkhtml38-devel wget gettext gcc-g77 automake fiex* libmcrypt* libtool-ltdl-devel* pcre* cmake mhash* libevent libevent-devel gif* libtiff* libjpeg* libpng* libx11* libiconv mcrypt Nginx haproxy
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/conf.zip
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/conf.zip
 	if [ -f conf.zip ]; then
 			unzip -o conf.zip
 	fi
@@ -47,7 +47,7 @@ function setupLibs()
 	echo "install libiconv"
 	echo "------------------------------------"
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/libiconv-1.13.1.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/libiconv-1.13.1.tar.gz
 	if [ -f libiconv-1.13.1.tar.gz ]; then
 	  tar xvf libiconv-1.13.1.tar.gz
 	  cd libiconv-1.13.1
@@ -59,7 +59,7 @@ function setupLibs()
 	echo "install mcrypt"
 	echo "------------------------------------"
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/mcrypt-2.6.8.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/mcrypt-2.6.8.tar.gz
 	if [ -f mcrypt-2.6.8.tar.gz ]; then
 	  tar xvf mcrypt-2.6.8.tar.gz
 	  cd mcrypt-2.6.8
@@ -76,10 +76,10 @@ function setupLibgdiplus()
 	echo "install libgdiplus"
 	echo "------------------------------------"
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/libgdiplus-2.10.tar.bz2
-	if [ -f libgdiplus-2.10.tar.bz2 ]; then
-		tar -jxvf libgdiplus-2.10.tar.bz2
-		cd libgdiplus-2.10
+	wget -c http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.9.tar.bz2
+	if [ -f libgdiplus-2.10.9.tar.bz2 ]; then
+		tar -jxvf libgdiplus-2.10.9.tar.bz2
+		cd libgdiplus-2.10.9
 		./configure --prefix=/usr
 		make && make install
 	fi
@@ -102,7 +102,7 @@ function setupMemcached()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/memcached-1.4.6.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/memcached-1.4.6.tar.gz
 	if [ -f memcached-1.4.6.tar.gz ]; then
 	  tar xvf memcached-1.4.6.tar.gz
 	  cd memcached-1.4.6
@@ -133,14 +133,18 @@ function setupMono()
 	echo "install mono"
 	echo "------------------------------------"
 
+	rpm --import xamarin.gpg
+	yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
+	
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/aspx-info.tar.gz
-	wget -c http://flex-ui-libs.googlecode.com/files/mono-2.10.8.tar.bz2
-	if [ -f mono-2.10.8.tar.bz2 ]; then
-	  tar -jvxf mono-2.10.8.tar.bz2
-	  cd mono-2.10.8
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/aspx-info.tar.gz
+	wget -c https://github.com/mono/mono/archive/mono-3.10.0.tar.gz
+	if [ -f mono-3.10.0.tar.gz ]; then
+	  tar -vxf mono-3.10.0.tar.gz
+	  cd mono-3.10.0
 	  ./configure --prefix=/usr
-	  cp -r -f /tmp/downloads/conf/config.h eglib/config.h
+	  sed -i 's/#define HAVE_LOCALCHARSET_H 1/#define HAVE_LOCALCHARSET_H 0/g' eglib/config.h
+	  #cp -r -f /tmp/downloads/conf/config.h eglib/config.h
 	  make && make install
 	  ldconfig
 	fi
@@ -183,7 +187,7 @@ function setupMysql()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/mysql-5.5.16.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/mysql-5.5.16.tar.gz
 	if [ -f mysql-5.5.16.tar.gz ]; then
 	  tar xvf mysql-5.5.16.tar.gz
 	  cd mysql-5.5.16
@@ -267,7 +271,7 @@ function setupNginx()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/nginx-1.1.1.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/nginx-1.1.1.tar.gz
 	if [ -f nginx-1.1.1.tar.gz ]; then
 	  tar xvf nginx-1.1.1.tar.gz
 	  cd nginx-1.1.1
@@ -306,7 +310,7 @@ function setupXsp()
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/xsp-2.10.2.tar.bz2
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/xsp-2.10.2.tar.bz2
 	if [ -f xsp-2.10.2.tar.bz2 ]; then
 	  tar -jvxf xsp-2.10.2.tar.bz2
 	  cd xsp-2.10.2
@@ -339,7 +343,7 @@ function setupHaproxy()
 	fi
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/haproxy-1.4.22.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/haproxy-1.4.22.tar.gz
 	if [ -f haproxy-1.4.22.tar.gz ]; then
 		tar zxvf haproxy-1.4.22.tar.gz
 		cd haproxy-1.4.22
@@ -357,7 +361,7 @@ function setupRedis()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://flex-ui-libs.googlecode.com/files/redis-2.4.4.tar.gz
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/redis-2.4.4.tar.gz
 	if [ -f redis-2.4.4.tar.gz ]; then
 	  tar zxvf redis-2.4.4.tar.gz
 	  cd redis-2.4.4
@@ -398,10 +402,10 @@ function setupJws()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://linuxdot.net/down/jexus-5.5.1.tar.gz
-	if [ -f jexus-5.5.1.tar.gz ]; then
-	  tar -xf jexus-5.5.1.tar.gz
-	  cd jexus-5.5.1
+	wget -c http://www.linuxdot.net/down/jexus-5.6.3.tar.gz
+	if [ -f jexus-5.6.3.tar.gz ]; then
+	  tar -xf jexus-5.6.3.tar.gz
+	  cd jexus-5.6.3
 	  sudo ./install /usr/local/webserver/jexus
 	  /usr/local/webserver/jexus/jws start
 	fi
@@ -418,46 +422,46 @@ function setupGtkSharp()
 	export PKG_CONFIG_PATH=/opt/gtk/lib/pkgconfig:$PKG_CONFIG_PATH
 	ldconfig
 	#=========================================================
-	wget http://flex-ui-libs.googlecode.com/files/glib-2.13.7.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/glib-2.13.7.tar.bz2
 	tar xvfj  glib-2.13.7.tar.bz2
 	cd glib-2.13.7
 	./configure --prefix=/opt/gtk --with-libiconv=gnu && make && make install
 	ldconfig
 	cd ..
 
-	wget http://flex-ui-libs.googlecode.com/files/atk-1.19.6.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/atk-1.19.6.tar.bz2
 	tar xvfj atk-1.19.6.tar.bz2
 	cd atk-1.19.6
 	./configure --prefix=/opt/gtk && make && make install
 	cd ..
 
-	wget http://flex-ui-libs.googlecode.com/files/pixman-0.22.2.tar.gz
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pixman-0.22.2.tar.gz
 	tar xvfz pixman-0.22.2.tar.gz
 	cd pixman-0.22.2
 	./configure --prefix=/opt/gtk && make && make install
 	cd ..
 
-	wget http://flex-ui-libs.googlecode.com/files/cairo-1.8.10.tar.gz
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/cairo-1.8.10.tar.gz
 	tar xvfz cairo-1.8.10.tar.gz
 	cd cairo-1.8.10
 	./configure --prefix=/opt/gtk && make && make install
 	cd ..
 
-	wget http://flex-ui-libs.googlecode.com/files/pango-1.17.3.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pango-1.17.3.tar.bz2
 	tar xvfj pango-1.17.3.tar.bz2
 	cd pango-1.17.3
 	./configure --prefix=/opt/gtk && make && make install
 	ldconfig
 	cd ..
 
-	wget http://flex-ui-libs.googlecode.com/files/gtk+-2.12.0.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/gtk+-2.12.0.tar.bz2
 	tar xvfj gtk+-2.12.0.tar.bz2
 	cd gtk+-2.12.0
 	./configure --prefix=/opt/gtk --with-x --without-libjasper && make && make install
 	ldconfig
 	cd ..
 
-	wget http://flex-ui-libs.googlecode.com/files/gtk-sharp-2.12.11.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/gtk-sharp-2.12.11.tar.bz2
 	tar xvfj gtk-sharp-2.12.11.tar.bz2
 	cd gtk-sharp-2.12.11
 	./configure --prefix=/usr && make && make install
