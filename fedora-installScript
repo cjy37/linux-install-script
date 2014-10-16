@@ -40,8 +40,10 @@ function setupLibs()
 }
 function setupMono()
 {
-	rpm --import xamarin.gpg
-	yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
+	cd /tmp
+	wget http://download.mono-project.com/repo/xamarin.gpg
+	sudo rpm --import xamarin.gpg
+	sudo yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
 	sudo yum -y install mono-complete mono-basic mono-basic-devel mono-core mono-data mono-devel mono-mvc mono-mvc-devel mono-web mono-web-devel
 	echo "Install mono completed. info:"
 	mono -V
