@@ -35,7 +35,7 @@ function setupLibs()
 	yum -y groupinstall "Development Tools"
 	echo "Install the public Libs"
 	echo "------------------------------------"
-	sudo yum -y install libjpeg libjpeg-devel libpng libpng-devel curl curl-devel wget gif* libtiff* libjpeg* vim 
+	sudo yum -y install libjpeg libjpeg-devel libpng libpng-devel curl curl-devel wget gif* libtiff* libjpeg* 
 	return 0
 }
 function setupMono()
@@ -66,6 +66,12 @@ function setupNginx()
 {
 	echo "install nginx"
 	echo "------------------------------------"
+	sudo echo '[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=0
+enabled=1' > /etc/yum.repos.d/nginx.repo
+
 	sudo yum -y install nginx
 	return 0
 }
