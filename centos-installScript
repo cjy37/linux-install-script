@@ -138,9 +138,9 @@ function setupMono()
 	
 	cd /tmp/downloads
 	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/aspx-info.tar.gz
-	wget -c https://github.com/mono/mono/archive/mono-3.10.0.tar.gz
-	if [ -f mono-3.10.0.tar.gz ]; then
-	  tar -vxf mono-3.10.0.tar.gz
+	wget -c http://download.mono-project.com/sources/mono/mono-3.10.0.tar.bz2
+	if [ -f mono-3.10.0.tar.bz2 ]; then
+	  tar -jvxf mono-3.10.0.tar.bz2
 	  cd mono-3.10.0
 	  ./configure --prefix=/usr
 	  sed -i 's/#define HAVE_LOCALCHARSET_H 1/#define HAVE_LOCALCHARSET_H 0/g' eglib/config.h
