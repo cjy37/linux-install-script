@@ -270,13 +270,7 @@ function setupJws()
 	  sudo chmod +x /usr/jexus/*
 
 	  sudo sed -i 's/root=\/ \/var\/www\/default/root=\/ \/wwwroot\/htdocs\/www/g' /usr/jexus/siteconf/default
-	  
-	  #echo "Jexus listening port: 80"
-	  sudo /usr/jexus/jws start
-	  sudo /usr/jexus/jws -V
-	  echo "Jexus install to path: /usr/jexus/"
-	  echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
-	  
+
 	fi
 	
 	cd /tmp/downloads
@@ -289,6 +283,11 @@ function setupJws()
 	  echo "If you need change it. Please vim the Jexus config file(/usr/jexus/siteconf/*)"
 	fi
 	
+	sudo /usr/jexus/jws start
+	sudo /usr/jexus/jws -V
+	echo "Jexus install to path: /usr/jexus/"
+	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+	  
 	return 0
 }
 

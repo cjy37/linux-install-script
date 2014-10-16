@@ -54,9 +54,12 @@ function setupMysql()
 {
 	echo "install mysql"
 	echo "------------------------------------"
-	sudo yum -y install mariadb mariadb-devel mariadb-libs mariadb-server
+	sudo yum -y install mariadb mariadb-devel mariadb-libs mariadb-server mariadb-client
 	sudo chkconfig --level 2345 mysqld on
 	sudo service mysqld start
+	
+	mysql -V
+	
 	echo "Mysql: Please Ender user(root) password"
 	read -e PWD
 	sudo mysqladmin -uroot password "$PWD"
@@ -66,13 +69,10 @@ function setupNginx()
 {
 	echo "install nginx"
 	echo "------------------------------------"
-	sudo echo '[nginx]
-name=nginx repo
-baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
-gpgcheck=0
-enabled=1' > /etc/yum.repos.d/nginx.repo
-
+	
 	sudo yum -y install nginx
+	nginx -v
+	
 	return 0
 }
 function setupHaproxy()
@@ -114,11 +114,6 @@ function setupJws()
 	  sudo chmod +x /usr/jexus/*
 	  
 	  sudo sed -i 's/root=\/ \/var\/www\/default/root=\/ \/wwwroot\/htdocs\/www/g' /usr/jexus/siteconf/default
-	  #echo "Jexus listening port: 80"
-	  sudo /usr/jexus/jws start
-	  sudo /usr/jexus/jws -V
-	  echo "Jexus install to path: /usr/jexus/"
-	  echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 
 	fi
 		
@@ -132,6 +127,11 @@ function setupJws()
 	  echo "If you need change it. Please vim the Jexus config file(/usr/jexus/siteconf/*)"
 	fi
 	
+	sudo /usr/jexus/jws start
+	sudo /usr/jexus/jws -V
+	echo "Jexus install to path: /usr/jexus/"
+	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+	  
 	return 0
 }
 

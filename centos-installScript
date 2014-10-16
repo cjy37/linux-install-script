@@ -160,7 +160,6 @@ function setupMono()
 	  cd mono-3.10.0
 	  ./configure --prefix=/usr
 	  sed -i 's/#define HAVE_LOCALCHARSET_H 1/#define HAVE_LOCALCHARSET_H 0/g' eglib/config.h
-	  #cp -r -f /tmp/downloads/conf/config.h eglib/config.h
 	  make && make install
 	  ldconfig
 	fi
@@ -172,164 +171,45 @@ function setupMono()
 
 function setupMysql()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
-	if [ ! -d /usr/local/webserver/mysql ]; then
-	  mkdir -pv /usr/local/webserver/mysql
-	  mkdir -pv /usr/local/webserver/mysql/etc
-	  mkdir -pv /usr/local/webserver/mysql/bin
-
-	  echo export PATH=/usr/local/webserver/mysql/bin:$PATH>>/etc/profile
-	  source /etc/profile
-	fi
-	if [ ! -d /wwwroot/mysql ]; then
-	  mkdir -pv /wwwroot/mysql
-
-	  groupadd -g 3306 mysql
-	  useradd -u 3306 -g mysql -M -s /sbin/nologin mysql
-	  chown -R mysql:mysql /wwwroot/mysql/
-	fi
-
-	echo "install mysql"
+	echo "install Mysql"
 	echo "------------------------------------"
+	
+	echo '[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/5.5/centos5-x86
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/mysql-5.5.16.tar.gz
-	if [ -f mysql-5.5.16.tar.gz ]; then
-	  tar xvf mysql-5.5.16.tar.gz
-	  cd mysql-5.5.16
-		cmake . \
-	  -DCMAKE_INSTALL_PREFIX=/usr/local/webserver/mysql/ \
-	  -DMYSQL_DATADIR=/wwwroot/mysql \
-	  -DMYSQL_UNIX_ADDR=/wwwroot/mysql/mysqld.sock \
-	  -DDEFAULT_CHARSET=utf8 \
-	  -DDEFAULT_COLLATION=utf8_general_ci \
-	  -DWITH_EXTRA_CHARSETS:STRING=utf8,gbk \
-	  -DWITH_INNOBASE_STORAGE_ENGINE=1 \
-	  -DWITH_MYISAM_STORAGE_ENGINE=1 \
-	  -DWITH_MEMORY_STORAGE_ENGINE=1 \
-	  -DWITH_PARTITION_STORAGE_ENGINE=1 \
-	  -DWITH_BLACKHOLE_STORAGE_ENGINE=0 \
-	  -DWITH_ARCHIVE_STORAGE_ENGINE=0 \
-	  -DENABLED_LOCAL_INFILE=1 \
-	  -DWITH_READLINE=1 \
-		-DMYSQL_USER=mysql \
-		-DEXTRA_CHARSETS=all \
-	  -DMYSQL_TCP_PORT=3306
-
-		make && make install
-		ldconfig
-
-		# config:
-		cp -r -f /tmp/downloads/conf/my.cnf /etc/my.cnf
-		chmod +x scripts/mysql_install_db
-		scripts/mysql_install_db --user=mysql --basedir=/usr/local/webserver/mysql --datadir=/wwwroot/mysql/
-
-		echo "setup mysql succeed"
-		echo
-		echo "mysql install db"
-		echo
-
-		cp -r -f support-files/mysql.server /etc/init.d/mysqld
-		chmod +x /etc/init.d/mysqld
-		chkconfig --add mysqld
-		chkconfig --level 2345 mysqld on
-		/etc/init.d/mysqld start
-
-		#/usr/local/webserver/mysql/bin/mysql -u root < /tmp/downloads/conf/mysql_config.sql
-		echo "Mysql: Please Ender user(root) password"
-		read -e PWD
-		/usr/local/webserver/mysql/bin/mysqladmin -uroot password "$PWD"
-	fi
-
+	yum -y install MariaDB-server MariaDB-client
+	chkconfig --level 2345 mysqld on
+	service mysqld start
+	
+	mysql -V
+	
+	echo "Mysql: Please Ender user(root) password"
+	read -e PWD
+	mysqladmin -uroot password "$PWD"
 	return 0
 }
 
 function setupNginx()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /wwwroot/htdocs/www ]; then
-	  mkdir -pv /wwwroot/htdocs/www
-	fi
-
-	#/wwwroot/logs
-	if [ ! -d /wwwroot/logs ]; then
-	  mkdir -pv /wwwroot/logs
-	fi
-
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
-	if [ ! -d /usr/local/webserver/nginx ]; then
-
-	  mkdir -pv /usr/local/webserver/nginx
-	fi
 
 	echo "install nginx"
 	echo "------------------------------------"
 
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/nginx-1.1.1.tar.gz
-	if [ -f nginx-1.1.1.tar.gz ]; then
-	  tar xvf nginx-1.1.1.tar.gz
-	  cd nginx-1.1.1
-	  ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module
-	  make && make install
-	  ldconfig
-
-    cp -r -f /tmp/downloads/conf/fastcgi_params /usr/local/webserver/nginx/conf/fastcgi_params
-    cp -r -f /tmp/downloads/conf/nginx.conf /usr/local/webserver/nginx/conf/nginx.conf
-
-		cp -r -f /tmp/downloads/conf/nginx /etc/init.d/nginx
-	  chmod +x /etc/init.d/nginx
-		chkconfig --add nginx
-		chkconfig --level 2345 nginx on
-		/etc/init.d/nginx start
-
-	fi
+	echo '[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=0
+enabled=1' > /etc/yum.repos.d/nginx.repo
+	yum -y install nginx
+	chkconfig --level 2345 nginx on
+	service nginx start
+	nginx -v
+	
 	return 0
 }
-
-#function setupXsp()
-#{
-#	if [ ! -d /usr/local/webserver ]; then
-#	  mkdir -pv /usr/local/webserver
-#	fi
-#	if [ ! -d /wwwroot/htdocs/www ]; then
-#	  mkdir -pv /wwwroot/htdocs/www
-#	fi
-#	if [ ! -d /tmp/downloads ]; then
-#	  mkdir -pv /tmp/downloads
-#	fi
-#
-#	echo "install xsp"
-#	echo "------------------------------------"
-#
-#	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-#
-#	cd /tmp/downloads
-#	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/xsp-2.10.2.tar.bz2
-#	if [ -f xsp-2.10.2.tar.bz2 ]; then
-#	  tar -jvxf xsp-2.10.2.tar.bz2
-#	  cd xsp-2.10.2
-#	  ./configure --prefix=/usr
-#	  make && make install
-#	  ldconfig
-#
-#	  cp -r -f /tmp/downloads/conf/fcgi_mono /etc/init.d/fcgi_mono
-#	  chmod +x /etc/init.d/fcgi_mono
-#		chkconfig --add fcgi_mono
-#		chkconfig --level 2345 fcgi_mono on
-#		/etc/init.d/fcgi_mono start
-#	fi
-#	return 0
-#}
 
 function setupHaproxy()
 {
@@ -412,12 +292,6 @@ function setupJws()
 	  
 	  sed -i 's/root=\/ \/var\/www\/default/root=\/ \/wwwroot\/htdocs\/www/g' /usr/jexus/siteconf/default
 
-	  #echo "Jexus listening port: 80"
-	  /usr/jexus/jws start
-	  /usr/jexus/jws -V
-	  echo "Jexus install to path: /usr/jexus/"
-	  echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
-
 	fi
 	
 	cd /tmp/downloads
@@ -430,6 +304,11 @@ function setupJws()
 	  echo "If you need change it. Please vim the Jexus config file(/usr/jexus/siteconf/*)"
 	fi
 	
+	/usr/jexus/jws start
+	/usr/jexus/jws -V
+	echo "Jexus install to path: /usr/jexus/"
+	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+	  
 	return 0
 }
 
