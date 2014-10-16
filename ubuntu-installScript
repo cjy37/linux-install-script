@@ -164,8 +164,6 @@ function setupMongoDB()
 	sudo apt-get install -y mongodb-10gen=2.4.6
 	echo "mongodb-10gen hold" | sudo dpkg --set-selections
 	sudo service mongodb start
-	#sudo apt-get install -y mongo
-	#sudo apt-get update -y
 }
 
 function setupMQTTServer()
@@ -202,7 +200,7 @@ function setupNodeJS()
 	
 	cd /wwwroot/node_mqtt
 	
-	sudo echo "sudo npm install forever/mqtt/websocket/websocket-server/socket.io to '/wwwroot/node_mqtt'"
+	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
 	
 	sudo npm install forever -g
 	sudo npm install mqtt -g
@@ -271,39 +269,9 @@ function setupJws()
 	  sudo ./install
 	  sudo chmod +x /usr/jexus/*
 
-	  echo "######################
-# Web Site: Default 
-########################################
-
-port=80
-root=/ /wwwroot/htdocs/www
-hosts=*    #OR your.com,*.your.com
-
-# addr=0.0.0.0
-# CheckQuery=false
-# NoLog=true
-# NoFile=/index.aspx
-# Keep_Alive=false
-# UseGZIP=true
-# UseHttps=true
-# DenyFrom=192.168.0.233, 192.168.1.*, 192.168.2.0/24
-# AllowFrom=192.168.*.*
-# DenyDirs=~/cgi, ~/upfiles
-# indexes=myindex.aspx
-# rewrite=^/.+?\.(asp|php|cgi|pl|sh)$ /index.aspx
-
-# reproxy=/bbs/ http://192.168.1.112/bbs/
-
-# Jexus php fastcgi address is '/var/run/jexus/phpsvr'
-#######################################################
-# fastcgi.add=php|socket:/var/run/jexus/phpsvr
-
-# php-fpm listen address is '127.0.0.1:9000'
-############################################
-# fastcgi.add=php|tcp:127.0.0.1:9000
-" > /usr/jexus/siteconf/default
-
-	  echo "Jexus listening port: 80"
+	  sudo sed -i 's/root=\/ \/var\/www\/default/root=\/ \/wwwroot\/htdocs\/www/g' /usr/jexus/siteconf/default
+	  
+	  #echo "Jexus listening port: 80"
 	  sudo /usr/jexus/jws start
 	  sudo /usr/jexus/jws -V
 	  echo "Jexus install to path: /usr/jexus/"

@@ -18,7 +18,7 @@ function showMenu()
 	echo "|      c. Install MySQL    [d,h,l]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
 	echo "|      e. Install mono                                       |"
-	echo "|      f. Install xsp+mono-fastcgi                           |"
+#	echo "|      f. Install xsp+mono-fastcgi                           |"
 	echo "|      g. Install jexus v5                                   |"
 	echo "|      h. Install mysql v5.5                                 |"
 	echo "|      i. Install memcached                                  |"
@@ -52,18 +52,6 @@ function setupLibs()
 	  mkdir -pv /tmp/downloads
 	fi
 
-
-
-	#if [ -f yum.zip ]; then
-	#		unzip -o yum.zip
-	#fi
-
-
-
-	#cp -r -f /tmp/downloads/conf/yum.conf /etc/yum.conf
-	#cp -r -f /tmp/downloads/yum /tmp
-
-	# cd /tmp/downloads/rpm
 	yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers patch make jpackage-utils build-essential bzip bison pkgconfig glib-devel httpd-devel libX11-devel fontconfig pango-devel ruby ruby-rdoc gtkhtml38-devel wget gettext gcc-g77 automake fiex* libmcrypt* libtool-ltdl-devel* pcre* cmake mhash* libevent libevent-devel gif* libtiff* libjpeg* libpng* libx11* libiconv mcrypt Nginx haproxy
 
 	cd /tmp/downloads
@@ -243,16 +231,9 @@ function setupMysql()
 
 		echo "setup mysql succeed"
 		echo
-
 		echo "mysql install db"
 		echo
-		#	  cd /usr/local/webserver/mysql/
-		#		mkdir -pv log run tmp data
-		#		chgrp -R mysql *
-		#		cd /tmp/downloads/mysql-5.5.16
-		#		cp -r -f support-files/my-large.cnf /usr/local/webserver/mysql/etc/my.cnf
 
-		# setup service:
 		cp -r -f support-files/mysql.server /etc/init.d/mysqld
 		chmod +x /etc/init.d/mysqld
 		chkconfig --add mysqld
@@ -315,40 +296,40 @@ function setupNginx()
 	return 0
 }
 
-function setupXsp()
-{
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /wwwroot/htdocs/www ]; then
-	  mkdir -pv /wwwroot/htdocs/www
-	fi
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
-
-	echo "install xsp"
-	echo "------------------------------------"
-
-	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/xsp-2.10.2.tar.bz2
-	if [ -f xsp-2.10.2.tar.bz2 ]; then
-	  tar -jvxf xsp-2.10.2.tar.bz2
-	  cd xsp-2.10.2
-	  ./configure --prefix=/usr
-	  make && make install
-	  ldconfig
-
-	  cp -r -f /tmp/downloads/conf/fcgi_mono /etc/init.d/fcgi_mono
-	  chmod +x /etc/init.d/fcgi_mono
-		chkconfig --add fcgi_mono
-		chkconfig --level 2345 fcgi_mono on
-		/etc/init.d/fcgi_mono start
-	fi
-	return 0
-}
+#function setupXsp()
+#{
+#	if [ ! -d /usr/local/webserver ]; then
+#	  mkdir -pv /usr/local/webserver
+#	fi
+#	if [ ! -d /wwwroot/htdocs/www ]; then
+#	  mkdir -pv /wwwroot/htdocs/www
+#	fi
+#	if [ ! -d /tmp/downloads ]; then
+#	  mkdir -pv /tmp/downloads
+#	fi
+#
+#	echo "install xsp"
+#	echo "------------------------------------"
+#
+#	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+#
+#	cd /tmp/downloads
+#	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/xsp-2.10.2.tar.bz2
+#	if [ -f xsp-2.10.2.tar.bz2 ]; then
+#	  tar -jvxf xsp-2.10.2.tar.bz2
+#	  cd xsp-2.10.2
+#	  ./configure --prefix=/usr
+#	  make && make install
+#	  ldconfig
+#
+#	  cp -r -f /tmp/downloads/conf/fcgi_mono /etc/init.d/fcgi_mono
+#	  chmod +x /etc/init.d/fcgi_mono
+#		chkconfig --add fcgi_mono
+#		chkconfig --level 2345 fcgi_mono on
+#		/etc/init.d/fcgi_mono start
+#	fi
+#	return 0
+#}
 
 function setupHaproxy()
 {
@@ -429,39 +410,9 @@ function setupJws()
 	  ./install
 	  chmod +x /usr/jexus/*
 	  
-	  echo "######################
-# Web Site: Default 
-########################################
+	  sed -i 's/root=\/ \/var\/www\/default/root=\/ \/wwwroot\/htdocs\/www/g' /usr/jexus/siteconf/default
 
-port=80
-root=/ /wwwroot/htdocs/www
-hosts=*    #OR your.com,*.your.com
-
-# addr=0.0.0.0
-# CheckQuery=false
-# NoLog=true
-# NoFile=/index.aspx
-# Keep_Alive=false
-# UseGZIP=true
-# UseHttps=true
-# DenyFrom=192.168.0.233, 192.168.1.*, 192.168.2.0/24
-# AllowFrom=192.168.*.*
-# DenyDirs=~/cgi, ~/upfiles
-# indexes=myindex.aspx
-# rewrite=^/.+?\.(asp|php|cgi|pl|sh)$ /index.aspx
-
-# reproxy=/bbs/ http://192.168.1.112/bbs/
-
-# Jexus php fastcgi address is '/var/run/jexus/phpsvr'
-#######################################################
-# fastcgi.add=php|socket:/var/run/jexus/phpsvr
-
-# php-fpm listen address is '127.0.0.1:9000'
-############################################
-# fastcgi.add=php|tcp:127.0.0.1:9000
-" > /usr/jexus/siteconf/default
-
-	  echo "Jexus listening port: 80"
+	  #echo "Jexus listening port: 80"
 	  /usr/jexus/jws start
 	  /usr/jexus/jws -V
 	  echo "Jexus install to path: /usr/jexus/"
@@ -621,9 +572,9 @@ function selectCmd()
      read -n 1 -p "Press <Enter> to continue..."
 		 setupMono
      read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "f" ]; then
-		 setupXsp
-     read -n 1 -p "Press <Enter> to continue..."
+	#elif [ "$M" = "f" ]; then
+	#	 setupXsp
+    # read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
 		 setupJws
      read -n 1 -p "Press <Enter> to continue..."
