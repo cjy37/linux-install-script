@@ -10,18 +10,10 @@ MONO asp.net mysql redis haproxy install Script
 
 ===========================
 
-### 1. Download and unzip:
-```
-cd /tmp
-wget https://github.com/cjy37/linux-asp.net-installScript/archive/master.zip
-unzip master
-cd linux-asp.net-installScript-master/
-```
-
-
 ### 1.1 Ubuntu:
 ```
 cd /tmp
+rm ubuntu-installScript
 wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/ubuntu-installScript
 chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
@@ -32,6 +24,9 @@ Function Menu:
 
 ### 1.2 CentOS: 
 ```
+cd /tmp
+rm centos-installScript
+wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/centos-installScript
 chmod +x centos-installScript
 ./centos-installScript
 ```
@@ -39,6 +34,9 @@ chmod +x centos-installScript
 
 ### 1.3 Fedora: 
 ```
+cd /tmp
+rm fedora-installScript
+wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/fedora-installScript
 chmod +x fedora-installScript
 ./fedora-installScript
 ```
