@@ -56,9 +56,7 @@ function setupLibs()
 	sudo apt-get install -y automake autoconf
 	sudo apt-get install -y bison gettext libtool libglib2.0-dev libfreetype6-dev libfontconfig-dev
 	sudo apt-get install -y libgif-dev libtiff4-dev libpng12-dev libexif-dev libx11-dev libxft-dev libjpeg-dev
-	#sudo apt-get install -y mono-complete
-        #sudo apt-get install -y git
-        #setupLibgdiplus
+
 	cd /tmp/downloads
 	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/conf.zip
 	if [ -f conf.zip ]; then
@@ -110,36 +108,6 @@ function setupNewMono()
 	return 0
 }
 
-#function setupMono()
-#{
-#	if [ ! -d /wwwroot/htdocs/www ]; then
-#	  mkdir -pv /wwwroot/htdocs/www
-#	fi
-#	if [ ! -d /tmp/downloads ]; then
-#	  mkdir -pv /tmp/downloads
-#	fi
-#	
-#	echo "Install mono for Last releases version"
-#	echo "------------------------------------"
-#
-#	cd /tmp/downloads
-#	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/aspx-info.tar.gz
-#	wget -c http://download.mono-project.com/sources/mono/mono-3.4.0.tar.bz2
-#	if [ -f mono-3.4.0.tar.bz2 ]; then
-#	  tar -vxf mono-3.4.0.tar.bz2
-#	  cd mono-3.4.0
-#	  sudo ./configure --prefix=/usr && sudo make && sudo make install && sudo ldconfig
-#	fi
-#
-#	cd /tmp/downloads
-#	if [ -f aspx-info.tar.gz ]; then
-#	  tar xvf aspx-info.tar.gz
-#	  cd aspx-info
-#	  sudo cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
-#	fi
-#
-#  return 0
-#}
 
 function setupMysql()
 {
@@ -264,17 +232,18 @@ function updateJws()
 	  sudo mkdir -pv /tmp/downloads
 	fi
 
-	echo "upgrade jexus v5.5.3"
+	echo "upgrade jexus"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://img.bmos.cn/dowload/jexus-5.5.3.tar.gz
-	if [ -f jexus-5.5.3.tar.gz ]; then
-	  tar -xf jexus-5.5.3.tar.gz
-	  cd jexus-5.5.3
+	wget -c http://www.linuxdot.net/down/jexus-5.6.3.tar.gz
+	if [ -f jexus-5.6.3.tar.gz ]; then
+	  tar -xf jexus-5.6.3.tar.gz
+	  cd jexus-5.6.3
 	  sudo /usr/jexus/jws stop
-          sudo ./upgrade
+      sudo ./upgrade
 	  sudo /usr/jexus/jws start
+	  sudo /usr/jexus/jws -V
 	  echo "Jexus upgrade to path: /usr/jexus/"
 	  echo "Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	fi
@@ -291,14 +260,14 @@ function setupJws()
 	  sudo mkdir -pv /tmp/downloads
 	fi
 
-	echo "install jexus v5.5.3"
+	echo "install jexus"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://img.bmos.cn/dowload/jexus-5.5.3.tar.gz
-	if [ -f jexus-5.5.3.tar.gz ]; then
-	  tar -xf jexus-5.5.3.tar.gz
-	  cd jexus-5.5.3
+	wget -c http://www.linuxdot.net/down/jexus-5.6.3.tar.gz
+	if [ -f jexus-5.6.3.tar.gz ]; then
+	  tar -xf jexus-5.6.3.tar.gz
+	  cd jexus-5.6.3
 	  sudo ./install
 	  sudo chmod +x /usr/jexus/*
 
@@ -336,6 +305,7 @@ hosts=*    #OR your.com,*.your.com
 
 	  echo "Jexus listening port: 80"
 	  sudo /usr/jexus/jws start
+	  sudo /usr/jexus/jws -V
 	  echo "Jexus install to path: /usr/jexus/"
 	  echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  

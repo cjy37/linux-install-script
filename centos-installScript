@@ -5,6 +5,34 @@
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
 
+function showMenu()
+{
+	clear
+	echo
+	echo "--------------------------------------------------------------"
+	echo "|      CentOS Install Helper                                 |"
+	echo "|      copyright https://github.com/cjy37                    |"
+	echo "--------------------------------------------------------------"
+	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"
+	echo "|      b. Install Web Server   [d,e,g,k,l]                   |"
+	echo "|      c. Install MySQL    [d,h,l]                           |"
+	echo "|      d. Install Libs     [Public Libs]                     |"
+	echo "|      e. Install mono                                       |"
+	echo "|      f. Install xsp+mono-fastcgi                           |"
+	echo "|      g. Install jexus v5                                   |"
+	echo "|      h. Install mysql v5.5                                 |"
+	echo "|      i. Install memcached                                  |"
+	echo "|      j. Install nginx                                      |"
+	echo "|      k. Install haproxy                                    |"
+	echo "|      l. Install Redis                                      |"
+	echo "|      m. Install CutyCapt                                   |"
+	echo "|      n. Install GtkSharp                                   |"
+	echo "|      x. Exit                                               |"
+	echo "-------------------------------------------------------------"
+	echo
+	return 0
+}
+
 function setupLibs()
 {
 	yum -y update
@@ -129,8 +157,8 @@ function setupMono()
 	if [ ! -d /tmp/downloads ]; then
 	  mkdir -pv /tmp/downloads
 	fi
-
-	echo "install mono"
+	
+	echo "Install mono v3.6+"
 	echo "------------------------------------"
 
 	rpm --import xamarin.gpg
@@ -148,13 +176,8 @@ function setupMono()
 	  make && make install
 	  ldconfig
 	fi
-
-	cd /tmp/downloads
-	if [ -f aspx-info.tar.gz ]; then
-	  tar xvf aspx-info.tar.gz
-	  cd aspx-info
-	  cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
-	fi
+	echo "Install mono completed. info:"
+	mono -V
 
   return 0
 }
@@ -384,21 +407,18 @@ function setupRedis()
 
 function setupJws()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
 	if [ ! -d /wwwroot/htdocs/www ]; then
 	  mkdir -pv /wwwroot/htdocs/www
 	fi
 	if [ ! -d /tmp/downloads ]; then
 	  mkdir -pv /tmp/downloads
 	fi
-	if [ ! -d /usr/local/webserver/jexus ]; then
-	  mkdir -pv /usr/local/webserver/jexus
-	  echo  "/usr/local/webserver/jexus/jws start" >> /etc/rc.local
+	if [ ! -d /usr/jexus ]; then
+	  mkdir -pv /usr/jexus
+	  echo  "/usr/jexus/jws start" >> /etc/rc.local
 	fi
 
-	echo "install jexus5.3.1"
+	echo "install jexus"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
@@ -406,9 +426,59 @@ function setupJws()
 	if [ -f jexus-5.6.3.tar.gz ]; then
 	  tar -xf jexus-5.6.3.tar.gz
 	  cd jexus-5.6.3
-	  sudo ./install /usr/local/webserver/jexus
-	  /usr/local/webserver/jexus/jws start
+	  ./install
+	  chmod +x /usr/jexus/*
+	  
+	  echo "######################
+# Web Site: Default 
+########################################
+
+port=80
+root=/ /wwwroot/htdocs/www
+hosts=*    #OR your.com,*.your.com
+
+# addr=0.0.0.0
+# CheckQuery=false
+# NoLog=true
+# NoFile=/index.aspx
+# Keep_Alive=false
+# UseGZIP=true
+# UseHttps=true
+# DenyFrom=192.168.0.233, 192.168.1.*, 192.168.2.0/24
+# AllowFrom=192.168.*.*
+# DenyDirs=~/cgi, ~/upfiles
+# indexes=myindex.aspx
+# rewrite=^/.+?\.(asp|php|cgi|pl|sh)$ /index.aspx
+
+# reproxy=/bbs/ http://192.168.1.112/bbs/
+
+# Jexus php fastcgi address is '/var/run/jexus/phpsvr'
+#######################################################
+# fastcgi.add=php|socket:/var/run/jexus/phpsvr
+
+# php-fpm listen address is '127.0.0.1:9000'
+############################################
+# fastcgi.add=php|tcp:127.0.0.1:9000
+" > /usr/jexus/siteconf/default
+
+	  echo "Jexus listening port: 80"
+	  /usr/jexus/jws start
+	  /usr/jexus/jws -V
+	  echo "Jexus install to path: /usr/jexus/"
+	  echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+
 	fi
+	
+	cd /tmp/downloads
+	wget -c https://github.com/cjy37/linux-asp.net-installScript/blob/master/aspx-info.tar.gz?raw=true
+	if [ -f aspx-info.tar.gz ]; then
+	  tar xvf aspx-info.tar.gz
+	  cd aspx-info
+	  cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
+	  echo "Web Root Path: /wwwroot/htdocs/www/"
+	  echo "If you need change it. Please vim the Jexus config file(/usr/jexus/siteconf/*)"
+	fi
+	
 	return 0
 }
 
@@ -506,34 +576,6 @@ function setupCutyCapt()
 	return 0
 }
 
-function showMenu()
-{
-	clear
-	echo
-	echo "--------------------------------------------------------------"
-	echo "|      CentOS Install Helper                                 |"
-	echo "|      copyright https://github.com/cjy37                    |"
-	echo "--------------------------------------------------------------"
-	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"
-	echo "|      b. Install Web Server   [d,e,g,k,l]                   |"
-	echo "|      c. Install MySQL    [d,h,l]                           |"
-	echo "|      d. Install Libs     [Public Libs]                     |"
-	echo "|      e. Install mono                                       |"
-	echo "|      f. Install xsp+mono-fastcgi                           |"
-	echo "|      g. Install jexus v5                                   |"
-	echo "|      h. Install mysql v5.5                                 |"
-	echo "|      i. Install memcached                                  |"
-	echo "|      j. Install nginx                                      |"
-	echo "|      k. Install haproxy                                    |"
-	echo "|      l. Install Redis                                      |"
-	echo "|      m. Install CutyCapt                                   |"
-	echo "|      n. Install GtkSharp                                   |"
-	echo "|      x. Exit                                               |"
-	echo "-------------------------------------------------------------"
-	echo
-	return 0
-}
-
 function selectCmd()
 {
 	alias cp='cp'
@@ -614,11 +656,5 @@ function selectCmd()
 	selectCmd
 	return 0
 }
-
-
 cd /tmp
 selectCmd
-
-
-
-
