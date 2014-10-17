@@ -38,7 +38,19 @@ function setupNodejs()
 {
 	yum -y install nodejs
 	echo "Install nodejs completed. info:"
-	nodejs -v
+	node -v
+		
+	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
+	
+	sudo npm install forever -g
+	sudo npm install mqtt -g
+	sudo npm install websocket -g
+	sudo npm install websocket-server -g
+	sudo npm install socket.io@0.9 -g
+	sudo npm install log4js -g
+	sudo npm install pm2 -g --unsafe-perm
+	
+	return 0
 }
 
 function setupMongodb()
@@ -46,6 +58,8 @@ function setupMongodb()
 	yum -y install mongodb mongodb-server
 	echo "Install mongodb completed. info:"
 	mongod --version
+	
+	return 0
 }
 
 function setupOs7Epel()
@@ -54,6 +68,8 @@ function setupOs7Epel()
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
 	yum -y install yum-priorities
+	
+	return 0
 }
 
 function setupOs6Epel()
@@ -62,6 +78,8 @@ function setupOs6Epel()
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 	yum -y install yum-priorities
+	
+	return 0
 }
 
 function setupOs5Epel()
@@ -70,6 +88,8 @@ function setupOs5Epel()
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-5
 	yum -y install yum-priorities
+	
+	return 0
 }
 
 function setupLibs()

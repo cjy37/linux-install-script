@@ -38,6 +38,8 @@ function setupOs7Epel()
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
 	yum -y install yum-priorities
+	
+	return 0
 }
 
 function setupOs6Epel()
@@ -46,6 +48,8 @@ function setupOs6Epel()
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 	yum -y install yum-priorities
+	
+	return 0
 }
 
 function setupOs5Epel()
@@ -54,6 +58,8 @@ function setupOs5Epel()
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-5
 	yum -y install yum-priorities
+	
+	return 0
 }
 
 function setupLibs()
