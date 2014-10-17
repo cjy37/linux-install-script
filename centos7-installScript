@@ -18,7 +18,7 @@ function showMenu()
 	echo "|      c. Install MySQL    [d,h,l]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
 	echo "|      e. Install mono                                       |"
-#	echo "|      f. Install xsp+mono-fastcgi                           |"
+   #echo "|      f. *none                                              |"
 	echo "|      g. Install jexus v5                                   |"
 	echo "|      h. Install mysql v5.5                                 |"
 	echo "|      i. Install memcached                                  |"
@@ -31,6 +31,30 @@ function showMenu()
 	echo "-------------------------------------------------------------"
 	echo
 	return 0
+}
+
+function setupOs7Epel()
+{
+	echo "Install Centos7_64bit EPEL repository"
+	rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+	yum install yum-priorities
+}
+
+function setupOs6Epel()
+{
+	echo "Install Centos6_64bit EPEL repository"
+	rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+	yum install yum-priorities
+}
+
+function setupOs5Epel()
+{
+	echo "Install Centos5_64bit EPEL repository"
+	rpm -ivh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-5
+	yum install yum-priorities
 }
 
 function setupLibs()
@@ -52,6 +76,15 @@ function setupLibs()
 	  mkdir -pv /tmp/downloads
 	fi
 
+	vers=`cat /etc/redhat-release | awk  '{print $3}' | awk -F'.' '{print $1}'`
+	if [ "$vers" = "7" ]; then
+		setupOs7Epel
+	elif [ "$vers" = "6" ]; then
+		setupOs6Epel
+	elif [ "$vers" = "5" ]; then
+		setupOs5Epel
+	fi
+	
 	yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers patch make jpackage-utils build-essential bzip bison pkgconfig glib-devel httpd-devel libX11-devel fontconfig pango-devel ruby ruby-rdoc gtkhtml38-devel wget gettext gcc-g77 automake fiex* libmcrypt* libtool-ltdl-devel* pcre* cmake mhash* libevent libevent-devel gif* libtiff* libjpeg* libpng* libx11* libiconv mcrypt Nginx haproxy
 
 	cd /tmp/downloads
