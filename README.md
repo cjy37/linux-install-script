@@ -26,21 +26,18 @@ Running interface:
 |      Ubuntu12.04 Install Helper                            |
 |      copyright https://github.com/cjy37                    |
 --------------------------------------------------------------
-|      a. Install Web Server + MySQL [d,e,g,h,i,j]           |
-|      b. Install Web Server   [d,e,g,i,j]                   |
-|      c. Install MySQL    [d,h,j]                           |
-|      d. Install Libs     [Public Libs]                     |
-|      e. Install Mono (Last releases version)               |
-|      f. *Update Jexus v5.5.3 (Mono Web Server)             |
-|      g. Install Jexus v5.5.3 (Mono Web Server)             |
-|      h. Install Mysql v5.5 (MariaDB)                       |
-|      i. Install Haproxy                                    |
-|      j. Install Redis                                      |
-|      k. Install Node.js                                    |
-|      l. Install MQTT Server                                |
-|      m. Install MongoDB                                    |
-|      n. Install Nginx                                      |
-|      o. *Update Mono (After v3.6.0)                        |
+|      a. Install ALL                                        |
+|      b. Install Web Server (linux mono mysql jexus)[c,d]   |
+|      c. Install Mono & Jexus (Asp.Net Web Server)          |
+|      d. Install Mysql (MariaDB-10)                         |
+|      e. Install Haproxy                                    |
+|      f. Install Redis                                      |
+|      g. Install Node.js                                    |
+|      h. Install MongoDB                                    |
+|      i. Install Nginx                                      |
+|      j. Install MQTT Server                                |
+|      k. *Update Mono & Jexus                               |
+|      l. *Update Jexus (Mono Web Server)                    |
 |      x. Exit                                               |
 --------------------------------------------------------------
 ```
@@ -61,19 +58,18 @@ Running interface:
 |      Centos6 Install Helper                                |
 |      copyright https://github.com/cjy37                    |
 --------------------------------------------------------------
-|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |
-|      b. Install Web Server   [d,e,g,k,l]                   |
-|      c. Install MySQL    [d,h,l]                           |
-|      d. Install Libs     [Public Libs]                     |
-|      e. Install mono                                       |
-|      g. Install jexus v5                                   |
-|      h. Install mysql v5.5                                 |
-|      i. Install memcached                                  |
-|      j. Install nginx                                      |
-|      k. Install haproxy                                    |
-|      l. Install Redis                                      |
-|      m. Install CutyCapt                                   |
-|      n. Install GtkSharp                                   |
+|      a. Install ALL                                        |
+|      b. Install Web Server (linux mono mysql jexus)[c,d]   |
+|      c. Install Mono & Jexus (Asp.Net Web Server)          |
+|      d. Install Mysql (MariaDB-10)                         |
+|      e. Install Haproxy                                    |
+|      f. Install Redis                                      |
+|      g. Install Node.js                                    |
+|      h. Install MongoDB                                    |
+|      i. Install Nginx                                      |
+|      j. Install Memcached                                  |
+|      k. Install CutyCapt                                   |
+|      l. Install GtkSharp                                   |
 |      x. Exit                                               |
 --------------------------------------------------------------
 ```
@@ -93,21 +89,18 @@ Running interface:
 |      Centos7 Install Helper                                |
 |      copyright https://github.com/cjy37                    |
 --------------------------------------------------------------
-|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |
-|      b. Install Web Server   [d,e,g,k,l]                   |
-|      c. Install MySQL    [d,h,l]                           |
-|      d. Install Libs     [Public Libs]                     |
-|      e. Install mono                                       |
-|      f. Install Nodejs                                     |
-|      g. Install jexus v5                                   |
-|      h. Install mysql v5.5                                 |
-|      i. Install memcached                                  |
-|      j. Install nginx                                      |
-|      k. Install haproxy                                    |
-|      l. Install Redis                                      |
-|      m. Install CutyCapt                                   |
-|      n. Install GtkSharp                                   |
-|      o. Install MongoDB                                    |
+|      a. Install ALL                                        |
+|      b. Install Web Server (linux mono mysql jexus)[c,d]   |
+|      c. Install Mono & Jexus (Asp.Net Web Server)          |
+|      d. Install Mysql (MariaDB-10)                         |
+|      e. Install Haproxy                                    |
+|      f. Install Redis                                      |
+|      g. Install Node.js                                    |
+|      h. Install MongoDB                                    |
+|      i. Install Nginx                                      |
+|      j. Install Memcached                                  |
+|      k. Install CutyCapt                                   |
+|      l. Install GtkSharp                                   |
 |      x. Exit                                               |
 --------------------------------------------------------------
 ```
@@ -127,16 +120,15 @@ Running interface:
 |      Fedora19/20 Install Helper                            |
 |      copyright https://github.com/cjy37                    |
 --------------------------------------------------------------
-|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |
-|      b. Install Web Server   [d,e,g,k,l]                   |
-|      c. Install MySQL    [d,h,l]                           |
-|      d. Install Libs     [Public Libs]                     |
-|      e. Install mono                                       |
-|      g. Install jexus v5                                   |
-|      h. Install mysql v5.5                                 |
-|      j. Install nginx                                      |
-|      k. Install haproxy                                    |
-|      l. Install Redis                                      |
+|      a. Install ALL                                        |
+|      b. Install Web Server (linux mono mysql jexus)[c,d]   |
+|      c. Install Mono & Jexus (Asp.Net Web Server)          |
+|      d. Install Mysql (MariaDB-10)                         |
+|      e. Install Haproxy                                    |
+|      f. Install Redis                                      |
+|      g. Install Node.js                                    |
+|      h. Install MongoDB                                    |
+|      i. Install Nginx                                      |
 |      x. Exit                                               |
 --------------------------------------------------------------
 ```
