@@ -7,7 +7,7 @@ MONO asp.net mysql redis haproxy install Script
 ###     1. [Ubuntu v12.4 install Script](#11-ubuntu)
 ###     2. [Centos v6 install Script](#12-centos6)
 ###     3. [Centos v7 install Script](#13-centos7)
-###     4. [Fedora v19/20 install Script](#14-fedora19/20)
+###     4. [Fedora v19/20 install Script](#14-fedora1920)
 
 ===========================
 
