@@ -59,7 +59,7 @@ function setupOs5Epel()
 
 function setupLibs()
 {
-	vers=`cat /etc/redhat-release | awk  '{print $3}' | awk -F'.' '{print $1}'`
+	vers=`cat /etc/redhat-release | awk -F'release' '{print $2}' | awk -F'.' '{print $1}' | awk -F' ' '{print $1}'`
 	if [ "$vers" = "7" ]; then
 		setupOs7Epel
 	elif [ "$vers" = "6" ]; then
