@@ -44,6 +44,7 @@ chmod +x centos7-installScript
 ./centos7-installScript
 
 ```
+![screen shot](https://raw.github.com/cjy37/linux-asp.net-installScript/master/Centos7_Install.png)
 
 ### 1.4 Fedora19/20: 
 ```
