@@ -4,14 +4,14 @@ MONO asp.net mysql redis haproxy install Script
 
 ###   [WIKI](https://github.com/cjy37/linux-asp.net-installScript/wiki)
 
-###     1. [Ubuntu v12.4 install Script](#11-ubuntu)
+###     1. [Ubuntu v12.04 install Script](#11-ubuntu1204)
 ###     2. [Centos v6 install Script](#12-centos6)
 ###     3. [Centos v7 install Script](#13-centos7)
 ###     4. [Fedora v19/20 install Script](#14-fedora1920)
 
 ===========================
 
-### 1.1 Ubuntu:
+### 1.1 Ubuntu12.04:
 ```
 cd /tmp
 rm -f ubuntu-installScript
