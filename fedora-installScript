@@ -24,7 +24,7 @@ function showMenu()
 	echo "|      k. Install haproxy                                    |"
 	echo "|      l. Install Redis                                      |"
 	echo "|      x. Exit                                               |"
-	echo "-------------------------------------------------------------"
+	echo "--------------------------------------------------------------"
 	echo
 	return 0
 }

@@ -18,7 +18,6 @@ function showMenu()
 	echo "|      c. Install MySQL    [d,h,l]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
 	echo "|      e. Install mono                                       |"
-#	echo "|      f. Install xsp+mono-fastcgi                           |"
 	echo "|      g. Install jexus v5                                   |"
 	echo "|      h. Install mysql v5.5                                 |"
 	echo "|      i. Install memcached                                  |"
@@ -28,7 +27,7 @@ function showMenu()
 	echo "|      m. Install CutyCapt                                   |"
 	echo "|      n. Install GtkSharp                                   |"
 	echo "|      x. Exit                                               |"
-	echo "-------------------------------------------------------------"
+	echo "--------------------------------------------------------------"
 	echo
 	return 0
 }

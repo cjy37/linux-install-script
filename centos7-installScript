@@ -29,7 +29,7 @@ function showMenu()
 	echo "|      n. Install GtkSharp                                   |"
 	echo "|      o. Install MongoDB                                    |"
 	echo "|      x. Exit                                               |"
-	echo "-------------------------------------------------------------"
+	echo "--------------------------------------------------------------"
 	echo
 	return 0
 }
