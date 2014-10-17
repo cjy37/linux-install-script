@@ -20,7 +20,30 @@ chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 
 ```
-![screen shot](https://raw.github.com/cjy37/linux-asp.net-installScript/master/Ubuntu_install_menu.jpg)
+
+```
+--------------------------------------------------------------
+|      Ubuntu12.04 Install Helper                            |
+|      copyright https://github.com/cjy37                    |
+--------------------------------------------------------------
+|      a. Install Web Server + MySQL [d,e,g,h,i,j]           |
+|      b. Install Web Server   [d,e,g,i,j]                   |
+|      c. Install MySQL    [d,h,j]                           |
+|      d. Install Libs     [Public Libs]                     |
+|      e. Install Mono (Last releases version)               |
+|      f. *Update Jexus v5.5.3 (Mono Web Server)             |
+|      g. Install Jexus v5.5.3 (Mono Web Server)             |
+|      h. Install Mysql v5.5 (MariaDB)                       |
+|      i. Install Haproxy                                    |
+|      j. Install Redis                                      |
+|      k. Install Node.js                                    |
+|      l. Install MQTT Server                                |
+|      m. Install MongoDB                                    |
+|      n. Install Nginx                                      |
+|      o. *Update Mono (After v3.6.0)                        |
+|      x. Exit                                               |
+--------------------------------------------------------------
+```
 
 
 ### 1.2 Centos6: 
@@ -32,7 +55,27 @@ chmod +x centos-installScript
 ./centos-installScript
 
 ```
-![screen shot](https://raw.github.com/cjy37/linux-asp.net-installScript/master/centos-install.png)
+```
+--------------------------------------------------------------
+|      Centos6 Install Helper                                |
+|      copyright https://github.com/cjy37                    |
+--------------------------------------------------------------
+|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |
+|      b. Install Web Server   [d,e,g,k,l]                   |
+|      c. Install MySQL    [d,h,l]                           |
+|      d. Install Libs     [Public Libs]                     |
+|      e. Install mono                                       |
+|      g. Install jexus v5                                   |
+|      h. Install mysql v5.5                                 |
+|      i. Install memcached                                  |
+|      j. Install nginx                                      |
+|      k. Install haproxy                                    |
+|      l. Install Redis                                      |
+|      m. Install CutyCapt                                   |
+|      n. Install GtkSharp                                   |
+|      x. Exit                                               |
+--------------------------------------------------------------
+```
 
 ### 1.3 Centos7: 
 ```
@@ -43,7 +86,29 @@ chmod +x centos7-installScript
 ./centos7-installScript
 
 ```
-![screen shot](https://raw.github.com/cjy37/linux-asp.net-installScript/master/Centos7_Install.png)
+```
+--------------------------------------------------------------
+|      Centos7 Install Helper                                |
+|      copyright https://github.com/cjy37                    |
+--------------------------------------------------------------
+|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |
+|      b. Install Web Server   [d,e,g,k,l]                   |
+|      c. Install MySQL    [d,h,l]                           |
+|      d. Install Libs     [Public Libs]                     |
+|      e. Install mono                                       |
+|      f. Install Nodejs                                     |
+|      g. Install jexus v5                                   |
+|      h. Install mysql v5.5                                 |
+|      i. Install memcached                                  |
+|      j. Install nginx                                      |
+|      k. Install haproxy                                    |
+|      l. Install Redis                                      |
+|      m. Install CutyCapt                                   |
+|      n. Install GtkSharp                                   |
+|      o. Install MongoDB                                    |
+|      x. Exit                                               |
+--------------------------------------------------------------
+```
 
 ### 1.4 Fedora19/20: 
 ```
@@ -54,5 +119,22 @@ chmod +x fedora-installScript
 ./fedora-installScript
 
 ```
-![screen shot](https://raw.github.com/cjy37/linux-asp.net-installScript/master/fedora-install.png)
+```
+--------------------------------------------------------------
+|      Fedora19/20 Install Helper                            |
+|      copyright https://github.com/cjy37                    |
+--------------------------------------------------------------
+|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |
+|      b. Install Web Server   [d,e,g,k,l]                   |
+|      c. Install MySQL    [d,h,l]                           |
+|      d. Install Libs     [Public Libs]                     |
+|      e. Install mono                                       |
+|      g. Install jexus v5                                   |
+|      h. Install mysql v5.5                                 |
+|      j. Install nginx                                      |
+|      k. Install haproxy                                    |
+|      l. Install Redis                                      |
+|      x. Exit                                               |
+--------------------------------------------------------------
+```
 
