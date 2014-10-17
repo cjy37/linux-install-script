@@ -4,10 +4,10 @@ Auto install MONO (asp.net linux runtime) | Jexus (asp.net linux server) | mysql
 
 ###   [WIKI](https://github.com/cjy37/linux-asp.net-installScript/wiki)
 
-###     1. [Ubuntu v12.04 install Script](#11-ubuntu1204)
-###     2. [Centos v5/v6 install Script](#12-centos6)
-###     3. [Centos v7 install Script](#13-centos7)
-###     4. [Fedora v19/20 install Script](#14-fedora1920)
+###     1. [Ubuntu v12.04 install ](#11-ubuntu1204)
+###     2. [Centos v5/v6 install ](#12-centos56)
+###     3. [Centos v7 install ](#13-centos7)
+###     4. [Fedora v19/20 install ](#14-fedora1920)
 
 ===========================
 
@@ -46,7 +46,7 @@ Running interface:
 ```
 
 
-### 1.2 Centos6: 
+### 1.2 Centos5/6: 
 ```
 cd /tmp
 rm -f centos-installScript
