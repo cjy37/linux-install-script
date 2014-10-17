@@ -20,7 +20,7 @@ chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 
 ```
-
+Running interface:
 ```
 --------------------------------------------------------------
 |      Ubuntu12.04 Install Helper                            |
@@ -55,6 +55,7 @@ chmod +x centos-installScript
 ./centos-installScript
 
 ```
+Running interface:
 ```
 --------------------------------------------------------------
 |      Centos6 Install Helper                                |
@@ -86,6 +87,7 @@ chmod +x centos7-installScript
 ./centos7-installScript
 
 ```
+Running interface:
 ```
 --------------------------------------------------------------
 |      Centos7 Install Helper                                |
@@ -119,6 +121,7 @@ chmod +x fedora-installScript
 ./fedora-installScript
 
 ```
+Running interface:
 ```
 --------------------------------------------------------------
 |      Fedora19/20 Install Helper                            |
