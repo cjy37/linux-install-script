@@ -1,6 +1,6 @@
 ###  linux-asp.net-installScript
 
-MONO asp.net mysql redis haproxy install Script
+Auto install MONO (asp.net linux runtime) | Jexus (asp.net linux server) | mysql | redis | haproxy | mongodb | nginx | Node.js | mosquitto (MQTT server)
 
 ###   [WIKI](https://github.com/cjy37/linux-asp.net-installScript/wiki)
 
@@ -20,7 +20,6 @@ chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 
 ```
-Function Menu:                                                         
 ![screen shot](https://raw.github.com/cjy37/linux-asp.net-installScript/master/Ubuntu_install_menu.jpg)
 
 
