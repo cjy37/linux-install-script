@@ -7,27 +7,124 @@
 
 function showMenu()
 {
+	setupLibs
 	clear
 	echo
 	echo "--------------------------------------------------------------"
 	echo "|      Fedora19/20 Install Helper                            |"
 	echo "|      copyright https://github.com/cjy37                    |"
 	echo "--------------------------------------------------------------"
-	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"
-	echo "|      b. Install Web Server   [d,e,g,k,l]                   |"
-	echo "|      c. Install MySQL    [d,h,l]                           |"
-	echo "|      d. Install Libs     [Public Libs]                     |"
-	echo "|      e. Install mono                                       |"
-	echo "|      g. Install jexus v5                                   |"
-	echo "|      h. Install mysql v5.5                                 |"
-	echo "|      j. Install nginx                                      |"
-	echo "|      k. Install haproxy                                    |"
-	echo "|      l. Install Redis                                      |"
+	echo "|      a. Install ALL                                        |"
+	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
+	echo "|      c. Install Mono & Jexus (Asp.Net Web Server)          |"
+	echo "|      d. Install Mysql (MariaDB-10)                         |"
+	echo "|      e. Install Haproxy                                    |"
+	echo "|      f. Install Redis                                      |"
+	echo "|      g. Install Node.js                                    |"
+	echo "|      h. Install MongoDB                                    |"
+	echo "|      i. Install Nginx                                      |"
 	echo "|      x. Exit                                               |"
 	echo "--------------------------------------------------------------"
 	echo
 	return 0
 }
+
+
+function selectCmd()
+{
+	alias cp='cp'
+	showMenu
+	echo "Please select a serial number for installation [a-x]:"
+	read -n 1 M
+	echo
+
+	if [ "$M" = "x" ]; then
+		exit 1
+		
+	elif [ "$M" = "a" ]; then
+		echo "Installing ALL..."
+		echo "------------------------------------"
+		setupMono
+		setupMysql
+		setupHaproxy
+		setupRedis
+		setupNodejs
+		setupNginx
+		setupMongodb
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "b" ]; then
+		echo "Installing Web Server ... [c,d]"
+		echo "------------------------------------"
+		setupMono
+		setupMysql
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "c" ]; then
+		setupMono
+		read -n 1 -p "Press <Enter> to continue..."
+
+	elif [ "$M" = "d" ]; then
+		setupMysql
+		read -n 1 -p "Press <Enter> to continue..."
+
+	elif [ "$M" = "e" ]; then
+		setupHaproxy
+		read -n 1 -p "Press <Enter> to continue..."
+
+	elif [ "$M" = "f" ]; then
+		setupRedis
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "g" ]; then
+		setupNodejs
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "h" ]; then
+		setupMongodb
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "i" ]; then
+		setupNginx
+		read -n 1 -p "Press <Enter> to continue..."
+
+	else
+		echo "Select Error!"
+		read -n 1 -p "Press <Enter> to continue..."
+	fi
+
+	selectCmd
+	return 0
+}
+
+function setupNodejs()
+{
+	yum -y install nodejs
+	echo "Install nodejs completed. info:"
+	node -v
+
+	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
+
+	sudo npm install forever -g
+	sudo npm install mqtt -g
+	sudo npm install websocket -g
+	sudo npm install websocket-server -g
+	sudo npm install socket.io@0.9 -g
+	sudo npm install log4js -g
+	sudo npm install pm2 -g --unsafe-perm
+	
+	return 0
+}
+
+function setupMongodb()
+{
+	yum -y install mongodb mongodb-server
+	echo "Install mongodb completed. info:"
+	mongod --version
+	
+	return 0
+}
+
 
 function setupLibs()
 {
@@ -47,6 +144,8 @@ function setupMono()
 	sudo yum -y install mono-complete
 	echo "Install mono completed. info:"
 	mono -V
+	
+	setupJws
 	
 	return 0
 }
@@ -160,71 +259,5 @@ function setupJws()
 	return 0
 }
 
-function selectCmd()
-{
-	alias cp='cp'
-	showMenu
-	echo "Please select a serial number for installation"
-	echo "When your manual installation, Please install the [d] first:"
-	echo "[f][g] be dependent on [e]:"
-	read -n 1 M
-	echo
-
-	if [ "$M" = "x" ]; then
-		exit 1
-	elif [ "$M" = "a" ]; then
-		 echo "Installing ALL... [d,e,g,h,k,l]"
-		 echo "------------------------------------"
-		 setupLibs
-		 setupLibgdiplus
-		 setupMono
-		 setupJws
-		 setupMysql
-		 setupHaproxy
-		 setupRedis
-	elif [ "$M" = "b" ]; then
-		 echo "Installing Web Server ... [d,e,g,k,l]"
-		 echo "------------------------------------"
-		 setupLibs
-		 setupLibgdiplus
-		 setupMono
-		 setupJws
-		 setupHaproxy
-		 setupRedis
-	elif [ "$M" = "c" ]; then
-		 echo "Installing MySQL ... [d,h,l]"
-		 echo "------------------------------------"
-		 setupLibs
-		 setupMysql
-		 setupRedis
-	elif [ "$M" = "d" ]; then
-		 setupLibs
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "e" ]; then
-		 setupMono
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "g" ]; then
-		 setupJws
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "h" ]; then
-		 setupMysql
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "j" ]; then
-		 setupNginx
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "k" ]; then
-		 setupHaproxy
-     read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "l" ]; then
-		 setupRedis
-     read -n 1 -p "Press <Enter> to continue..."
-	else
-		 echo "Select Error!"
-     read -n 1 -p "Press <Enter> to continue..."
-	fi
-
-	selectCmd
-	return 0
-}
 cd /tmp
 selectCmd

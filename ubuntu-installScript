@@ -7,30 +7,108 @@
 
 function showMenu()
 {
+	setupLibs
 	clear
 	echo
 	echo "--------------------------------------------------------------"
 	echo "|      Ubuntu12.04 Install Helper                            |"
 	echo "|      copyright https://github.com/cjy37                    |"
 	echo "--------------------------------------------------------------"
-	echo "|      a. Install Web Server + MySQL [d,e,g,h,i,j]           |"
-	echo "|      b. Install Web Server   [d,e,g,i,j]                   |"
-	echo "|      c. Install MySQL    [d,h,j]                           |"
-	echo "|      d. Install Libs     [Public Libs]                     |"
-	echo "|      e. Install Mono (Last releases version)               |"
-	echo "|      f. *Update Jexus v5.5.3 (Mono Web Server)             |"
-	echo "|      g. Install Jexus v5.5.3 (Mono Web Server)             |"
-	echo "|      h. Install Mysql v5.5 (MariaDB)                       |"
-	echo "|      i. Install Haproxy                                    |"
-	echo "|      j. Install Redis                                      |"
-	echo "|      k. Install Node.js                                    |"
-	echo "|      l. Install MQTT Server                                |"
-	echo "|      m. Install MongoDB                                    |"
-	echo "|      n. Install Nginx                                      |"
-	echo "|      o. *Update Mono (After v3.6.0)                        |"
+	echo "|      a. Install ALL                                        |"
+	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
+	echo "|      c. Install Mono & Jexus (Asp.Net Web Server)          |"
+	echo "|      d. Install Mysql (MariaDB-10)                         |"
+	echo "|      e. Install Haproxy                                    |"
+	echo "|      f. Install Redis                                      |"
+	echo "|      g. Install Node.js                                    |"
+	echo "|      h. Install MongoDB                                    |"
+	echo "|      i. Install Nginx                                      |"
+	echo "|      j. Install MQTT Server                                |"
+	echo "|      k. *Update Mono & Jexus                               |"
+	echo "|      l. *Update Jexus (Mono Web Server)                    |"
 	echo "|      x. Exit                                               |"
 	echo "--------------------------------------------------------------"
 	echo
+	return 0
+}
+
+function selectCmd()
+{
+	alias cp='cp'
+	showMenu
+	echo "Please select a serial number for installation [a-x]:"
+	read -n 1 M
+	echo
+
+	if [ "$M" = "x" ]; then
+		exit 1
+		
+	elif [ "$M" = "a" ]; then
+		echo "Installing ALL..."
+		echo "------------------------------------"
+		setupNewMono
+		setupMysql
+		setupHaproxy
+		setupRedis
+		setupNodeJS
+		setupMQTTServer
+		setupMongoDB
+		setupNginx
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "b" ]; then
+		echo "Installing Web Server(linux mono mysql jexus) (lmmj) [c,d]"
+		echo "------------------------------------"
+		setupNewMono
+		setupMysql
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "c" ]; then
+		setupNewMono
+		read -n 1 -p "Press <Enter> to continue..."
+
+	elif [ "$M" = "d" ]; then
+		setupMysql
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "e" ]; then
+		setupHaproxy
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "f" ]; then
+		setupRedis
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "g" ]; then
+		setupNodeJS
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "j" ]; then
+		setupMQTTServer
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "h" ]; then
+		setupMongoDB
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "i" ]; then
+		setupNginx
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "k" ]; then
+		updateMono
+		read -n 1 -p "Press <Enter> to continue..."
+		
+	elif [ "$M" = "l" ]; then
+		updateJws
+		read -n 1 -p "Press <Enter> to continue..."
+
+	else
+		echo "Select Error!"
+		read -n 1 -p "Press <Enter> to continue..."
+	fi
+
+	selectCmd
 	return 0
 }
 
@@ -68,13 +146,19 @@ function setupLibs()
 
 function updateMono()
 {
-	echo "Update mono v3.8+"
+	echo "Update mono"
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
 	apt-key add xamarin.gpg
 	echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list
 	sudo apt-get update
 	sudo apt-get install -y mono-complete
+	echo "Install mono completed. info:"
+	mono -V
+	
+	updateJws
+	
+	return 0
 }
 
 function setupNewMono()
@@ -86,7 +170,7 @@ function setupNewMono()
 	  mkdir -pv /tmp/downloads
 	fi
 	
-	echo "Install mono v3.6+"
+	echo "Install mono"
 	echo "------------------------------------"
 
 	sudo apt-get -f remove -y libmono* mono-jay
@@ -104,6 +188,8 @@ function setupNewMono()
 	
 	echo "Install mono completed. info:"
 	mono -V
+	
+	setupJws
 	
 	return 0
 }
@@ -221,6 +307,8 @@ function setupNginx()
 	sudo apt-get update
 	sudo apt-get install nginx
 	echo "Nginx config file: /etc/nginx/nginx.conf"
+	
+	return 0
 }
 
 function updateJws()
@@ -247,8 +335,8 @@ function updateJws()
 	  echo "Jexus upgrade to path: /usr/jexus/"
 	  echo "Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	fi
-	return 0
 	
+	return 0
 }
 
 function setupJws()
@@ -293,84 +381,5 @@ function setupJws()
 	return 0
 }
 
-function selectCmd()
-{
-	alias cp='cp'
-	showMenu
-	echo "Please select a serial number for installation"
-	echo "When your manual installation, Please install the [d] first:"
-	echo "[f][g] be dependent on [e]:"
-	read -n 1 M
-	echo
-
-	if [ "$M" = "x" ]; then
-		exit 1
-	elif [ "$M" = "a" ]; then
-		echo "Installing ALL... [d,e,g,h,i,j]"
-		echo "------------------------------------"
-		setupLibs
-		setupNewMono
-		setupJws
-		setupMysql
-		setupHaproxy
-		setupRedis
-	elif [ "$M" = "b" ]; then
-		echo "Installing Web Server ... [d,e,g,i,j]"
-		echo "------------------------------------"
-		setupLibs
-		setupNewMono
-		setupJws
-		setupHaproxy
-		setupRedis
-	elif [ "$M" = "c" ]; then
-		 echo "Installing MySQL ... [d,h,j]"
-		 echo "------------------------------------"
-		 setupLibs
-		 setupMysql
-		 setupRedis
-	elif [ "$M" = "d" ]; then
-		setupLibs
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "e" ]; then
-		setupNewMono
-		read -n 1 -p "Press <Enter> to continue..."
-        elif [ "$M" = "f" ]; then
-		updateJws
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "g" ]; then
-		setupJws
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "h" ]; then
-		setupMysql
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "i" ]; then
-		setupHaproxy
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "j" ]; then
-		setupRedis
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "k" ]; then
-		setupNodeJS
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "l" ]; then
-		setupMQTTServer
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "m" ]; then
-		setupMongoDB
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "n" ]; then
-		setupNginx
-		read -n 1 -p "Press <Enter> to continue..."
-	elif [ "$M" = "o" ]; then
-		updateMono
-		read -n 1 -p "Press <Enter> to continue..."
-	else
-		echo "Select Error!"
-		read -n 1 -p "Press <Enter> to continue..."
-	fi
-
-	selectCmd
-	return 0
-}
 cd /tmp
 selectCmd
