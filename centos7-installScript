@@ -1,6 +1,6 @@
 #!/bin/sh
 #------------------------------------------
-#      CentOS asp.net InstallScript
+#      Centos7 asp.net InstallScript
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
@@ -10,7 +10,7 @@ function showMenu()
 	clear
 	echo
 	echo "--------------------------------------------------------------"
-	echo "|      CentOS Install Helper                                 |"
+	echo "|      Centos7 Install Helper                                |"
 	echo "|      copyright https://github.com/cjy37                    |"
 	echo "--------------------------------------------------------------"
 	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"
@@ -18,7 +18,7 @@ function showMenu()
 	echo "|      c. Install MySQL    [d,h,l]                           |"
 	echo "|      d. Install Libs     [Public Libs]                     |"
 	echo "|      e. Install mono                                       |"
-   #echo "|      f. *none                                              |"
+	echo "|      f. Install Nodejs                                     |"
 	echo "|      g. Install jexus v5                                   |"
 	echo "|      h. Install mysql v5.5                                 |"
 	echo "|      i. Install memcached                                  |"
@@ -27,10 +27,25 @@ function showMenu()
 	echo "|      l. Install Redis                                      |"
 	echo "|      m. Install CutyCapt                                   |"
 	echo "|      n. Install GtkSharp                                   |"
+	echo "|      o. Install MongoDB                                    |"
 	echo "|      x. Exit                                               |"
 	echo "-------------------------------------------------------------"
 	echo
 	return 0
+}
+
+function setupNodejs()
+{
+	yum -y install nodejs
+	echo "Install nodejs completed. info:"
+	nodejs -v
+}
+
+function setupMongodb()
+{
+	yum -y install mongodb mongodb-server
+	echo "Install mongodb completed. info:"
+	mongod --version
 }
 
 function setupOs7Epel()
@@ -38,7 +53,7 @@ function setupOs7Epel()
 	echo "Install Centos7_64bit EPEL repository"
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
-	yum install yum-priorities
+	yum -y install yum-priorities
 }
 
 function setupOs6Epel()
@@ -46,7 +61,7 @@ function setupOs6Epel()
 	echo "Install Centos6_64bit EPEL repository"
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-	yum install yum-priorities
+	yum -y install yum-priorities
 }
 
 function setupOs5Epel()
@@ -54,7 +69,7 @@ function setupOs5Epel()
 	echo "Install Centos5_64bit EPEL repository"
 	rpm -ivh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-5
-	yum install yum-priorities
+	yum -y install yum-priorities
 }
 
 function setupLibs()
@@ -67,7 +82,7 @@ function setupLibs()
 	elif [ "$vers" = "5" ]; then
 		setupOs5Epel
 	fi
-	
+
 	yum -y update
 	yum -y groupinstall "Development Tools"
 
@@ -85,7 +100,6 @@ function setupLibs()
 	  mkdir -pv /tmp/downloads
 	fi
 
-	
 	yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers patch make jpackage-utils build-essential bzip bison pkgconfig glib-devel httpd-devel libX11-devel fontconfig pango-devel ruby ruby-rdoc gtkhtml38-devel wget gettext gcc-g77 automake fiex* libmcrypt* libtool-ltdl-devel* pcre* cmake mhash* libevent libevent-devel gif* libtiff* libjpeg* libpng* libx11* libiconv mcrypt Nginx haproxy
 
 	cd /tmp/downloads
@@ -129,11 +143,12 @@ function setupMemcached()
 
 function setupMono()
 {
+	yum -y install mono-*
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
-	sudo rpm --import xamarin.gpg
-	sudo yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
-	sudo yum -y install mono-complete
+	rpm --import xamarin.gpg
+	yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
+	yum -y install mono-complete
 	echo "Install mono completed. info:"
 	mono -V
 	
@@ -145,13 +160,15 @@ function setupMysql()
 	echo "install Mysql"
 	echo "------------------------------------"
 	
-	echo '[mariadb]
+	echo '# MariaDB 10.0 CentOS repository list - created 2014-10-17 07:52 UTC
+# http://mariadb.org/mariadb/repositories/
+[mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/5.5/centos5-x86
+baseurl = http://yum.mariadb.org/10.0/centos7-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 
-	yum -y install MariaDB-server MariaDB-client
+	yum -y install MariaDB-server MariaDB-client MariaDB-devel
 	chkconfig --level 2345 mysqld on
 	service mysqld start
 	
@@ -418,9 +435,9 @@ function selectCmd()
 	elif [ "$M" = "e" ]; then
 		 setupMono
      read -n 1 -p "Press <Enter> to continue..."
-	#elif [ "$M" = "f" ]; then
-	#	 setupXsp
-    # read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "f" ]; then
+		 setupNodejs
+     read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "g" ]; then
 		 setupJws
      read -n 1 -p "Press <Enter> to continue..."
@@ -444,6 +461,9 @@ function selectCmd()
      read -n 1 -p "Press <Enter> to continue..."
 	elif [ "$M" = "n" ]; then
 		 setupGtkSharp
+     read -n 1 -p "Press <Enter> to continue..."
+	elif [ "$M" = "o" ]; then
+		 setupMongodb
      read -n 1 -p "Press <Enter> to continue..."
 	else
 		 echo "Select Error!"

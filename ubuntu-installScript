@@ -118,14 +118,16 @@ function setupMysql()
 	echo "install mysql"
 	echo "------------------------------------"
 
-	#apt-install mysql
 	sudo apt-get install -y python-software-properties
-	sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-	sudo add-apt-repository 'deb http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu precise main'
-	sudo apt-get update -y
-	sudo apt-get install -y libmysqlclient18=5.5.32+maria-1~precise mysql-common=5.5.32+maria-1~precise
+	sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+	sudo add-apt-repository 'deb http://ftp.osuosl.org/pub/mariadb/repo/10.1/ubuntu precise main'
+	
+	sudo apt-get update -y 
 	sudo apt-get install -y mariadb-server mariadb-client libmariadbd*-dev
+	
 	sudo service mysql start
+	mysql -V
+	
 	return 0
 }
 

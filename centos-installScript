@@ -33,8 +33,41 @@ function showMenu()
 	return 0
 }
 
+function setupOs7Epel()
+{
+	echo "Install Centos7_64bit EPEL repository"
+	rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+	yum -y install yum-priorities
+}
+
+function setupOs6Epel()
+{
+	echo "Install Centos6_64bit EPEL repository"
+	rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+	yum -y install yum-priorities
+}
+
+function setupOs5Epel()
+{
+	echo "Install Centos5_64bit EPEL repository"
+	rpm -ivh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-5
+	yum -y install yum-priorities
+}
+
 function setupLibs()
 {
+	vers=`cat /etc/redhat-release | awk  '{print $3}' | awk -F'.' '{print $1}'`
+	if [ "$vers" = "7" ]; then
+		setupOs7Epel
+	elif [ "$vers" = "6" ]; then
+		setupOs6Epel
+	elif [ "$vers" = "5" ]; then
+		setupOs5Epel
+	fi
+
 	yum -y update
 	yum -y groupinstall "Development Tools"
 
@@ -174,13 +207,15 @@ function setupMysql()
 	echo "install Mysql"
 	echo "------------------------------------"
 	
-	echo '[mariadb]
+	echo '# MariaDB 10.1 CentOS repository list - created 2014-10-17 07:52 UTC
+# http://mariadb.org/mariadb/repositories/
+[mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/5.5/centos5-x86
+baseurl = http://yum.mariadb.org/10.1/centos6-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 
-	yum -y install MariaDB-server MariaDB-client
+	yum -y install MariaDB-server MariaDB-client MariaDB-devel
 	chkconfig --level 2345 mysqld on
 	service mysqld start
 	
