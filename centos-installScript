@@ -7,6 +7,7 @@
 
 function showMenu()
 {
+	read -n 1 -p "Press [Any Key] to setup public libs. [Ctrl + C] to Cancel."
 	setupLibs
 	clear
 	echo
@@ -46,27 +47,17 @@ function selectCmd()
 	elif [ "$M" = "a" ]; then
 		echo "Installing ALL..."
 		echo "------------------------------------"
-		setupMono
-		setupMysql
-		setupHaproxy
-		setupRedis
-		setupNodejs
-		setupMemcached
-		setupNginx
-		setupMongodb
-		setupCutyCapt
-		setupGtkSharp
+		setupMono && setupJws && setupMysql && setupHaproxy && setupRedis && setupNodejs && setupMemcached && setupNginx && setupMongodb && setupCutyCapt && setupGtkSharp
 		read -n 1 -p "Press <Enter> to continue..."
 		
 	elif [ "$M" = "b" ]; then
 		echo "Installing Web Server ... [c,d]"
 		echo "------------------------------------"
-		setupMono
-		setupMysql
+		setupMono && setupJws && setupMysql
 		read -n 1 -p "Press <Enter> to continue..."
 		
 	elif [ "$M" = "c" ]; then
-		setupMono
+		setupMono && setupJws
 		read -n 1 -p "Press <Enter> to continue..."
 
 	elif [ "$M" = "d" ]; then
