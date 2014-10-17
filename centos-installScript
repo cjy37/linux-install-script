@@ -1,6 +1,6 @@
 #!/bin/sh
 #------------------------------------------
-#      CentOS asp.net InstallScript
+#      Centos6 asp.net InstallScript
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
@@ -10,7 +10,7 @@ function showMenu()
 	clear
 	echo
 	echo "--------------------------------------------------------------"
-	echo "|      CentOS Install Helper                                 |"
+	echo "|      Centos6 Install Helper                                |"
 	echo "|      copyright https://github.com/cjy37                    |"
 	echo "--------------------------------------------------------------"
 	echo "|      a. Install Web Server + MySQL [d,e,g,h,k,l]           |"

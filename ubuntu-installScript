@@ -1,6 +1,6 @@
 #!/bin/bash
 #------------------------------------------
-#      Ubuntu asp.net InstallScript
+#      Ubuntu12.04 asp.net InstallScript
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
@@ -10,7 +10,7 @@ function showMenu()
 	clear
 	echo
 	echo "--------------------------------------------------------------"
-	echo "|      Ubuntu Install Helper                                 |"
+	echo "|      Ubuntu12.04 Install Helper                            |"
 	echo "|      copyright https://github.com/cjy37                    |"
 	echo "--------------------------------------------------------------"
 	echo "|      a. Install Web Server + MySQL [d,e,g,h,i,j]           |"
