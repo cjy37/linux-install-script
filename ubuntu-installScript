@@ -201,7 +201,8 @@ function setupMysql()
 	
 	sudo apt-get update -y 
 	sudo apt-get install -y mariadb-server mariadb-client libmariadbd*-dev
-	
+	sudo cp /usr/share/mysql/my-innodb-heavy-4G.cnf /etc/my.cnf
+	sudo sed -i 's/# generic configuration options/user = mysql/g' /etc/my.cnf
 	sudo service mysql start
 	mysql -V
 	

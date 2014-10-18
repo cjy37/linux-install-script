@@ -173,6 +173,8 @@ gpgcheck=1' | sudo tee /etc/yum.repos.d/MariaDB.repo
 	fi
 	
 	sudo yum -y install MariaDB-server MariaDB-client MariaDB-devel
+	sudo cp /usr/share/mysql/my-innodb-heavy-4G.cnf /etc/my.cnf
+	sudo sed -i 's/# generic configuration options/user = mysql/g' /etc/my.cnf
 	sudo chkconfig --level 2345 mysql on
 	sudo service mysql start
 	
