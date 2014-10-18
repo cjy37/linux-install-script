@@ -93,7 +93,9 @@ function selectCmd()
 
 function setupNodejs()
 {
-	yum -y install nodejs
+	echo "install Node.js"
+	echo "------------------------------------"
+	sudo yum -y install nodejs
 	echo "Install nodejs completed. info:"
 	node -v
 
@@ -112,7 +114,9 @@ function setupNodejs()
 
 function setupMongodb()
 {
-	yum -y install mongodb mongodb-server
+	echo "install Mongodb"
+	echo "------------------------------------"
+	sudo yum -y install mongodb mongodb-server
 	echo "Install mongodb completed. info:"
 	mongod --version
 	
@@ -122,8 +126,8 @@ function setupMongodb()
 
 function setupLibs()
 {
-	yum -y update
-	yum -y groupinstall "Development Tools"
+	sudo yum -y update
+	sudo yum -y groupinstall "Development Tools"
 	echo "Install the public Libs"
 	echo "------------------------------------"
 	sudo yum -y install libjpeg libjpeg-devel libpng libpng-devel curl curl-devel wget gif* libtiff* libjpeg* 
@@ -171,8 +175,8 @@ gpgcheck=1' | sudo tee /etc/yum.repos.d/MariaDB.repo
 	fi
 	
 	sudo yum -y install MariaDB-server MariaDB-client MariaDB-devel
-	sudo chkconfig --level 2345 mysqld on
-	sudo service mysqld start
+	sudo chkconfig --level 2345 mysql on
+	sudo service mysql start
 	
 	mysql -V
 	
