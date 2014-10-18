@@ -278,11 +278,11 @@ function setupMysql()
 	echo "install Mysql"
 	echo "------------------------------------"
 	
-	echo '# MariaDB 10.1 CentOS repository list - created 2014-10-17 07:52 UTC
+	echo '# MariaDB 10.0 CentOS repository list - created 2014-10-17 07:52 UTC
 # http://mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/10.1/centos6-amd64
+baseurl = http://yum.mariadb.org/10.0/centos6-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 

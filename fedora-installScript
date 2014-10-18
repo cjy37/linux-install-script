@@ -163,21 +163,21 @@ function setupMysql()
 	
 	if [ "$vers" = "19" ]; then
 	
-		echo '# MariaDB 10.1 Fedora repository list - created 2014-10-17 08:04 UTC
+		echo '# MariaDB 10.0 Fedora repository list - created 2014-10-17 08:04 UTC
 # http://mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/10.1/fedora19-amd64
+baseurl = http://yum.mariadb.org/10.0/fedora19-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1' | sudo tee /etc/yum.repos.d/MariaDB.repo
 
 	elif [ "$vers" = "20" ]; then
 	
-		echo '# MariaDB 10.1 Fedora repository list - created 2014-10-17 08:06 UTC
+		echo '# MariaDB 10.0 Fedora repository list - created 2014-10-17 08:06 UTC
 # http://mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
-baseurl = http://yum.mariadb.org/10.1/fedora20-amd64
+baseurl = http://yum.mariadb.org/10.0/fedora20-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1' | sudo tee /etc/yum.repos.d/MariaDB.repo
 
