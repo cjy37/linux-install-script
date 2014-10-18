@@ -251,6 +251,28 @@ gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 	return $?
 }
 
+function setupMosquitto()
+{
+	echo "install Mosquitto"
+	echo "------------------------------------"
+	
+	echo '[home_oojah_mqtt]
+name=mqtt (CentOS_CentOS-7)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-7/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-7/repodata/repomd.xml.key
+enabled=1
+' > /etc/yum.repos.d/Mosquitto.repo
+
+	yum -y install mosquitto mosquitto-clients libmosquitto1 libmosquitto-devel libmosquittopp1 libmosquittopp-devel python-mosquitto
+
+	mosquitto -h
+	echo "------------------------------------"
+
+	return $?
+}
+
 function setupNginx()
 {
 

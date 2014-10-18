@@ -293,6 +293,49 @@ gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 	return $?
 }
 
+function setupMosquitto()
+{
+	echo "install Mosquitto"
+	echo "------------------------------------"
+	
+	vers=`cat /etc/redhat-release | awk -F'release' '{print $2}' | awk -F'.' '{print $1}' | awk -F' ' '{print $1}'`
+	if [ "$vers" = "7" ]; then
+		echo '[home_oojah_mqtt]
+name=mqtt (CentOS_CentOS-7)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-7/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-7/repodata/repomd.xml.key
+enabled=1
+' > /etc/yum.repos.d/Mosquitto.repo
+	elif [ "$vers" = "6" ]; then
+		echo '[home_oojah_mqtt]
+name=mqtt (CentOS_CentOS-6)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-6/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-6/repodata/repomd.xml.key
+enabled=1
+' > /etc/yum.repos.d/Mosquitto.repo
+	elif [ "$vers" = "5" ]; then
+		echo '[home_oojah_mqtt]
+name=mqtt (CentOS_CentOS-5)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-5/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-5/repodata/repomd.xml.key
+enabled=1
+' > /etc/yum.repos.d/Mosquitto.repo
+	fi
+
+	yum -y install mosquitto mosquitto-clients libmosquitto1 libmosquitto-devel libmosquittopp1 libmosquittopp-devel python-mosquitto
+
+	mosquitto -h
+	echo "------------------------------------"
+
+	return $?
+}
+
 function setupNginx()
 {
 

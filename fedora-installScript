@@ -186,6 +186,46 @@ gpgcheck=1' | sudo tee /etc/yum.repos.d/MariaDB.repo
 	sudo mysqladmin -uroot password "$PWD"
 	return $?
 }
+
+function setupMosquitto()
+{
+	echo "install Mosquitto"
+	echo "------------------------------------"
+	
+	vers=`cat /etc/redhat-release | awk  '{print $3}' | awk -F'.' '{print $1}'`
+	
+	if [ "$vers" = "19" ]; then
+	
+		echo '[home_oojah_mqtt]
+name=mqtt (Fedora_19)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/home:/oojah:/mqtt/Fedora_19/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/Fedora_19/repodata/repomd.xml.key
+enabled=1
+' | sudo tee /etc/yum.repos.d/Mosquitto.repo
+
+	elif [ "$vers" = "20" ]; then
+	
+		echo '[home_oojah_mqtt]
+name=mqtt (Fedora_20)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/home:/oojah:/mqtt/Fedora_20/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/Fedora_20/repodata/repomd.xml.key
+enabled=1
+' | sudo tee /etc/yum.repos.d/Mosquitto.repo
+
+	fi
+	
+	sudo yum -y install mosquitto mosquitto-clients libmosquitto1 libmosquitto-devel libmosquittopp1 libmosquittopp-devel python-mosquitto
+
+	mosquitto -h
+	echo "------------------------------------"
+
+	return $?
+}
+
 function setupNginx()
 {
 	echo "install nginx"
