@@ -96,10 +96,12 @@ function selectCmd()
 
 function setupNodejs()
 {
+	echo "install Node.js"
+	echo "------------------------------------"
 	yum -y install nodejs npm
 	echo "Install nodejs completed. info:"
 	node -v
-
+	echo "------------------------------------"
 	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
 
 	sudo npm install forever -g
@@ -115,10 +117,12 @@ function setupNodejs()
 
 function setupMongodb()
 {
+	echo "install Mongodb"
+	echo "------------------------------------"
 	yum -y install mongodb mongodb-server
 	echo "Install mongodb completed. info:"
 	mongod --version
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -194,6 +198,9 @@ function setupLibs()
 
 function setupMemcached()
 {
+	echo "install Memcached"
+	echo "------------------------------------"
+	
 	yum -y install memcached*
 	echo "Install Memcached completed. info:"
 
@@ -202,6 +209,9 @@ function setupMemcached()
 
 function setupMono()
 {
+	echo "install setupMono"
+	echo "------------------------------------"
+	
 	#yum -y install mono-*
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
@@ -210,7 +220,7 @@ function setupMono()
 	yum -y install mono-complete
 	echo "Install mono completed. info:"
 	mono -V
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -234,7 +244,7 @@ gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 	service mysql start
 	
 	mysql -V
-	
+	echo "------------------------------------"
 	echo "Mysql: Please Ender user(root) password"
 	read -e PWD
 	mysqladmin -uroot password "$PWD"
@@ -256,25 +266,29 @@ enabled=1' > /etc/yum.repos.d/nginx.repo
 	chkconfig --level 2345 nginx on
 	service nginx start
 	nginx -v
-	
+	echo "------------------------------------"
 	return $?
 }
 
 function setupHaproxy()
 {
+	echo "install haproxy"
+	echo "------------------------------------"
 	yum -y install haproxy
 	echo "Install haproxy completed. info:"
 	haproxy -v
-	
+	echo "------------------------------------"
 	return $?
 }
 
 function setupRedis()
 {
+	echo "install redis"
+	echo "------------------------------------"
 	yum -y install redis
 	echo "Install Redis completed. info:"
 	redis-server -v
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -318,6 +332,7 @@ function setupJws()
 	
 	/usr/jexus/jws start
 	/usr/jexus/jws -V
+	echo "------------------------------------"
 	echo "Jexus install to path: /usr/jexus/"
 	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  

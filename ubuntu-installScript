@@ -138,6 +138,7 @@ function setupLibs()
 function updateMono()
 {
 	echo "Update mono"
+	echo "------------------------------------"
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
 	apt-key add xamarin.gpg
@@ -146,7 +147,7 @@ function updateMono()
 	sudo apt-get install -y mono-complete
 	echo "Install mono completed. info:"
 	mono -V
-
+	echo "------------------------------------"
 	return $?
 }
 
@@ -177,7 +178,7 @@ function setupNewMono()
 	
 	echo "Install mono completed. info:"
 	mono -V
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -201,7 +202,7 @@ function setupMysql()
 	sudo sed -i 's/# generic configuration options/user = mysql/g' /etc/my.cnf
 	sudo service mysql start
 	mysql -V
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -213,7 +214,8 @@ function setupHaproxy()
 	sudo apt-get install -y haproxy
 	sudo echo "ENABLED=1" > /etc/default/haproxy
 	sudo service haproxy start
-	
+	haproxy -v
+	echo "------------------------------------"
 	return $?
 }
 
@@ -224,7 +226,8 @@ function setupRedis()
 
 	sudo apt-get install -y redis-server
 	sudo service redis-server start
-	
+	redis-server -v
+	echo "------------------------------------"
 	return $?
 }
 
@@ -240,7 +243,8 @@ function setupMongoDB()
 	sudo apt-get install -y mongodb-10gen=2.4.6
 	echo "mongodb-10gen hold" | sudo dpkg --set-selections
 	sudo service mongodb start
-	
+	mongod --version
+	echo "------------------------------------"
 	return $?
 }
 
@@ -256,7 +260,8 @@ function setupMQTTServer()
 	sudo cp /etc/mosquitto/mosquitto.conf.example /etc/mosquitto/mosquitto.conf
 	echo "Mosquitto config file: /etc/mosquitto/mosquitto.conf"
 	sudo service mosquitto start
-	
+	mosquitto -h
+	echo "------------------------------------"
 	return $?
 }
 
@@ -277,7 +282,8 @@ function setupNodeJS()
 	sudo add-apt-repository ppa:chris-lea/node.js
 	sudo apt-get update -y
 	sudo apt-get install -y nodejs
-	
+	node -v
+	echo "------------------------------------"
 	cd /wwwroot/node_mqtt
 	
 	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
@@ -295,11 +301,14 @@ function setupNodeJS()
 
 function setupNginx()
 {
+	echo "install Nginx"
+	echo "------------------------------------"
 	sudo apt-add-repository ppa:nginx/development
 	sudo apt-get update
 	sudo apt-get install nginx
 	echo "Nginx config file: /etc/nginx/nginx.conf"
-	
+	nginx -v
+	echo "------------------------------------"
 	return $?
 }
 
@@ -324,6 +333,7 @@ function updateJws()
       sudo ./upgrade
 	  sudo /usr/jexus/jws start
 	  sudo /usr/jexus/jws -V
+	  echo "------------------------------------"
 	  echo "Jexus upgrade to path: /usr/jexus/"
 	  echo "Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	fi
@@ -367,6 +377,7 @@ function setupJws()
 	
 	sudo /usr/jexus/jws start
 	sudo /usr/jexus/jws -V
+	echo "------------------------------------"
 	echo "Jexus install to path: /usr/jexus/"
 	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  

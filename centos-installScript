@@ -105,10 +105,12 @@ function selectCmd()
 
 function setupNodejs()
 {
+	echo "install nodejs"
+	echo "------------------------------------"
 	yum -y install nodejs npm
 	echo "Install nodejs completed. info:"
 	node -v
-
+	echo "------------------------------------"
 	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
 
 	sudo npm install forever -g
@@ -124,10 +126,12 @@ function setupNodejs()
 
 function setupMongodb()
 {
+	echo "install mongodb"
+	echo "------------------------------------"
 	yum -y install mongodb mongodb-server
 	echo "Install mongodb completed. info:"
 	mongod --version
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -198,28 +202,6 @@ function setupLibs()
 			unzip -o conf.zip
 	fi
 
-	echo "install libiconv"
-	echo "------------------------------------"
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/libiconv-1.13.1.tar.gz
-	if [ -f libiconv-1.13.1.tar.gz ]; then
-	  tar xvf libiconv-1.13.1.tar.gz
-	  cd libiconv-1.13.1
-	  ./configure --prefix=/usr && make && make install
-	  ldconfig
-	fi
-
-	echo "install mcrypt"
-	echo "------------------------------------"
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/mcrypt-2.6.8.tar.gz
-	if [ -f mcrypt-2.6.8.tar.gz ]; then
-	  tar xvf mcrypt-2.6.8.tar.gz
-	  cd mcrypt-2.6.8
-	  ./configure --prefix=/usr && make && make install
-	  ldconfig
-	fi
-
 	return $?
 }
 
@@ -242,29 +224,10 @@ function setupLibgdiplus()
 
 function setupMemcached()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
-
 	echo "install memcached"
 	echo "------------------------------------"
+	yum -y install memcached*
 
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/memcached-1.4.6.tar.gz
-	if [ -f memcached-1.4.6.tar.gz ]; then
-	  tar xvf memcached-1.4.6.tar.gz
-	  cd memcached-1.4.6
-	  ./configure --prefix=/usr && make && make install
-	  ldconfig
-	  cp -r -f /tmp/downloads/conf/memcached /etc/init.d/memcached
-	  chmod 755 /etc/init.d/memcached
-	  chkconfig --add memcached
-	  chkconfig memcached on
-	  service memcached start
-	fi
 	return $?
 }
 
@@ -299,7 +262,7 @@ function setupMono()
 	fi
 	echo "Install mono completed. info:"
 	mono -V
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -323,7 +286,7 @@ gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 	service mysql start
 	
 	mysql -V
-	
+	echo "------------------------------------"
 	echo "Mysql: Please Ender user(root) password"
 	read -e PWD
 	mysqladmin -uroot password "$PWD"
@@ -345,7 +308,7 @@ enabled=1' > /etc/yum.repos.d/nginx.repo
 	chkconfig --level 2345 nginx on
 	service nginx start
 	nginx -v
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -353,46 +316,21 @@ function setupHaproxy()
 {
 	echo "install haproxy"
 	echo "------------------------------------"
-
-	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  echo "haproxy -f /etc/haproxy/haproxy.cfg &" >> /etc/rc.local
-	fi
-
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/haproxy-1.4.22.tar.gz
-	if [ -f haproxy-1.4.22.tar.gz ]; then
-		tar zxvf haproxy-1.4.22.tar.gz
-		cd haproxy-1.4.22
-		make TARGET=linux26 PREFIX=/usr && make install PREFIX=/usr
-		ldconfig
-		mkdir /etc/haproxy
-		cp -r -f /tmp/downloads/conf/haproxy.cfg /etc/haproxy/haproxy.cfg
-	fi
+	yum -y install haproxy
+	echo "Install haproxy completed. info:"
+	haproxy -v
+	echo "------------------------------------"
 	return $?
 }
 
 function setupRedis()
 {
-	echo "install Redis"
+	echo "install redis"
 	echo "------------------------------------"
-
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/redis-2.4.4.tar.gz
-	if [ -f redis-2.4.4.tar.gz ]; then
-	  tar zxvf redis-2.4.4.tar.gz
-	  cd redis-2.4.4
-	  make && make install PREFIX=/usr
-	  ldconfig
-	  mkdir /etc/redis
-	  cp -r -f /tmp/downloads/conf/redis.conf /etc/redis/redis.conf
-
-	  mkdir  /var/lib/redis
-		cp -r -f /tmp/downloads/conf/redis-server.sh /etc/init.d/redis
-		chmod +x /etc/init.d/redis
-		chkconfig --add redis
-		chkconfig --level 2345 redis on
-		/etc/init.d/redis start
-	fi
+	yum -y install redis
+	echo "Install Redis completed. info:"
+	redis-server -v
+	echo "------------------------------------"
 	return $?
 }
 
@@ -436,6 +374,7 @@ function setupJws()
 	
 	/usr/jexus/jws start
 	/usr/jexus/jws -V
+	echo "------------------------------------"
 	echo "Jexus install to path: /usr/jexus/"
 	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  

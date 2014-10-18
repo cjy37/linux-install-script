@@ -97,7 +97,7 @@ function setupNodejs()
 	sudo yum -y install nodejs npm
 	echo "Install nodejs completed. info:"
 	node -v
-
+	echo "------------------------------------"
 	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
 
 	sudo npm install forever -g
@@ -118,7 +118,7 @@ function setupMongodb()
 	sudo yum -y install mongodb mongodb-server
 	echo "Install mongodb completed. info:"
 	mongod --version
-	
+	echo "------------------------------------"
 	return $?
 }
 
@@ -141,7 +141,7 @@ function setupMono()
 	sudo yum -y install mono-complete
 	echo "Install mono completed. info:"
 	mono -V
-
+	echo "------------------------------------"
 	return $?
 }
 function setupMysql()
@@ -180,7 +180,7 @@ gpgcheck=1' | sudo tee /etc/yum.repos.d/MariaDB.repo
 	sudo service mysql start
 	
 	mysql -V
-	
+	echo "------------------------------------"
 	echo "Mysql: Please Ender user(root) password"
 	read -e PWD
 	sudo mysqladmin -uroot password "$PWD"
@@ -193,7 +193,7 @@ function setupNginx()
 	
 	sudo yum -y install nginx
 	nginx -v
-	
+	echo "------------------------------------"
 	return $?
 }
 function setupHaproxy()
@@ -201,6 +201,8 @@ function setupHaproxy()
 	echo "install haproxy"
 	echo "------------------------------------"
 	sudo yum -y install haproxy
+	haproxy -v
+	echo "------------------------------------"
 	return $?
 }
 function setupRedis()
@@ -208,6 +210,8 @@ function setupRedis()
 	echo "install Redis"
 	echo "------------------------------------"
 	sudo yum -y install redis
+	redis-server -v
+	echo "------------------------------------"
 	return $?
 }
 function setupJws()
@@ -250,6 +254,7 @@ function setupJws()
 	
 	sudo /usr/jexus/jws start
 	sudo /usr/jexus/jws -V
+	echo "------------------------------------"
 	echo "Jexus install to path: /usr/jexus/"
 	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  
