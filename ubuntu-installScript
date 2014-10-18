@@ -288,7 +288,6 @@ function setupNodeJS()
 	
 	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
 	
-	sudo npm install forever -g
 	sudo npm install mqtt -g
 	sudo npm install websocket -g
 	sudo npm install websocket-server -g
