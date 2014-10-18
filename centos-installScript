@@ -205,8 +205,7 @@ function setupLibs()
 	if [ -f libiconv-1.13.1.tar.gz ]; then
 	  tar xvf libiconv-1.13.1.tar.gz
 	  cd libiconv-1.13.1
-	  ./configure --prefix=/usr
-	  make && make install
+	  ./configure --prefix=/usr && make && make install
 	  ldconfig
 	fi
 
@@ -217,8 +216,7 @@ function setupLibs()
 	if [ -f mcrypt-2.6.8.tar.gz ]; then
 	  tar xvf mcrypt-2.6.8.tar.gz
 	  cd mcrypt-2.6.8
-	  ./configure --prefix=/usr
-	  make && make install
+	  ./configure --prefix=/usr && make && make install
 	  ldconfig
 	fi
 
@@ -234,8 +232,7 @@ function setupLibgdiplus()
 	if [ -f libgdiplus-2.10.9.tar.bz2 ]; then
 		tar -jxvf libgdiplus-2.10.9.tar.bz2
 		cd libgdiplus-2.10.9
-		./configure --prefix=/usr
-		make && make install
+		./configure --prefix=/usr && make && make install
 	fi
 	ldconfig
 	ldconfig -p |grep libgdiplus
@@ -260,8 +257,7 @@ function setupMemcached()
 	if [ -f memcached-1.4.6.tar.gz ]; then
 	  tar xvf memcached-1.4.6.tar.gz
 	  cd memcached-1.4.6
-	  ./configure --prefix=/usr/local/webserver/memcached
-	  make && make install
+	  ./configure --prefix=/usr && make && make install
 	  ldconfig
 	  cp -r -f /tmp/downloads/conf/memcached /etc/init.d/memcached
 	  chmod 755 /etc/init.d/memcached
@@ -298,9 +294,7 @@ function setupMono()
 	if [ -f mono-3.10.0.tar.bz2 ]; then
 	  tar -jvxf mono-3.10.0.tar.bz2
 	  cd mono-3.10.0
-	  ./configure --prefix=/usr
-	  sed -i 's/#define HAVE_LOCALCHARSET_H 1/#define HAVE_LOCALCHARSET_H 0/g' eglib/config.h
-	  make && make install
+	  ./configure --prefix=/usr && sed -i 's/#define HAVE_LOCALCHARSET_H 1/#define HAVE_LOCALCHARSET_H 0/g' eglib/config.h && make && make install
 	  ldconfig
 	fi
 	echo "Install mono completed. info:"
@@ -363,13 +357,7 @@ function setupHaproxy()
 	echo "------------------------------------"
 
 	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  echo "/usr/local/webserver/haproxy/sbin/haproxy -f /usr/local/webserver/haproxy/conf/haproxy.cfg &" >> /etc/rc.local
-	fi
-	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  mkdir -pv /usr/local/webserver/haproxy
-	fi
-	if [ ! -d /usr/local/webserver/haproxy/conf ]; then
-	  mkdir -pv /usr/local/webserver/haproxy/conf
+	  echo "haproxy -f /etc/haproxy/haproxy.cfg &" >> /etc/rc.local
 	fi
 
 	cd /tmp/downloads
@@ -377,10 +365,10 @@ function setupHaproxy()
 	if [ -f haproxy-1.4.22.tar.gz ]; then
 		tar zxvf haproxy-1.4.22.tar.gz
 		cd haproxy-1.4.22
-		make TARGET=linux26 PREFIX=/usr/local/webserver/haproxy
-		make install PREFIX=/usr/local/webserver/haproxy
+		make TARGET=linux26 PREFIX=/usr && make install PREFIX=/usr
 		ldconfig
-		cp -r -f /tmp/downloads/conf/haproxy.cfg /usr/local/webserver/haproxy/conf/haproxy.cfg
+		mkdir /etc/haproxy
+		cp -r -f /tmp/downloads/conf/haproxy.cfg /etc/haproxy/haproxy.cfg
 	fi
 	return 0
 }
@@ -395,15 +383,13 @@ function setupRedis()
 	if [ -f redis-2.4.4.tar.gz ]; then
 	  tar zxvf redis-2.4.4.tar.gz
 	  cd redis-2.4.4
-	  make
-	  make PREFIX=/usr/local install
+	  make && make install PREFIX=/usr
 	  ldconfig
 	  mkdir /etc/redis
 	  cp -r -f /tmp/downloads/conf/redis.conf /etc/redis/redis.conf
 
 	  mkdir  /var/lib/redis
 		cp -r -f /tmp/downloads/conf/redis-server.sh /etc/init.d/redis
-		# cp -r -f redis-server.sh /etc/init.d/redis
 		chmod +x /etc/init.d/redis
 		chkconfig --add redis
 		chkconfig --level 2345 redis on
@@ -471,39 +457,39 @@ function setupGtkSharp()
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/glib-2.13.7.tar.bz2
 	tar xvfj  glib-2.13.7.tar.bz2
 	cd glib-2.13.7
-	./configure --prefix=/opt/gtk --with-libiconv=gnu && make && make install
+	./configure --prefix=/usr --with-libiconv=gnu && make && make install
 	ldconfig
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/atk-1.19.6.tar.bz2
 	tar xvfj atk-1.19.6.tar.bz2
 	cd atk-1.19.6
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pixman-0.22.2.tar.gz
 	tar xvfz pixman-0.22.2.tar.gz
 	cd pixman-0.22.2
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/cairo-1.8.10.tar.gz
 	tar xvfz cairo-1.8.10.tar.gz
 	cd cairo-1.8.10
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pango-1.17.3.tar.bz2
 	tar xvfj pango-1.17.3.tar.bz2
 	cd pango-1.17.3
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	ldconfig
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/gtk+-2.12.0.tar.bz2
 	tar xvfj gtk+-2.12.0.tar.bz2
 	cd gtk+-2.12.0
-	./configure --prefix=/opt/gtk --with-x --without-libjasper && make && make install
+	./configure --prefix=/usr --with-x --without-libjasper && make && make install
 	ldconfig
 	cd ..
 

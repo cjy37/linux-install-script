@@ -298,13 +298,7 @@ function setupHaproxy()
 	echo "------------------------------------"
 
 	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  echo "/usr/local/webserver/haproxy/sbin/haproxy -f /usr/local/webserver/haproxy/conf/haproxy.cfg &" >> /etc/rc.local
-	fi
-	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  mkdir -pv /usr/local/webserver/haproxy
-	fi
-	if [ ! -d /usr/local/webserver/haproxy/conf ]; then
-	  mkdir -pv /usr/local/webserver/haproxy/conf
+	  echo "haproxy -f /etc/haproxy/haproxy.cfg &" >> /etc/rc.local
 	fi
 
 	cd /tmp/downloads
@@ -312,10 +306,10 @@ function setupHaproxy()
 	if [ -f haproxy-1.4.22.tar.gz ]; then
 		tar zxvf haproxy-1.4.22.tar.gz
 		cd haproxy-1.4.22
-		make TARGET=linux26 PREFIX=/usr/local/webserver/haproxy
-		make install PREFIX=/usr/local/webserver/haproxy
+		make TARGET=linux26 PREFIX=/usr && make install PREFIX=/usr
 		ldconfig
-		cp -r -f /tmp/downloads/conf/haproxy.cfg /usr/local/webserver/haproxy/conf/haproxy.cfg
+		mkdir /etc/haproxy
+		cp -r -f /tmp/downloads/conf/haproxy.cfg /etc/haproxy/haproxy.cfg
 	fi
 	return 0
 }
@@ -330,8 +324,7 @@ function setupRedis()
 	if [ -f redis-2.4.4.tar.gz ]; then
 	  tar zxvf redis-2.4.4.tar.gz
 	  cd redis-2.4.4
-	  make
-	  make PREFIX=/usr/local install
+	  make && make install PREFIX=/usr
 	  ldconfig
 	  mkdir /etc/redis
 	  cp -r -f /tmp/downloads/conf/redis.conf /etc/redis/redis.conf
@@ -406,39 +399,39 @@ function setupGtkSharp()
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/glib-2.13.7.tar.bz2
 	tar xvfj  glib-2.13.7.tar.bz2
 	cd glib-2.13.7
-	./configure --prefix=/opt/gtk --with-libiconv=gnu && make && make install
+	./configure --prefix=/usr --with-libiconv=gnu && make && make install
 	ldconfig
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/atk-1.19.6.tar.bz2
 	tar xvfj atk-1.19.6.tar.bz2
 	cd atk-1.19.6
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pixman-0.22.2.tar.gz
 	tar xvfz pixman-0.22.2.tar.gz
 	cd pixman-0.22.2
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/cairo-1.8.10.tar.gz
 	tar xvfz cairo-1.8.10.tar.gz
 	cd cairo-1.8.10
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pango-1.17.3.tar.bz2
 	tar xvfj pango-1.17.3.tar.bz2
 	cd pango-1.17.3
-	./configure --prefix=/opt/gtk && make && make install
+	./configure --prefix=/usr && make && make install
 	ldconfig
 	cd ..
 
 	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/gtk+-2.12.0.tar.bz2
 	tar xvfj gtk+-2.12.0.tar.bz2
 	cd gtk+-2.12.0
-	./configure --prefix=/opt/gtk --with-x --without-libjasper && make && make install
+	./configure --prefix=/usr --with-x --without-libjasper && make && make install
 	ldconfig
 	cd ..
 
