@@ -23,8 +23,6 @@ function showMenu()
 	echo "|      h. Install MongoDB                                    |"
 	echo "|      i. Install Nginx                                      |"
 	echo "|      j. Install Memcached                                  |"
-	echo "|      k. Install CutyCapt                                   |"
-	echo "|      l. Install GtkSharp                                   |"
 	echo "|      x. Exit                                               |"
 	echo "--------------------------------------------------------------"
 	echo
@@ -85,14 +83,6 @@ function selectCmd()
 
 	elif [ "$M" = "j" ]; then
 		setupMemcached
-		read -n 1 -p "Press <Enter> to continue..."
-
-	elif [ "$M" = "k" ]; then
-		setupCutyCapt
-		read -n 1 -p "Press <Enter> to continue..."
-	 
-	elif [ "$M" = "l" ]; then
-		setupGtkSharp
 		read -n 1 -p "Press <Enter> to continue..."
 
 	else
