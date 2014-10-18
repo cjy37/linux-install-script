@@ -442,46 +442,46 @@ function setupGtkSharp()
 	export PKG_CONFIG_PATH=/opt/gtk/lib/pkgconfig:$PKG_CONFIG_PATH
 	ldconfig
 	#=========================================================
-	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/glib-2.13.7.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/tar/glib-2.13.7.tar.bz2
 	tar xvfj  glib-2.13.7.tar.bz2
 	cd glib-2.13.7
 	./configure --prefix=/usr --with-libiconv=gnu && make && make install
 	ldconfig
 	cd ..
 
-	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/atk-1.19.6.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/tar/atk-1.19.6.tar.bz2
 	tar xvfj atk-1.19.6.tar.bz2
 	cd atk-1.19.6
 	./configure --prefix=/usr && make && make install
 	cd ..
 
-	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pixman-0.22.2.tar.gz
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/tar/pixman-0.22.2.tar.gz
 	tar xvfz pixman-0.22.2.tar.gz
 	cd pixman-0.22.2
 	./configure --prefix=/usr && make && make install
 	cd ..
 
-	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/cairo-1.8.10.tar.gz
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/tar/cairo-1.8.10.tar.gz
 	tar xvfz cairo-1.8.10.tar.gz
 	cd cairo-1.8.10
 	./configure --prefix=/usr && make && make install
 	cd ..
 
-	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/pango-1.17.3.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/tar/pango-1.17.3.tar.bz2
 	tar xvfj pango-1.17.3.tar.bz2
 	cd pango-1.17.3
 	./configure --prefix=/usr && make && make install
 	ldconfig
 	cd ..
 
-	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/gtk+-2.12.0.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/tar/gtk+-2.12.0.tar.bz2
 	tar xvfj gtk+-2.12.0.tar.bz2
 	cd gtk+-2.12.0
 	./configure --prefix=/usr --with-x --without-libjasper && make && make install
 	ldconfig
 	cd ..
 
-	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/gtk-sharp-2.12.11.tar.bz2
+	wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/tar/gtk-sharp-2.12.11.tar.bz2
 	tar xvfj gtk-sharp-2.12.11.tar.bz2
 	cd gtk-sharp-2.12.11
 	./configure --prefix=/usr && make && make install
