@@ -239,7 +239,7 @@ function setupMysql()
 	echo "install Mysql"
 	echo "------------------------------------"
 	
-	echo '# MariaDB 10.0 CentOS repository list - created 2014-10-17 07:52 UTC
+	echo '# MariaDB 10.0 CentOS repository list - created 2014-10-18 16:58 UTC
 # http://mariadb.org/mariadb/repositories/
 [mariadb]
 name = MariaDB
