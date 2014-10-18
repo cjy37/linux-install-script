@@ -105,7 +105,7 @@ function selectCmd()
 
 function setupNodejs()
 {
-	yum -y install nodejs
+	yum -y install nodejs npm
 	echo "Install nodejs completed. info:"
 	node -v
 
@@ -119,7 +119,7 @@ function setupNodejs()
 	sudo npm install log4js -g
 	sudo npm install pm2 -g --unsafe-perm
 	
-	return 0
+	return $?
 }
 
 function setupMongodb()
@@ -128,7 +128,7 @@ function setupMongodb()
 	echo "Install mongodb completed. info:"
 	mongod --version
 	
-	return 0
+	return $?
 }
 
 
@@ -139,7 +139,7 @@ function setupOs7Epel()
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
 	yum -y install yum-priorities
 	
-	return 0
+	return $?
 }
 
 function setupOs6Epel()
@@ -149,7 +149,7 @@ function setupOs6Epel()
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 	yum -y install yum-priorities
 	
-	return 0
+	return $?
 }
 
 function setupOs5Epel()
@@ -159,7 +159,7 @@ function setupOs5Epel()
 	rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-5
 	yum -y install yum-priorities
 	
-	return 0
+	return $?
 }
 
 function setupLibs()
@@ -220,7 +220,7 @@ function setupLibs()
 	  ldconfig
 	fi
 
-	return 0
+	return $?
 }
 
 function setupLibgdiplus()
@@ -237,7 +237,7 @@ function setupLibgdiplus()
 	ldconfig
 	ldconfig -p |grep libgdiplus
 
-	return 0
+	return $?
 }
 
 function setupMemcached()
@@ -265,7 +265,7 @@ function setupMemcached()
 	  chkconfig memcached on
 	  service memcached start
 	fi
-	return 0
+	return $?
 }
 
 function setupMono()
@@ -300,9 +300,7 @@ function setupMono()
 	echo "Install mono completed. info:"
 	mono -V
 	
-	setupJws
-	
-	return 0
+	return $?
 }
 
 function setupMysql()
@@ -329,7 +327,7 @@ gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 	echo "Mysql: Please Ender user(root) password"
 	read -e PWD
 	mysqladmin -uroot password "$PWD"
-	return 0
+	return $?
 }
 
 function setupNginx()
@@ -348,7 +346,7 @@ enabled=1' > /etc/yum.repos.d/nginx.repo
 	service nginx start
 	nginx -v
 	
-	return 0
+	return $?
 }
 
 function setupHaproxy()
@@ -370,7 +368,7 @@ function setupHaproxy()
 		mkdir /etc/haproxy
 		cp -r -f /tmp/downloads/conf/haproxy.cfg /etc/haproxy/haproxy.cfg
 	fi
-	return 0
+	return $?
 }
 
 function setupRedis()
@@ -395,7 +393,7 @@ function setupRedis()
 		chkconfig --level 2345 redis on
 		/etc/init.d/redis start
 	fi
-	return 0
+	return $?
 }
 
 function setupJws()
@@ -441,7 +439,7 @@ function setupJws()
 	echo "Jexus install to path: /usr/jexus/"
 	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  
-	return 0
+	return $?
 }
 
 function setupGtkSharp()
@@ -499,7 +497,7 @@ function setupGtkSharp()
 	./configure --prefix=/usr && make && make install
 	cd ..
 
-	return 0
+	return $?
 }
 
 function setupCutyCapt()
@@ -535,7 +533,7 @@ function setupCutyCapt()
 
 	#/usr/local/CutyCapt/xvfb-run.sh --server-args="-screen 0, 1024x768x24" /usr/local/CutyCapt/CutyCapt --url=http://www.163.com --out=163.jpg
 
-	return 0
+	return $?
 }
 
 cd /tmp

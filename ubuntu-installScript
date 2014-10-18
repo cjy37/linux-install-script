@@ -87,7 +87,7 @@ function selectCmd()
 		read -n 1 -p "Press <Enter> to continue..."
 		
 	elif [ "$M" = "k" ]; then
-		updateMono
+		updateMono && updateJws
 		read -n 1 -p "Press <Enter> to continue..."
 		
 	elif [ "$M" = "l" ]; then
@@ -132,7 +132,7 @@ function setupLibs()
 			unzip -o conf.zip
 	fi
 
-	return 0
+	return $?
 }
 
 function updateMono()
@@ -146,10 +146,8 @@ function updateMono()
 	sudo apt-get install -y mono-complete
 	echo "Install mono completed. info:"
 	mono -V
-	
-	updateJws
-	
-	return 0
+
+	return $?
 }
 
 function setupNewMono()
@@ -180,9 +178,7 @@ function setupNewMono()
 	echo "Install mono completed. info:"
 	mono -V
 	
-	setupJws
-	
-	return 0
+	return $?
 }
 
 
@@ -206,7 +202,7 @@ function setupMysql()
 	sudo service mysql start
 	mysql -V
 	
-	return 0
+	return $?
 }
 
 function setupHaproxy()
@@ -218,7 +214,7 @@ function setupHaproxy()
 	sudo echo "ENABLED=1" > /etc/default/haproxy
 	sudo service haproxy start
 	
-	return 0
+	return $?
 }
 
 function setupRedis()
@@ -229,7 +225,7 @@ function setupRedis()
 	sudo apt-get install -y redis-server
 	sudo service redis-server start
 	
-	return 0
+	return $?
 }
 
 function setupMongoDB()
@@ -244,6 +240,8 @@ function setupMongoDB()
 	sudo apt-get install -y mongodb-10gen=2.4.6
 	echo "mongodb-10gen hold" | sudo dpkg --set-selections
 	sudo service mongodb start
+	
+	return $?
 }
 
 function setupMQTTServer()
@@ -258,6 +256,8 @@ function setupMQTTServer()
 	sudo cp /etc/mosquitto/mosquitto.conf.example /etc/mosquitto/mosquitto.conf
 	echo "Mosquitto config file: /etc/mosquitto/mosquitto.conf"
 	sudo service mosquitto start
+	
+	return $?
 }
 
 function setupNodeJS()
@@ -290,7 +290,7 @@ function setupNodeJS()
 	sudo npm install log4js -g
 	sudo npm install pm2 -g --unsafe-perm
 	
-	return 0
+	return $?
 }
 
 function setupNginx()
@@ -300,7 +300,7 @@ function setupNginx()
 	sudo apt-get install nginx
 	echo "Nginx config file: /etc/nginx/nginx.conf"
 	
-	return 0
+	return $?
 }
 
 function updateJws()
@@ -328,7 +328,7 @@ function updateJws()
 	  echo "Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	fi
 	
-	return 0
+	return $?
 }
 
 function setupJws()
@@ -370,7 +370,7 @@ function setupJws()
 	echo "Jexus install to path: /usr/jexus/"
 	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  
-	return 0
+	return $?
 }
 
 cd /tmp

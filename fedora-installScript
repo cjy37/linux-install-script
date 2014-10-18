@@ -25,6 +25,7 @@ function showMenu()
 	echo "|      x. Exit                                               |"
 	echo "--------------------------------------------------------------"
 	echo
+	
 	return 0
 }
 
@@ -93,7 +94,7 @@ function setupNodejs()
 {
 	echo "install Node.js"
 	echo "------------------------------------"
-	sudo yum -y install nodejs
+	sudo yum -y install nodejs npm
 	echo "Install nodejs completed. info:"
 	node -v
 
@@ -107,7 +108,7 @@ function setupNodejs()
 	sudo npm install log4js -g
 	sudo npm install pm2 -g --unsafe-perm
 	
-	return 0
+	return $?
 }
 
 function setupMongodb()
@@ -118,7 +119,7 @@ function setupMongodb()
 	echo "Install mongodb completed. info:"
 	mongod --version
 	
-	return 0
+	return $?
 }
 
 
@@ -129,7 +130,7 @@ function setupLibs()
 	echo "Install the public Libs"
 	echo "------------------------------------"
 	sudo yum -y install libjpeg libjpeg-devel libpng libpng-devel curl curl-devel wget gif* libtiff* libjpeg* 
-	return 0
+	return $?
 }
 function setupMono()
 {
@@ -141,7 +142,7 @@ function setupMono()
 	echo "Install mono completed. info:"
 	mono -V
 
-	return 0
+	return $?
 }
 function setupMysql()
 {
@@ -183,7 +184,7 @@ gpgcheck=1' | sudo tee /etc/yum.repos.d/MariaDB.repo
 	echo "Mysql: Please Ender user(root) password"
 	read -e PWD
 	sudo mysqladmin -uroot password "$PWD"
-	return 0
+	return $?
 }
 function setupNginx()
 {
@@ -193,21 +194,21 @@ function setupNginx()
 	sudo yum -y install nginx
 	nginx -v
 	
-	return 0
+	return $?
 }
 function setupHaproxy()
 {
 	echo "install haproxy"
 	echo "------------------------------------"
 	sudo yum -y install haproxy
-	return 0
+	return $?
 }
 function setupRedis()
 {
 	echo "install Redis"
 	echo "------------------------------------"
 	sudo yum -y install redis
-	return 0
+	return $?
 }
 function setupJws()
 {
@@ -252,7 +253,7 @@ function setupJws()
 	echo "Jexus install to path: /usr/jexus/"
 	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  
-	return 0
+	return $?
 }
 
 cd /tmp
