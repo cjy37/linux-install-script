@@ -190,7 +190,7 @@ function setupLibs()
 	  mkdir -pv /tmp/downloads
 	fi
 
-	yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers patch make jpackage-utils build-essential bzip bison pkgconfig glib-devel httpd-devel libX11-devel fontconfig pango-devel ruby ruby-rdoc gtkhtml38-devel wget gettext gcc-g77 automake fiex* libmcrypt* libtool-ltdl-devel* pcre* cmake mhash* libevent libevent-devel gif* libtiff* libjpeg* libpng* libx11* libiconv mcrypt Nginx haproxy
+	yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers patch make jpackage-utils build-essential bzip bison pkgconfig glib-devel httpd-devel libX11-devel fontconfig pango-devel ruby ruby-rdoc gtkhtml38-devel wget gettext gcc-g77 automake fiex* libmcrypt* libtool-ltdl-devel* pcre* cmake mhash* libevent libevent-devel gif* libtiff* libjpeg* libpng* libx11* libiconv mcrypt
 
 	cd /tmp/downloads
 	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/conf.zip
