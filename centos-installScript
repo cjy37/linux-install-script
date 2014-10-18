@@ -247,9 +247,6 @@ function setupMono()
 	echo "Install mono"
 	echo "------------------------------------"
 
-	rpm --import xamarin.gpg
-	yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
-	
 	cd /tmp/downloads
 	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/aspx-info.tar.gz
 	wget -c http://download.mono-project.com/sources/mono/mono-3.10.0.tar.bz2
