@@ -55,7 +55,7 @@ chmod +x centos-installScript
 Running interface:
 ```
 --------------------------------------------------------------
-|      Centos6 Install Helper                                |
+|      Centos5/6 Install Helper                                |
 |      copyright https://github.com/cjy37                    |
 --------------------------------------------------------------
 |      a. Install ALL                                        |
@@ -99,8 +99,6 @@ Running interface:
 |      h. Install MongoDB                                    |
 |      i. Install Nginx                                      |
 |      j. Install Memcached                                  |
-|      k. Install CutyCapt                                   |
-|      l. Install GtkSharp                                   |
 |      x. Exit                                               |
 --------------------------------------------------------------
 ```
