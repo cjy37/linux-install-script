@@ -212,14 +212,14 @@ function setupRedis()
 function setupJws()
 {
 	if [ ! -d /wwwroot/htdocs/www ]; then
-	  mkdir -pv /wwwroot/htdocs/www
+	  sudo mkdir -pv /wwwroot/htdocs/www
 	fi
 	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
+	  sudo mkdir -pv /tmp/downloads
 	fi
 	if [ ! -d /usr/jexus ]; then
-	  mkdir -pv /usr/jexus
-	  echo  "/usr/jexus/jws start" >> /etc/rc.d/rc.local
+	  sudo mkdir -pv /usr/jexus
+	  echo  "/usr/jexus/jws start" | sudo tee /etc/rc.d/rc.local
 	fi
 
 	echo "install jexus"
