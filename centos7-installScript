@@ -260,8 +260,8 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 
 	yum -y install MariaDB-server MariaDB-client MariaDB-devel
-	chkconfig --level 2345 mysqld on
-	service mysqld start
+	chkconfig --level 2345 mysql on
+	service mysql start
 	
 	mysql -V
 	
