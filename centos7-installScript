@@ -194,30 +194,9 @@ function setupLibs()
 
 function setupMemcached()
 {
-	if [ ! -d /usr/local/webserver ]; then
-	  mkdir -pv /usr/local/webserver
-	fi
-	if [ ! -d /tmp/downloads ]; then
-	  mkdir -pv /tmp/downloads
-	fi
+	yum -y install memcached*
+	echo "Install Memcached completed. info:"
 
-	echo "install memcached"
-	echo "------------------------------------"
-
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/memcached-1.4.6.tar.gz
-	if [ -f memcached-1.4.6.tar.gz ]; then
-	  tar xvf memcached-1.4.6.tar.gz
-	  cd memcached-1.4.6
-	  ./configure --prefix=/usr/local/webserver/memcached
-	  make && make install
-	  ldconfig
-	  cp -r -f /tmp/downloads/conf/memcached /etc/init.d/memcached
-	  chmod 755 /etc/init.d/memcached
-	  chkconfig --add memcached
-	  chkconfig memcached on
-	  service memcached start
-	fi
 	return $?
 }
 
@@ -283,49 +262,19 @@ enabled=1' > /etc/yum.repos.d/nginx.repo
 
 function setupHaproxy()
 {
-	echo "install haproxy"
-	echo "------------------------------------"
-
-	if [ ! -d /usr/local/webserver/haproxy ]; then
-	  echo "haproxy -f /etc/haproxy/haproxy.cfg &" >> /etc/rc.local
-	fi
-
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/haproxy-1.4.22.tar.gz
-	if [ -f haproxy-1.4.22.tar.gz ]; then
-		tar zxvf haproxy-1.4.22.tar.gz
-		cd haproxy-1.4.22
-		make TARGET=linux26 PREFIX=/usr && make install PREFIX=/usr
-		ldconfig
-		mkdir /etc/haproxy
-		cp -r -f /tmp/downloads/conf/haproxy.cfg /etc/haproxy/haproxy.cfg
-	fi
+	yum -y install haproxy
+	echo "Install haproxy completed. info:"
+	haproxy -v
+	
 	return $?
 }
 
 function setupRedis()
 {
-	echo "install Redis"
-	echo "------------------------------------"
-
-	cd /tmp/downloads
-	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/redis-2.4.4.tar.gz
-	if [ -f redis-2.4.4.tar.gz ]; then
-	  tar zxvf redis-2.4.4.tar.gz
-	  cd redis-2.4.4
-	  make && make install PREFIX=/usr
-	  ldconfig
-	  mkdir /etc/redis
-	  cp -r -f /tmp/downloads/conf/redis.conf /etc/redis/redis.conf
-
-	  mkdir  /var/lib/redis
-		cp -r -f /tmp/downloads/conf/redis-server.sh /etc/init.d/redis
-		# cp -r -f redis-server.sh /etc/init.d/redis
-		chmod +x /etc/init.d/redis
-		chkconfig --add redis
-		chkconfig --level 2345 redis on
-		/etc/init.d/redis start
-	fi
+	yum -y install redis
+	echo "Install Redis completed. info:"
+	redis-server -v
+	
 	return $?
 }
 
