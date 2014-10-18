@@ -278,7 +278,7 @@ function setupNodeJS()
 	fi
 	
 	if [ ! -d /wwwroot/node_mqtt ]; then
-	  sudo mkdir -pv /wwwroot/node_mqtt
+	  mkdir -pv /wwwroot/node_mqtt
 	fi
 	
 	sudo apt-get install -y python-software-properties python g++ make
@@ -289,7 +289,7 @@ function setupNodeJS()
 	echo "------------------------------------"
 	cd /wwwroot/node_mqtt
 	
-	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
+	sudo echo "sudo npm install mqtt|websocket|socket.io|log4js|pm2"
 	
 	sudo npm install mqtt -g
 	sudo npm install websocket -g

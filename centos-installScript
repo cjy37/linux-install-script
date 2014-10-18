@@ -105,14 +105,25 @@ function selectCmd()
 
 function setupNodejs()
 {
+	if [ ! -d /wwwroot ]; then
+	  sudo mkdir -pv /wwwroot
+	  sudo chmod 777 wwwroot/
+	fi
+	
+	if [ ! -d /wwwroot/node_mqtt ]; then
+	  mkdir -pv /wwwroot/node_mqtt
+	fi
+	
 	echo "install nodejs"
 	echo "------------------------------------"
 	yum -y install nodejs npm
 	echo "Install nodejs completed. info:"
 	node -v
 	echo "------------------------------------"
-	sudo echo "sudo npm install forever|mqtt|websocket|websocket-server|socket.io to '/wwwroot/node_mqtt'"
+	sudo echo "sudo npm install mqtt|websocket|socket.io|log4js|pm2"
 
+	cd /wwwroot/node_mqtt
+	
 	sudo npm install mqtt -g
 	sudo npm install websocket -g
 	sudo npm install websocket-server -g
