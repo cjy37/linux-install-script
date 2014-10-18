@@ -112,6 +112,8 @@ function setupLibs()
 	echo "------------------------------------"
 
 	if [ ! -d /wwwroot/htdocs/www ]; then
+	  sudo mkdir /wwwroot
+	  sudo chmod 777 wwwroot/
 	  mkdir -pv /wwwroot/htdocs/www
 	fi
 
@@ -315,10 +317,10 @@ function setupNginx()
 function updateJws()
 {
 	if [ ! -d /wwwroot/htdocs/www ]; then
-	  sudo mkdir -pv /wwwroot/htdocs/www
+	  mkdir -pv /wwwroot/htdocs/www
 	fi
 	if [ ! -d /tmp/downloads ]; then
-	  sudo mkdir -pv /tmp/downloads
+	  mkdir -pv /tmp/downloads
 	fi
 
 	echo "upgrade jexus"
@@ -344,10 +346,10 @@ function updateJws()
 function setupJws()
 {
 	if [ ! -d /wwwroot/htdocs/www ]; then
-	  sudo mkdir -pv /wwwroot/htdocs/www
+	  mkdir -pv /wwwroot/htdocs/www
 	fi
 	if [ ! -d /tmp/downloads ]; then
-	  sudo mkdir -pv /tmp/downloads
+	  mkdir -pv /tmp/downloads
 	fi
 
 	echo "install jexus"

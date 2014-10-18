@@ -257,10 +257,12 @@ function setupRedis()
 function setupJws()
 {
 	if [ ! -d /wwwroot/htdocs/www ]; then
-	  sudo mkdir -pv /wwwroot/htdocs/www
+	  sudo mkdir /wwwroot
+	  sudo chmod 777 wwwroot/
+	  mkdir -pv /wwwroot/htdocs/www
 	fi
 	if [ ! -d /tmp/downloads ]; then
-	  sudo mkdir -pv /tmp/downloads
+	  mkdir -pv /tmp/downloads
 	fi
 	if [ ! -d /usr/jexus ]; then
 	  sudo mkdir -pv /usr/jexus
