@@ -7,8 +7,6 @@
 
 function showMenu()
 {
-	read -n 1 -p "Press [Any Key] to setup public libs. [Ctrl + C] to Cancel."
-	setupLibs
 	clear
 	echo
 	echo "--------------------------------------------------------------"
@@ -488,4 +486,7 @@ function setupCutyCapt()
 }
 
 cd /tmp
+
+read -n 1 -p "Press [Any Key] to setup public libs. [Ctrl + C] to Cancel."
+setupLibs
 selectCmd
