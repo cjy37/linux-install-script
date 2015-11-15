@@ -144,7 +144,8 @@ function updateMono()
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
 	apt-key add xamarin.gpg
-	echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list
+	#echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list
+	echo "deb http://download.mono-project.com/repo/debian alpha main" | sudo tee /etc/apt/sources.list.d/mono-xamarin-alpha.list
 	sudo apt-get update
 	sudo apt-get install -y mono-complete
 	echo "Install mono completed. info:"
@@ -174,7 +175,8 @@ function setupNewMono()
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
 	sudo apt-key add xamarin.gpg
-	echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list
+	# echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list
+	echo "deb http://download.mono-project.com/repo/debian alpha main" | sudo tee /etc/apt/sources.list.d/mono-xamarin-alpha.list
 	sudo apt-get update
 	sudo apt-get install -y mono-complete
 	
