@@ -150,6 +150,7 @@ function setupMono()
 	#sudo yum-config-manager --add-repo http://download.mono-project.com/repo/centos/
 	sudo yum-config-manager --add-repo http://download.mono-project.com/repo/centos-beta/
 	sudo yum -y install mono-complete
+	sudo yum -y install ca-certificates-mono
 	echo "Install mono completed. info:"
 	mono -V
 	echo "------------------------------------"
