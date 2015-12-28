@@ -15,7 +15,7 @@ function showMenu()
 	echo "--------------------------------------------------------------"
 	echo "|      a. Install ALL                                        |"
 	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
-	echo "|      c. Install Mono4.2.2.10 & Jexus5.8.0 (Asp.Net Web Server)          |"
+	echo "|      c. Install Mono4.2.2.10 & Jexus5.8.0                  |"
 	echo "|      d. Install Mysql (MariaDB-10)                         |"
 	echo "|      e. Install Haproxy                                    |"
 	echo "|      f. Install Redis                                      |"
