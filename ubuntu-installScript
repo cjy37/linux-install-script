@@ -11,7 +11,7 @@ function showMenu()
 	echo
 	echo "--------------------------------------------------------------"
 	echo "|      Ubuntu12.04 Install Helper                            |"
-	echo "|      copyright https://github.com/cjy37                    |"
+	echo "|      copyright https://github.com/istrwei                  |"
 	echo "--------------------------------------------------------------"
 	echo "|      a. Install ALL                                        |"
 	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
@@ -21,7 +21,6 @@ function showMenu()
 	echo "|      f. Install Redis                                      |"
 	echo "|      g. Install Node.js                                    |"
 	echo "|      h. Install MongoDB                                    |"
-	echo "|      i. Install Nginx                                      |"
 	echo "|      j. Install MQTT Server                                |"
 	echo "|      k. *Update Mono & Jexus                               |"
 	echo "|      l. *Update Jexus (Mono Web Server)                    |"
