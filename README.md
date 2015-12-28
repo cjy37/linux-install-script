@@ -1,6 +1,6 @@
 ###  linux-asp.net-installScript
 
-自动安装单（ASP.NET Linux运行时）| jexus（ASP.NET Linux服务器）| MySQL | redis | HAProxy | MongoDB | nginx | Node.js | mosquitto（MQTT服务器）
+自动安装单（ASP.NET Linux运行时）| jexus（ASP.NET Linux服务器）| MySQL | redis | HAProxy | MongoDB | Node.js | mosquitto（MQTT服务器）
 
 ###   [WIKI](https://github.com/istrwei/linux-asp.net-installScript/wiki)
 
@@ -34,7 +34,6 @@ Running interface:
 |      f. Install Redis                                      |
 |      g. Install Node.js                                    |
 |      h. Install MongoDB                                    |
-|      i. Install Nginx                                      |
 |      j. Install MQTT Server                                |
 |      k. *Update Mono & Jexus                               |
 |      l. *Update Jexus (Mono Web Server)                    |
@@ -66,7 +65,6 @@ Running interface:
 |      f. Install Redis                                      |
 |      g. Install Node.js                                    |
 |      h. Install MongoDB                                    |
-|      i. Install Nginx                                      |
 |      j. Install Memcached                                  |
 |      k. Install CutyCapt                                   |
 |      l. Install GtkSharp                                   |
@@ -97,7 +95,6 @@ Running interface:
 |      f. Install Redis                                      |
 |      g. Install Node.js                                    |
 |      h. Install MongoDB                                    |
-|      i. Install Nginx                                      |
 |      j. Install Memcached                                  |
 |      x. Exit                                               |
 --------------------------------------------------------------
@@ -126,7 +123,6 @@ Running interface:
 |      f. Install Redis                                      |
 |      g. Install Node.js                                    |
 |      h. Install MongoDB                                    |
-|      i. Install Nginx                                      |
 |      x. Exit                                               |
 --------------------------------------------------------------
 ```
