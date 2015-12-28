@@ -15,7 +15,7 @@ function showMenu()
 	echo "--------------------------------------------------------------"
 	echo "|      a. Install ALL                                        |"
 	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
-	echo "|      c. Install Mono & Jexus (Asp.Net Web Server)          |"
+	echo "|      c. Install Mono4.2.2.10 & Jexus 5.8.0                 |"
 	echo "|      d. Install Mysql (MariaDB-10)                         |"
 	echo "|      e. Install Haproxy                                    |"
 	echo "|      f. Install Redis                                      |"
@@ -344,10 +344,10 @@ function setupJws()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://www.linuxdot.net/down/jexus-5.6.3.tar.gz
-	if [ -f jexus-5.6.3.tar.gz ]; then
-	  tar -xf jexus-5.6.3.tar.gz
-	  cd jexus-5.6.3
+	wget -c http://www.linuxdot.net/down/jexus-5.8.0.tar.gz
+	if [ -f jexus-5.8.0.tar.gz ]; then
+	  tar -xf jexus-5.8.0.tar.gz
+	  cd jexus-5.8.0
 	  ./install
 	  chmod +x /usr/jexus/*
 	  
