@@ -26,8 +26,8 @@ function showMenu()
 	echo "|      k. Install CutyCapt                                   |"
 	echo "|      l. Install GtkSharp                                   |"
 	echo "|      x. Exit                                               |"
-	echo "|      根据需求选择输入字母然后回车，如需安装数据库请        |"
-	echo "|      再次运行此脚本然后安装                                |"
+	echo "|      根据需求选择输入字母然后回车，如需安装数据库请          |"
+	echo "|      再次运行此脚本然后安装                                   |"
 	echo "--------------------------------------------------------------"
 	echo
 	return 0
