@@ -286,10 +286,10 @@ function setupJws()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://www.linuxdot.net/down/jexus-5.6.3.tar.gz
-	if [ -f jexus-5.6.3.tar.gz ]; then
-	  tar -xf jexus-5.6.3.tar.gz
-	  cd jexus-5.6.3
+	wget -c http://www.linuxdot.net/down/jexus-5.8.0.tar.gz
+	if [ -f jexus-5.8.0.tar.gz ]; then
+	  tar -xf jexus-5.8.0.tar.gz
+	  cd jexus-5.8.0
 	  sudo ./install
 	  sudo chmod +x /usr/jexus/*
 	  
