@@ -2,7 +2,7 @@
 
 自动安装单（ASP.NET Linux运行时）| jexus（ASP.NET Linux服务器）| MySQL | redis | HAProxy | MongoDB | nginx | Node.js | mosquitto（MQTT服务器）编辑
 
-###   [WIKI](https://github.com/cjy37/linux-asp.net-installScript/wiki)
+###   [WIKI](https://github.com/istrwei/linux-asp.net-installScript/wiki)
 
 ###     1. [Ubuntu v12.04 install ](#11-ubuntu1204)
 ###     2. [Centos v5/v6 install ](#12-centos56)
@@ -15,7 +15,7 @@
 ```
 cd /tmp
 rm -f ubuntu-installScript
-wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/ubuntu-installScript
+wget https://github.com/istrwei/linux-asp.net-installScript/raw/master/ubuntu-installScript
 chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 
@@ -24,7 +24,7 @@ Running interface:
 ```
 --------------------------------------------------------------
 |      Ubuntu12.04 Install Helper                            |
-|      copyright https://github.com/cjy37                    |
+|      copyright https://github.com/istrwei                  |
 --------------------------------------------------------------
 |      a. Install ALL                                        |
 |      b. Install Web Server (linux mono mysql jexus)[c,d]   |
@@ -47,7 +47,7 @@ Running interface:
 ```
 cd /tmp
 rm -f centos-installScript
-wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/centos-installScript
+wget https://github.com/istrwei/linux-asp.net-installScript/raw/master/centos-installScript
 chmod +x centos-installScript
 ./centos-installScript
 
@@ -56,7 +56,7 @@ Running interface:
 ```
 --------------------------------------------------------------
 |      Centos5/6 Install Helper                                |
-|      copyright https://github.com/cjy37                    |
+|      copyright https://github.com/istrwei                    |
 --------------------------------------------------------------
 |      a. Install ALL                                        |
 |      b. Install Web Server (linux mono mysql jexus)[c,d]   |
@@ -78,7 +78,7 @@ Running interface:
 ```
 cd /tmp
 rm -f centos7-installScript
-wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/centos7-installScript
+wget https://github.com/istrwei/linux-asp.net-installScript/raw/master/centos7-installScript
 chmod +x centos7-installScript
 ./centos7-installScript
 
@@ -87,7 +87,7 @@ Running interface:
 ```
 --------------------------------------------------------------
 |      Centos7 Install Helper                                |
-|      copyright https://github.com/cjy37                    |
+|      copyright https://github.com/istrwei                  |
 --------------------------------------------------------------
 |      a. Install ALL                                        |
 |      b. Install Web Server (linux mono mysql jexus)[c,d]   |
@@ -107,7 +107,7 @@ Running interface:
 ```
 cd /tmp
 rm -f fedora-installScript
-wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/fedora-installScript
+wget https://github.com/istrwei/linux-asp.net-installScript/raw/master/fedora-installScript
 chmod +x fedora-installScript
 ./fedora-installScript
 
@@ -116,7 +116,7 @@ Running interface:
 ```
 --------------------------------------------------------------
 |      Fedora19/20 Install Helper                            |
-|      copyright https://github.com/cjy37                    |
+|      copyright https://github.com/istrwei                  |
 --------------------------------------------------------------
 |      a. Install ALL                                        |
 |      b. Install Web Server (linux mono mysql jexus)[c,d]   |
