@@ -11,7 +11,7 @@ function showMenu()
 	echo
 	echo "--------------------------------------------------------------"
 	echo "|      Centos6 Install Helper                                |"
-	echo "|      copyright https://github.com/cjy37                    |"
+	echo "|      copyright https://github.com/istrwei                  |"
 	echo "--------------------------------------------------------------"
 	echo "|      a. Install ALL                                        |"
 	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
