@@ -1,6 +1,6 @@
 ###  linux-asp.net-installScript
 
-Auto install MONO (asp.net linux runtime) | Jexus (asp.net linux server) | mysql | redis | haproxy | mongodb | nginx | Node.js | mosquitto (MQTT server)
+自动安装单（ASP.NET Linux运行时）| jexus（ASP.NET Linux服务器）| MySQL | redis | HAProxy | MongoDB | nginx | Node.js | mosquitto（MQTT服务器）编辑
 
 ###   [WIKI](https://github.com/cjy37/linux-asp.net-installScript/wiki)
 
