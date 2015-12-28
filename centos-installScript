@@ -21,7 +21,6 @@ function showMenu()
 	echo "|      f. Install Redis                                      |"
 	echo "|      g. Install Node.js                                    |"
 	echo "|      h. Install MongoDB                                    |"
-	echo "|      i. Install Nginx                                      |"
 	echo "|      j. Install Memcached                                  |"
 	echo "|      k. Install CutyCapt                                   |"
 	echo "|      l. Install GtkSharp                                   |"
