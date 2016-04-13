@@ -261,10 +261,10 @@ function setupMono()
 
 	cd /tmp/downloads
 	wget -c https://github.com/cjy37/linux-asp.net-installScript/raw/master/aspx-info.tar.gz
-	wget -c http://download.mono-project.com/sources/mono/mono-4.2.2.10.tar.bz2
-	if [ -f mono-4.2.2.10.tar.bz2 ]; then
-	  tar -jvxf mono-4.2.2.10.tar.bz2
-	  cd mono-4.2.2.10
+	wget -c http://download.mono-project.com/sources/mono/mono-4.4.0.122.tar.bz2
+	if [ -f mono-4.4.0.122.tar.bz2 ]; then
+	  tar -jvxf mono-4.4.0.122.tar.bz2
+	  cd mono-4.4.0.122
 	  ./configure --prefix=/usr && sed -i 's/#define HAVE_LOCALCHARSET_H 1/#define HAVE_LOCALCHARSET_H 0/g' eglib/config.h && make && make install
 	  ldconfig
 	fi
@@ -403,10 +403,10 @@ function setupJws()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://www.linuxdot.net/down/jexus-5.8.0.tar.gz
-	if [ -f jexus-5.8.0.tar.gz ]; then
-	  tar -xf jexus-5.8.0.tar.gz
-	  cd jexus-5.8.0
+	wget -c http://www.linuxdot.net/down/jexus-5.8.1.tar.gz
+	if [ -f jexus-5.8.1.tar.gz ]; then
+	  tar -xf jexus-5.8.1.tar.gz
+	  cd jexus-5.8.1
 	  ./install
 	  chmod +x /usr/jexus/*
 	  
