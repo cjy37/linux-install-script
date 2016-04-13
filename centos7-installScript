@@ -345,10 +345,10 @@ function setupJws()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://www.linuxdot.net/down/jexus-5.8.0.tar.gz
-	if [ -f jexus-5.8.0.tar.gz ]; then
-	  tar -xf jexus-5.8.0.tar.gz
-	  cd jexus-5.8.0
+	wget -c http://www.linuxdot.net/down/jexus-5.8.1.tar.gz
+	if [ -f jexus-5.8.1.tar.gz ]; then
+	  tar -xf jexus-5.8.1.tar.gz
+	  cd jexus-5.8.1
 	  ./install
 	  chmod +x /usr/jexus/*
 	  
