@@ -11,19 +11,19 @@ function showMenu()
 	echo
 	echo "--------------------------------------------------------------"
 	echo "|      Centos7 Install Helper                                |"
-	echo "|      copyright https://github.com/cjy37                    |"
+	echo "|      版权所有 https://github.com/cjy37                     |"
 	echo "--------------------------------------------------------------"
-	echo "|      a. Install ALL                                        |"
-	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
-	echo "|      c. Install Mono & Jexus (Asp.Net Web Server)          |"
-	echo "|      d. Install Mysql (MariaDB-10)                         |"
-	echo "|      e. Install Haproxy                                    |"
-	echo "|      f. Install Redis                                      |"
-	echo "|      g. Install Node.js                                    |"
-	echo "|      h. Install MongoDB                                    |"
-	echo "|      i. Install Nginx                                      |"
-	echo "|      j. Install Memcached                                  |"
-	echo "|      x. Exit                                               |"
+	echo "|      a. 安装全部组件                                       |"
+	echo "|      b. 安装 Web 服务 (linux mono mysql jexus)[c,d]        |"
+	echo "|      c. 安装 Mono & Jexus (Asp.Net Web Server)             |"
+	echo "|      d. 安装 Mysql (MariaDB-10)                            |"
+	echo "|      e. 安装 Haproxy                                       |"
+	echo "|      f. 安装 Redis                                         |"
+	echo "|      g. 安装 Node.js                                       |"
+	echo "|      h. 安装 MongoDB                                       |"
+	echo "|      i. 安装 Nginx                                         |"
+	echo "|      j. 安装 Memcached                                     |"
+	echo "|      x. 退出                                               |"
 	echo "--------------------------------------------------------------"
 	echo
 	
@@ -34,7 +34,7 @@ function selectCmd()
 {
 	alias cp='cp'
 	showMenu
-	echo "Please select a serial number for installation [a-x]:"
+	echo "请选择要安装的字母序号 [a-x]:"
 	read -n 1 M
 	echo
 
@@ -42,52 +42,52 @@ function selectCmd()
 		exit 1
 		
 	elif [ "$M" = "a" ]; then
-		echo "Installing ALL..."
+		echo "安装 全部组件..."
 		echo "------------------------------------"
 		setupMono && setupJws && setupMysql && setupHaproxy && setupRedis && setupNodejs && setupMemcached && setupNginx && setupMongodb && setupCutyCapt && setupGtkSharp
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "b" ]; then
-		echo "Installing Web Server ... [c,d]"
+		echo "安装 Web 服务(linux mono mysql jexus) (lmmj) [c,d]"
 		echo "------------------------------------"
 		setupMono && setupJws && setupMysql
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "c" ]; then
 		setupMono && setupJws
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 
 	elif [ "$M" = "d" ]; then
 		setupMysql
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 
 	elif [ "$M" = "e" ]; then
 		setupHaproxy
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 
 	elif [ "$M" = "f" ]; then
 		setupRedis
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "g" ]; then
 		setupNodejs
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "h" ]; then
 		setupMongodb
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "i" ]; then
 		setupNginx
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 
 	elif [ "$M" = "j" ]; then
 		setupMemcached
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 
 	else
-		echo "Select Error!"
-		read -n 1 -p "Press <Enter> to continue..."
+		echo "选择错误!"
+		read -n 1 -p "按 <Enter> 继续..."
 	fi
 
 	selectCmd
@@ -179,8 +179,7 @@ function setupLibs()
 
 	yum -y update
 	yum -y groupinstall "Development Tools"
-
-	echo "Install the public Libs"
+	echo "安装公共组件..."
 	echo "------------------------------------"
 
 	if [ ! -d /usr/local/webserver ]; then
@@ -219,7 +218,7 @@ function setupMemcached()
 
 function setupMono()
 {
-	echo "install setupMono"
+	echo "安装 mono"
 	echo "------------------------------------"
 	
 	#yum -y install mono-*
@@ -230,7 +229,7 @@ function setupMono()
 	yum-config-manager --add-repo http://download.mono-project.com/repo/centos-beta/
 	yum -y install mono-complete
 	yum -y install ca-certificates-mono
-	echo "Install mono completed. info:"
+	echo "安装 mono 完成. 信息:"
 	mono -V
 	echo "------------------------------------"
 	return $?
@@ -238,7 +237,7 @@ function setupMono()
 
 function setupMysql()
 {
-	echo "install Mysql"
+	echo "安装 mysql"
 	echo "------------------------------------"
 	
 	echo '# MariaDB 10.0 CentOS repository list - created 2014-10-18 16:58 UTC
@@ -340,7 +339,7 @@ function setupJws()
 	  echo  "/usr/jexus/jws start" >> /etc/rc.local
 	fi
 
-	echo "install jexus"
+	echo "安装 jexus"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
@@ -361,15 +360,15 @@ function setupJws()
 	  tar xvf aspx-info.tar.gz
 	  cd aspx-info
 	  cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
-	  echo "Web Root Path: /wwwroot/htdocs/www/"
-	  echo "If you need change it. Please vim the Jexus config file(/usr/jexus/siteconf/*)"
+	  echo "站点根目录: /wwwroot/htdocs/www/"
+	  echo "如果你要更新它. 请修改 Jexus 配置文件：(/usr/jexus/siteconf/*)"
 	fi
 	
 	/usr/jexus/jws start
 	/usr/jexus/jws -V
 	echo "------------------------------------"
-	echo "Jexus install to path: /usr/jexus/"
-	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+	echo "Jexus 安装目录: /usr/jexus/"
+	echo "Jexus 配置文件：(/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  
 	return $?
 }
@@ -377,6 +376,6 @@ function setupJws()
 
 cd /tmp
 
-read -n 1 -p "Press [Any Key] to setup public libs. [Ctrl + C] to Cancel."
+read -n 1 -p "按任意键安装公共组件. 按 [Ctrl + C] 取消安装."
 setupLibs
 selectCmd
