@@ -11,21 +11,21 @@ function showMenu()
 	echo
 	echo "--------------------------------------------------------------"
 	echo "|      Ubuntu12.04 Install Helper                            |"
-	echo "|      copyright https://github.com/cjy37                    |"
+	echo "|      版权所有 https://github.com/cjy37                     |"
 	echo "--------------------------------------------------------------"
-	echo "|      a. Install ALL                                        |"
-	echo "|      b. Install Web Server (linux mono mysql jexus)[c,d]   |"
-	echo "|      c. Install Mono & Jexus (Asp.Net Web Server)          |"
-	echo "|      d. Install Mysql (MariaDB-10)                         |"
-	echo "|      e. Install Haproxy                                    |"
-	echo "|      f. Install Redis                                      |"
-	echo "|      g. Install Node.js                                    |"
-	echo "|      h. Install MongoDB                                    |"
-	echo "|      i. Install Nginx                                      |"
-	echo "|      j. Install MQTT Server                                |"
-	echo "|      k. *Update Mono & Jexus                               |"
-	echo "|      l. *Update Jexus (Mono Web Server)                    |"
-	echo "|      x. Exit                                               |"
+	echo "|      a. 安装全部组件                                       |"
+	echo "|      b. 安装 Web 服务 (linux mono mysql jexus)[c,d]        |"
+	echo "|      c. 安装 Mono & Jexus (Asp.Net Web Server)             |"
+	echo "|      d. 安装 Mysql (MariaDB-10)                            |"
+	echo "|      e. 安装 Haproxy                                       |"
+	echo "|      f. 安装 Redis                                         |"
+	echo "|      g. 安装 Node.js                                       |"
+	echo "|      h. 安装 MongoDB                                       |"
+	echo "|      i. 安装 Nginx                                         |"
+	echo "|      j. 安装 MQTT 服务                                     |"
+	echo "|      k. *更新 Mono & Jexus                                 |"
+	echo "|      l. *更新 Jexus (Mono Web Server)                      |"
+	echo "|      x. 退出                                               |"
 	echo "--------------------------------------------------------------"
 	echo
 	return 0
@@ -35,7 +35,7 @@ function selectCmd()
 {
 	alias cp='cp'
 	showMenu
-	echo "Please select a serial number for installation [a-x]:"
+	echo "请选择要安装的字母序号 [a-x]:"
 	read -n 1 M
 	echo
 
@@ -43,60 +43,60 @@ function selectCmd()
 		exit 1
 		
 	elif [ "$M" = "a" ]; then
-		echo "Installing ALL..."
+		echo "安装 全部组件..."
 		echo "------------------------------------"
 		setupNewMono && setupJws && setupMysql && setupHaproxy && setupRedis && setupNodeJS && setupMQTTServer && setupMongoDB && setupNginx
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "b" ]; then
-		echo "Installing Web Server(linux mono mysql jexus) (lmmj) [c,d]"
+		echo "安装 Web 服务(linux mono mysql jexus) (lmmj) [c,d]"
 		echo "------------------------------------"
 		setupNewMono && setupJws && setupMysql
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "c" ]; then
 		setupNewMono && setupJws
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 
 	elif [ "$M" = "d" ]; then
 		setupMysql
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "e" ]; then
 		setupHaproxy
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "f" ]; then
 		setupRedis
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "g" ]; then
 		setupNodeJS
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "j" ]; then
 		setupMQTTServer
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "h" ]; then
 		setupMongoDB
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "i" ]; then
 		setupNginx
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "k" ]; then
 		updateMono && updateJws
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 		
 	elif [ "$M" = "l" ]; then
 		updateJws
-		read -n 1 -p "Press <Enter> to continue..."
+		read -n 1 -p "按 <Enter> 继续..."
 
 	else
-		echo "Select Error!"
-		read -n 1 -p "Press <Enter> to continue..."
+		echo "选择错误!"
+		read -n 1 -p "按 <Enter> 继续..."
 	fi
 
 	selectCmd
@@ -119,7 +119,7 @@ function setupLibs()
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
 
-	echo "Install the public Libs"
+	echo "安装公共组件..."
 	echo "------------------------------------"
 
 	if [ ! -d /wwwroot/htdocs/www ]; then
@@ -150,7 +150,7 @@ function setupLibs()
 
 function updateMono()
 {
-	echo "Update mono"
+	echo "更新 mono"
 	echo "------------------------------------"
 	cd /tmp
 	wget http://download.mono-project.com/repo/xamarin.gpg
@@ -161,7 +161,7 @@ function updateMono()
 	sudo apt-get install -y mono-complete
 	sudo apt-get install -y ca-certificates-mono
 	
-	echo "Install mono completed. info:"
+	echo "更新 mono 完成. 信息:"
 	mono -V
 	echo "------------------------------------"
 	return $?
@@ -176,7 +176,7 @@ function setupNewMono()
 	  mkdir -pv /tmp/downloads
 	fi
 	
-	echo "Install mono"
+	echo "安装 mono"
 	echo "------------------------------------"
 
 	sudo apt-get -f remove -y libmono* mono-jay
@@ -194,7 +194,7 @@ function setupNewMono()
 	sudo apt-get install -y mono-complete
 	sudo apt-get install -y ca-certificates-mono
 	
-	echo "Install mono completed. info:"
+	echo "安装 mono 完成. 信息:"
 	mono -V
 	echo "------------------------------------"
 	return $?
@@ -207,7 +207,7 @@ function setupMysql()
 	  mkdir -pv /tmp/downloads
 	fi
 
-	echo "install mysql"
+	echo "安装 mysql"
 	echo "------------------------------------"
 
 	sudo apt-get install -y python-software-properties
@@ -227,7 +227,7 @@ function setupMysql()
 
 function setupHaproxy()
 {
-	echo "install haproxy"
+	echo "安装 haproxy"
 	echo "------------------------------------"
 
 	sudo apt-get install -y haproxy
@@ -240,7 +240,7 @@ function setupHaproxy()
 
 function setupRedis()
 {
-	echo "install Redis"
+	echo "安装 Redis"
 	echo "------------------------------------"
 
 	sudo apt-get install -y redis-server
@@ -252,7 +252,7 @@ function setupRedis()
 
 function setupMongoDB()
 {
-	echo "install MongoDB"
+	echo "安装 MongoDB"
 	echo "------------------------------------"
 
 	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
@@ -269,7 +269,7 @@ function setupMongoDB()
 
 function setupMQTTServer()
 {
-	echo "install mosquitto(MQTT Server)"
+	echo "安装 mosquitto(MQTT 服务)"
 	echo "------------------------------------"
 
 	sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
@@ -277,7 +277,7 @@ function setupMQTTServer()
 	sudo apt-get install -y python-software-properties
 	sudo apt-get install -y mosquitto
 	sudo cp /etc/mosquitto/mosquitto.conf.example /etc/mosquitto/mosquitto.conf
-	echo "Mosquitto config file: /etc/mosquitto/mosquitto.conf"
+	echo "Mosquitto 配置文件: /etc/mosquitto/mosquitto.conf"
 	sudo service mosquitto start
 	mosquitto -h
 	echo "------------------------------------"
@@ -286,7 +286,7 @@ function setupMQTTServer()
 
 function setupNodeJS()
 {
-	echo "install Node.js"
+	echo "安装 Node.js"
 	echo "------------------------------------"
 	
 	if [ ! -d /wwwroot ]; then
@@ -305,14 +305,8 @@ function setupNodeJS()
 	echo "------------------------------------"
 	cd /wwwroot/node_mqtt
 	
-	sudo echo "sudo npm install mqtt|websocket|socket.io|log4js|pm2"
-	
-	sudo npm install mqtt -g
-	sudo npm install websocket -g
-	sudo npm install websocket-server -g
-	#sudo npm install socket.io -g
-	sudo npm install socket.io@0.9 -g
-	sudo npm install log4js -g
+	sudo echo "安装Node组件：mqtt|websocket|socket.io|log4js|pm2"
+	sudo npm install -g mqtt websocket websocket-server socket.io@0.9 log4js
 	sudo npm install pm2 -g --unsafe-perm
 	
 	return $?
@@ -320,12 +314,12 @@ function setupNodeJS()
 
 function setupNginx()
 {
-	echo "install Nginx"
+	echo "安装 Nginx"
 	echo "------------------------------------"
 	sudo apt-add-repository ppa:nginx/development
 	sudo apt-get update
 	sudo apt-get install nginx
-	echo "Nginx config file: /etc/nginx/nginx.conf"
+	echo "Nginx 配置文件: /etc/nginx/nginx.conf"
 	nginx -v
 	echo "------------------------------------"
 	return $?
@@ -340,7 +334,7 @@ function updateJws()
 	  mkdir -pv /tmp/downloads
 	fi
 
-	echo "upgrade jexus"
+	echo "更新 jexus"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
@@ -353,8 +347,8 @@ function updateJws()
 	  sudo /usr/jexus/jws start
 	  sudo /usr/jexus/jws -V
 	  echo "------------------------------------"
-	  echo "Jexus upgrade to path: /usr/jexus/"
-	  echo "Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+	  echo "Jexus 更新到: /usr/jexus/"
+	  echo "Jexus 配置文件： (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	fi
 	
 	return $?
@@ -369,7 +363,7 @@ function setupJws()
 	  mkdir -pv /tmp/downloads
 	fi
 
-	echo "install jexus"
+	echo "安装 jexus"
 	echo "------------------------------------"
 
 	cd /tmp/downloads
@@ -390,21 +384,21 @@ function setupJws()
 	  tar xvf aspx-info.tar.gz
 	  cd aspx-info
 	  sudo cp -r -f index.aspx /wwwroot/htdocs/www/index.aspx
-	  echo "Web Root Path: /wwwroot/htdocs/www/"
-	  echo "If you need change it. Please vim the Jexus config file(/usr/jexus/siteconf/*)"
+	  echo "站点根目录: /wwwroot/htdocs/www/"
+	  echo "如果你要更新它. 请修改 Jexus 配置文件：(/usr/jexus/siteconf/*)"
 	fi
 	
 	sudo /usr/jexus/jws start
 	sudo /usr/jexus/jws -V
 	echo "------------------------------------"
-	echo "Jexus install to path: /usr/jexus/"
-	echo "Please vim the Jexus config file (/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
+	echo "Jexus 安装目录: /usr/jexus/"
+	echo "Jexus 配置文件：(/usr/jexus/jws.conf and /usr/jexus/siteconf/*)"
 	  
 	return $?
 }
 
 cd /tmp
 
-read -n 1 -p "Press [Any Key] to setup public libs. [Ctrl + C] to Cancel."
+read -n 1 -p "按任意键安装公共组件. 按 [Ctrl + C] 取消安装."
 setupLibs
 selectCmd
