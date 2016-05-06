@@ -402,10 +402,10 @@ function setupJws()
 	echo "------------------------------------"
 
 	cd /tmp/downloads
-	wget -c http://www.linuxdot.net/down/jexus-5.6.3.tar.gz
-	if [ -f jexus-5.6.3.tar.gz ]; then
-	  tar -xf jexus-5.6.3.tar.gz
-	  cd jexus-5.6.3
+	wget -c http://www.linuxdot.net/down/jexus-5.8.1-x64.tar.gz
+	if [ -f jexus-5.8.1-x64.tar.gz ]; then
+	  tar -xf jexus-5.8.1-x64.tar.gz
+	  cd jexus-5.8.1-x64
 	  ./install
 	  chmod +x /usr/jexus/*
 	  
