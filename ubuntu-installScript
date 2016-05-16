@@ -298,7 +298,10 @@ function setupNodeJS()
 	fi
 	
 	sudo apt-get install -y python-software-properties python g++ make
-	sudo add-apt-repository ppa:chris-lea/node.js
+
+        curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+        
+        #sudo add-apt-repository ppa:chris-lea/node.js
 	sudo apt-get update -y
 	sudo apt-get install -y nodejs
 	node -v
