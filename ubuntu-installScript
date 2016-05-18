@@ -297,20 +297,22 @@ function setupNodeJS()
 	  mkdir -pv /wwwroot/node_mqtt
 	fi
 	
-	sudo apt-get install -y python-software-properties python g++ make
-
-        curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+//	sudo apt-get install -y python-software-properties python g++ make
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash
+nvm install 4.4.4
+nvm use 4.4.4
+//        curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
         
         #sudo add-apt-repository ppa:chris-lea/node.js
-	sudo apt-get update -y
-	sudo apt-get install -y nodejs
+//	sudo apt-get update -y
+//	sudo apt-get install -y nodejs
 	node -v
 	echo "------------------------------------"
-	cd /wwwroot/node_mqtt
+//	cd /wwwroot/node_mqtt
 	
 	sudo echo "安装Node组件：mqtt|websocket|socket.io|log4js|pm2"
 	sudo npm install -g mqtt websocket websocket-server socket.io@0.9 log4js
-	sudo npm install pm2 -g --unsafe-perm
+//	sudo npm install pm2 -g --unsafe-perm
 	
 	return $?
 }
