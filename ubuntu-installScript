@@ -299,6 +299,7 @@ function setupNodeJS()
 	
 #/	sudo apt-get install -y python-software-properties python g++ make
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.1/install.sh | bash
+source ~/.bashrc
 nvm install 4.4.4
 nvm use 4.4.4
 #        curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
