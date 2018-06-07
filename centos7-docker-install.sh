@@ -273,18 +273,45 @@ function setupNFS()
     systemctl list-unit-files | grep nfs.service
     systemctl enable nfs.service
     echo "启动NFS服务"
-    echo "/wwwroot 172.16.7.0/24(rw,sync,all_squash)" > /etc/exports
-    chown -R nfsnobody.nfsnobody /wwwroot
+    echo "/wwwroot 172.16.7.0/24(rw,sync,all_squash,anonuid=0,anongid=0)" > /etc/exports
+    #chown -R nfsnobody.nfsnobody /wwwroot
     systemctl restart nfs.service
     exportfs -rv
+    
+    echo '
+RQUOTAD_PORT=1001
+去掉下面语句前面的“#”号
+LOCKD_TCPPORT=32803
+LOCKD_UDPPORT=32769
+MOUNTD_PORT=892
+STATD_PORT=662' >> /etc/sysconfig/nfs
+
+    firewall-cmd  --permanent    --add-port=111/tcp
+    firewall-cmd  --permanent    --add-port=111/udp
+    firewall-cmd  --permanent    --add-port=2049/tcp
+    firewall-cmd  --permanent    --add-port=2049/udp
+    
+    firewall-cmd  --permanent    --add-port  1001/tcp
+    firewall-cmd  --permanent    --add-port  1001/udp
+    firewall-cmd  --permanent    --add-port 32803/tcp
+    firewall-cmd  --permanent    --add-port 32769/udp
+    firewall-cmd  --permanent    --add-port 892/tcp
+    firewall-cmd  --permanent    --add-port 892/udp
+        
+    firewall-cmd --permanent --add-port=662/tcp
+    firewall-cmd --permanent --add-port=662/udp
+    
+    firewall-cmd --reload
+    
+    rpcinfo -p
     echo "====== 后续操作： ======"
     echo "vim /etc/exports"
-    echo "exports文件配置格式:\
-NFS共享的目录 NFS客户端地址1(参数1,参数2,...) 客户端地址2(参数1,参数2,...)\
-要用绝对路径，可被nfsnobody读写。\
-例如：\
-# /wwwroot 172.16.7.0/24(rw,sync,all_squash)\
-"
+    echo 'exports文件配置格式:
+NFS共享的目录 NFS客户端地址1(参数1,参数2,...) 客户端地址2(参数1,参数2,...)
+要用绝对路径，可被nfsnobody读写。
+例如：
+# /wwwroot 172.16.7.0/24(rw,sync,all_squash)
+'
 
 	return $?
 }
