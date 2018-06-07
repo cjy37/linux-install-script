@@ -11,18 +11,18 @@ function showMenu()
 	echo
 	echo "--------------------------------------------------------------"
 	echo "|      Centos7 Install Helper                                |"
-	echo "|      °æÈ¨ËùÓĞ https://github.com/cjy37                     |"
+	echo "|      ç‰ˆæƒæ‰€æœ‰ https://github.com/cjy37                     |"
 	echo "--------------------------------------------------------------"
-	echo "|      a. °²×° Docker ÔËĞĞ»·¾³                               |"
-	echo "|      b. °²×° Rancher (Docker¿ØÖÆÌ¨)                        |"
-	echo "|      # c. °²×° MySQL   ·şÎñ  (²»ÍÆ¼ö, ½¨ÒéDocker·½Ê½)      |"
-	echo "|      # d. °²×° MongoDB ·şÎñ  (²»ÍÆ¼ö, ½¨ÒéDocker·½Ê½)      |"
-	echo "|      # e. °²×° MQTT    ·şÎñ  (²»ÍÆ¼ö, ½¨ÒéDocker·½Ê½)      |"
-	echo "|      # f. °²×° Redis   ·şÎñ  (²»ÍÆ¼ö, ½¨ÒéDocker·½Ê½)      |"
-	echo "|      # g. °²×° Nginx   ·şÎñ  (²»ÍÆ¼ö, ½¨ÒéDocker·½Ê½)      |"
-	echo "|      # h. °²×° Haproxy ·şÎñ  (²»ÍÆ¼ö, ½¨ÒéDocker·½Ê½)      |"
-	echo "|      i. °²×° NFS ¹²Ïí´æ´¢                                  |"
-	echo "|      x. ÍË³ö                                               |"
+	echo "|      a. å®‰è£… Docker è¿è¡Œç¯å¢ƒ                               |"
+	echo "|      b. å®‰è£… Rancher (Dockeræ§åˆ¶å°)                        |"
+	echo "|      # c. å®‰è£… MySQL   æœåŠ¡  (ä¸æ¨è, å»ºè®®Dockeræ–¹å¼)      |"
+	echo "|      # d. å®‰è£… MongoDB æœåŠ¡  (ä¸æ¨è, å»ºè®®Dockeræ–¹å¼)      |"
+	echo "|      # e. å®‰è£… MQTT    æœåŠ¡  (ä¸æ¨è, å»ºè®®Dockeræ–¹å¼)      |"
+	echo "|      # f. å®‰è£… Redis   æœåŠ¡  (ä¸æ¨è, å»ºè®®Dockeræ–¹å¼)      |"
+	echo "|      # g. å®‰è£… Nginx   æœåŠ¡  (ä¸æ¨è, å»ºè®®Dockeræ–¹å¼)      |"
+	echo "|      # h. å®‰è£… Haproxy æœåŠ¡  (ä¸æ¨è, å»ºè®®Dockeræ–¹å¼)      |"
+	echo "|      i. å®‰è£… NFS å…±äº«å­˜å‚¨                                  |"
+	echo "|      x. é€€å‡º                                               |"
 	echo "--------------------------------------------------------------"
 	echo
 	
@@ -33,7 +33,7 @@ function selectCmd()
 {
 	alias cp='cp'
 	showMenu
-	echo "ÇëÑ¡ÔñÒª°²×°µÄ×ÖÄ¸ĞòºÅ [a-x]:"
+	echo "è¯·é€‰æ‹©è¦å®‰è£…çš„å­—æ¯åºå· [a-x]:"
 	read -n 1 M
 	echo
 
@@ -41,62 +41,62 @@ function selectCmd()
 		exit 1
 		
 	elif [ "$M" = "a" ]; then
-		echo "°²×° Docker ÔËĞĞ»·¾³"
+		echo "å®‰è£… Docker è¿è¡Œç¯å¢ƒ"
 		echo "------------------------------------"
 		setupDocker
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 		
 	elif [ "$M" = "b" ]; then
-		echo "°²×° Rancher ·şÎñ"
+		echo "å®‰è£… Rancher æœåŠ¡"
 		echo "------------------------------------"
 		setupRancher
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 
 	elif [ "$M" = "c" ]; then
-		echo "°²×° MySQL ·şÎñ"
+		echo "å®‰è£… MySQL æœåŠ¡"
 		echo "------------------------------------"
 		setupMysql
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 
 	elif [ "$M" = "d" ]; then
-		echo "°²×° MongoDB ·şÎñ"
+		echo "å®‰è£… MongoDB æœåŠ¡"
 		echo "------------------------------------"
 		setupMongodb
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 		
 	elif [ "$M" = "e" ]; then
-		echo "°²×° MQTT ·şÎñ£¨Mosquitto£©"
+		echo "å®‰è£… MQTT æœåŠ¡ï¼ˆMosquittoï¼‰"
 		echo "------------------------------------"
 		setupMosquitto
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
     
     elif [ "$M" = "f" ]; then
-		echo "°²×° Redis ·şÎñ"
+		echo "å®‰è£… Redis æœåŠ¡"
 		echo "------------------------------------"
 		setupRedis
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 	
     elif [ "$M" = "g" ]; then
-		echo "°²×° Nginx ·şÎñ"
+		echo "å®‰è£… Nginx æœåŠ¡"
 		echo "------------------------------------"
 		setupNginx
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
    
 	elif [ "$M" = "h" ]; then
-		echo "°²×° Haproxy ·şÎñ"
+		echo "å®‰è£… Haproxy æœåŠ¡"
 		echo "------------------------------------"
 		setupHaproxy
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 
 	elif [ "$M" = "i" ]; then
-		echo "°²×° NFS ¹²Ïí´æ´¢"
+		echo "å®‰è£… NFS å…±äº«å­˜å‚¨"
 		echo "------------------------------------"
 		setupNFS
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 
 	else
-		echo "Ñ¡Ôñ´íÎó!"
-		read -n 1 -p "°´ <Enter> ¼ÌĞø..."
+		echo "é€‰æ‹©é”™è¯¯!"
+		read -n 1 -p "æŒ‰ <Enter> ç»§ç»­..."
 	fi
 
 	selectCmd
@@ -106,7 +106,7 @@ function selectCmd()
 function setupDocker()
 {
 
-    # É¾³ı¾ÉµÄ×é¼ş
+    # åˆ é™¤æ—§çš„ç»„ä»¶
 	sudo yum remove docker \
         docker-client \
         docker-client-latest \
@@ -118,12 +118,12 @@ function setupDocker()
         docker-engine-selinux \
         docker-engine
 
-    # °²×°ÒÀÀµ
+    # å®‰è£…ä¾èµ–
 	sudo yum install -y yum-utils \
         device-mapper-persistent-data \
         lvm2
 
-    # °²×°Docker
+    # å®‰è£…Docker
     curl https://releases.rancher.com/install-docker/17.03.sh | sh
     
     sudo mkdir -p /etc/docker
@@ -151,7 +151,7 @@ function setupRancher()
 
 function setupMysql()
 {
-	echo "°²×° mysql"
+	echo "å®‰è£… mysql"
 	echo "------------------------------------"
 	
 	echo '# MariaDB 10.0 CentOS repository list - created 2014-10-18 16:58 UTC
@@ -258,21 +258,21 @@ function setupNFS()
 	echo "install nfs"
 	echo "------------------------------------"
 	yum install -y nfs-utils rpcbind
-    echo " ¼ì²érpcbindÊÇ·ñ¿ª»úÆô¶¯"
+    echo " æ£€æŸ¥rpcbindæ˜¯å¦å¼€æœºå¯åŠ¨"
     systemctl list-unit-files | grep rpcbind.service
     systemctl enable rpcbind.service
-    echo "Æô¶¯rpcbind·şÎñ"
+    echo "å¯åŠ¨rpcbindæœåŠ¡"
     systemctl restart rpcbind.service
-    echo " ²é¿´rpc"
+    echo " æŸ¥çœ‹rpc"
     netstat -lntup|grep rpcbind
-    echo " ²é¿´nfs·şÎñÏòrpc×¢²áµÄ¶Ë¿ÚĞÅÏ¢"
+    echo " æŸ¥çœ‹nfsæœåŠ¡å‘rpcæ³¨å†Œçš„ç«¯å£ä¿¡æ¯"
     rpcinfo -p localhost
     
     echo
-    echo " ¼ì²éNFSÊÇ·ñ¿ª»úÆô¶¯"
+    echo " æ£€æŸ¥NFSæ˜¯å¦å¼€æœºå¯åŠ¨"
     systemctl list-unit-files | grep nfs.service
     systemctl enable nfs.service
-    echo "Æô¶¯NFS·şÎñ"
+    echo "å¯åŠ¨NFSæœåŠ¡"
     echo "/wwwroot 172.16.7.0/24(rw,sync,all_squash,anonuid=0,anongid=0)" > /etc/exports
     #chown -R nfsnobody.nfsnobody /wwwroot
     systemctl restart nfs.service
@@ -280,7 +280,7 @@ function setupNFS()
     
     echo '
 RQUOTAD_PORT=1001
-È¥µôÏÂÃæÓï¾äÇ°ÃæµÄ¡°#¡±ºÅ
+å»æ‰ä¸‹é¢è¯­å¥å‰é¢çš„â€œ#â€å·
 LOCKD_TCPPORT=32803
 LOCKD_UDPPORT=32769
 MOUNTD_PORT=892
@@ -304,12 +304,14 @@ STATD_PORT=662' >> /etc/sysconfig/nfs
     firewall-cmd --reload
     
     rpcinfo -p
-    echo "====== ºóĞø²Ù×÷£º ======"
+    cd /wwwroot/
+    wget config.tar.bz2
+    echo "====== åç»­æ“ä½œï¼š ======"
     echo "vim /etc/exports"
-    echo 'exportsÎÄ¼şÅäÖÃ¸ñÊ½:
-NFS¹²ÏíµÄÄ¿Â¼ NFS¿Í»§¶ËµØÖ·1(²ÎÊı1,²ÎÊı2,...) ¿Í»§¶ËµØÖ·2(²ÎÊı1,²ÎÊı2,...)
-ÒªÓÃ¾ø¶ÔÂ·¾¶£¬¿É±»nfsnobody¶ÁĞ´¡£
-ÀıÈç£º
+    echo 'exportsæ–‡ä»¶é…ç½®æ ¼å¼:
+NFSå…±äº«çš„ç›®å½• NFSå®¢æˆ·ç«¯åœ°å€1(å‚æ•°1,å‚æ•°2,...) å®¢æˆ·ç«¯åœ°å€2(å‚æ•°1,å‚æ•°2,...)
+è¦ç”¨ç»å¯¹è·¯å¾„ï¼Œå¯è¢«nfsnobodyè¯»å†™ã€‚
+ä¾‹å¦‚ï¼š
 # /wwwroot 172.16.7.0/24(rw,sync,all_squash)
 '
 
@@ -360,7 +362,7 @@ function setupFedoraEpel()
 
 	sudo yum -y update
 	sudo yum -y groupinstall "Development Tools"
-	echo "°²×°Docker..."
+	echo "å®‰è£…Docker..."
 	echo "------------------------------------"
 
 	if [ ! -d /wwwroot ]; then
@@ -373,6 +375,6 @@ function setupFedoraEpel()
 
 cd /tmp
 
-read -n 1 -p "°´ÈÎÒâ¼ü°²×°Docker×é¼ş. °´ [Ctrl + C] È¡Ïû°²×°."
+read -n 1 -p "æŒ‰ä»»æ„é”®å®‰è£…Dockerç»„ä»¶. æŒ‰ [Ctrl + C] å–æ¶ˆå®‰è£…."
 setupFedoraEpel
 selectCmd
