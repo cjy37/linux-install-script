@@ -305,7 +305,8 @@ STATD_PORT=662' >> /etc/sysconfig/nfs
     
     rpcinfo -p
     cd /wwwroot/
-    wget config.tar.bz2
+    wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/config.tar.bz2
+    
     echo "====== 后续操作： ======"
     echo "vim /etc/exports"
     echo 'exports文件配置格式:
