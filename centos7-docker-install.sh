@@ -1,6 +1,6 @@
 #!/bin/sh
 #------------------------------------------
-#      Centos7 asp.net InstallScript
+#      Centos7 Install Helper
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
