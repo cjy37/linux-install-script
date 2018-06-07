@@ -8,7 +8,7 @@
 ###     2. [Centos v5/v6 安装 ](#12-centos56)
 ###     3. [Centos v7 安装 ](#13-centos7)
 ###     4. [Fedora v19/20 安装 ](#14-fedora1920)
-###     5. [Centos7 Docker 安装 ](#15-Centos7-Docker-install)
+###     5. [Centos7 Docker 安装 ](#15-centos7-docker-install)
 
 ===========================
 
