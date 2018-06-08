@@ -304,8 +304,14 @@ STATD_PORT=662' >> /etc/sysconfig/nfs
     firewall-cmd --reload
     
     rpcinfo -p
+    
+    # 下载配置文件
+    echo "下载配置文件"
     cd /wwwroot/
     wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/config.tar.bz2
+    tar xjf config.tar.bz2
+    cp -rf config/jenkins_home ./
+    rm -f config.tar.bz2
     
     echo "====== 后续操作： ======"
     echo "vim /etc/exports"
