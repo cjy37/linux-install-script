@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 #------------------------------------------
-#      Centos7 Install Helper
+#      Ubuntu16.04 asp.net InstallScript
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
@@ -10,17 +10,17 @@ function showMenu()
 	clear
 	echo
 	echo "--------------------------------------------------------------"
-	echo "|      Centos7 Install Helper                                |"
+	echo "|      Ubuntu16.04 Install Helper                            |"
 	echo "|      版权所有 https://github.com/cjy37                     |"
-	echo "--------------------------------------------------------------"
+	echo "|------------------------------------------------------------|"
 	echo "|      a. 安装 Docker 运行环境                               |"
 	echo "|      b. 安装 Rancher (Docker控制台)                        |"
-	#echo "|      # c. 安装 MySQL   服务  (不推荐, 建议Docker方式)      |"
-	#echo "|      # d. 安装 MongoDB 服务  (不推荐, 建议Docker方式)      |"
-	#echo "|      # e. 安装 MQTT    服务  (不推荐, 建议Docker方式)      |"
-	#echo "|      # f. 安装 Redis   服务  (不推荐, 建议Docker方式)      |"
-	#echo "|      # g. 安装 Nginx   服务  (不推荐, 建议Docker方式)      |"
-	#echo "|      # h. 安装 Haproxy 服务  (不推荐, 建议Docker方式)      |"
+	#echo "|      # c. 安装 MySQL   服务  (不推荐, 建议Docker方式)     |"
+	#echo "|      # d. 安装 MongoDB 服务  (不推荐, 建议Docker方式)     |"
+	#echo "|      # e. 安装 MQTT    服务  (不推荐, 建议Docker方式)     |"
+	#echo "|      # f. 安装 Redis   服务  (不推荐, 建议Docker方式)     |"
+	#echo "|      # g. 安装 Nginx   服务  (不推荐, 建议Docker方式)     |"
+	#echo "|      # h. 安装 Haproxy 服务  (不推荐, 建议Docker方式)     |"
 	echo "|      i. 安装 NFS 共享存储                                  |"
 	echo "|      x. 退出                                               |"
 	echo "--------------------------------------------------------------"
