@@ -8,7 +8,11 @@
 ###     2. [Centos v5/v6 安装 ](#12-centos56)
 ###     3. [Centos v7 安装 ](#13-centos7)
 ###     4. [Fedora v19/20 安装 ](#14-fedora1920)
-###     5. [Centos7 Docker 安装 ](#15-centos7-docker-install)
+
+###
+###     Docker and Rancher install:
+###     1. [Centos7 Docker 安装 ](#15-centos7-docker-install)
+###     2. [Ubuntu16 Docker 安装 ](#16-ubuntu16-docker-install)
 
 ===========================
 
@@ -150,6 +154,37 @@ chmod +x centos7-docker-install.sh
 ```
 --------------------------------------------------------------
 |      Centos7 Install Helper                                |
+|      版权所有 https://github.com/cjy37                     |
+--------------------------------------------------------------
+|      a. 安装 Docker 运行环境                               |
+|      b. 安装 Rancher (Docker控制台)                        |
+|      # c. 安装 MySQL   服务  (不推荐, 建议Docker方式)      |
+|      # d. 安装 MongoDB 服务  (不推荐, 建议Docker方式)      |
+|      # e. 安装 MQTT    服务  (不推荐, 建议Docker方式)      |
+|      # f. 安装 Redis   服务  (不推荐, 建议Docker方式)      |
+|      # g. 安装 Nginx   服务  (不推荐, 建议Docker方式)      |
+|      # h. 安装 Haproxy 服务  (不推荐, 建议Docker方式)      |
+|      i. 安装 NFS 共享存储                                  |
+|      x. 退出                                               |
+--------------------------------------------------------------
+```
+
+
+
+### 1.6 Ubuntu16 Docker install: 
+运行linux脚本：
+```
+cd /tmp
+rm -f ubuntu-docker-install.sh
+wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/ubuntu-docker-install.sh
+chmod +x ubuntu-docker-install.sh
+./ubuntu-docker-install.sh
+
+```
+运行界面:
+```
+--------------------------------------------------------------
+|      Ubuntu16 Install Helper                               |
 |      版权所有 https://github.com/cjy37                     |
 --------------------------------------------------------------
 |      a. 安装 Docker 运行环境                               |
