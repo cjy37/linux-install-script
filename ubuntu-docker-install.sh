@@ -121,15 +121,22 @@ EOF
     # 删除旧的组件
 	sudo apt-get update -y
     sudo apt-get remove docker docker-engine docker-ce docker.io
+    
     # 安装依赖
-	sudo apt install -y \
-      apt-transport-https \
-      ca-certificates \
-      curl \
-      software-properties-common
+	sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
 
     # 安装Docker
-    curl https://releases.rancher.com/install-docker/17.03.sh | sh
+    # curl https://releases.rancher.com/install-docker/17.03.sh | sh
+    
+    # step 2: 安装GPG证书
+    curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+    
+    # Step 3: 写入软件源信息
+    sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+    
+    # Step 4: 更新并安装 Docker-CE
+    sudo apt-get -y update
+    sudo apt-get -y install docker-ce=17.03.2~ce-0~ubuntu-xenial
     
     sudo mkdir -p /etc/docker
     sudo tee /etc/docker/daemon.json <<-'EOF'
