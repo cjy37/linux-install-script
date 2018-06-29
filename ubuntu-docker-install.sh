@@ -127,7 +127,7 @@ EOF
     # 安装依赖
 	sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
 
-    sudo rm -rf /var/lib/dpkg/info && sudo mkdir /var/lib/dpkg/info
+    sudo rm -rf /var/lib/dpkg/info /etc/init.d/docker && sudo mkdir /var/lib/dpkg/info
     # 安装Docker
     curl https://releases.rancher.com/install-docker/17.03.sh | sh
     
