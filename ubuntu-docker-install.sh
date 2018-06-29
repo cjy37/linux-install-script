@@ -122,7 +122,7 @@ EOF
 	sudo apt-get update -y
     sudo apt-get remove docker docker-engine docker-ce docker.io
     # 安装依赖
-	sudo apt install \
+	sudo apt install -y \
       apt-transport-https \
       ca-certificates \
       curl \
@@ -262,7 +262,7 @@ function setupNFS()
 {
 	echo "install nfs"
 	echo "------------------------------------"
-	sudo apt-get install nfs-kernel-server
+	sudo apt-get install -y nfs-kernel-server
     
     mkdir -p cd /wwwroot
     
