@@ -118,7 +118,7 @@ deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe
 EOF
     # 删除旧的组件
 	sudo apt-get update -y
-    sudo apt-get remove docker docker-engine docker-ce docker.io
+    sudo apt-get remove -y docker docker-engine docker-ce docker.io
     
     # 安装依赖
 	sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
@@ -299,6 +299,6 @@ NFS共享的目录 NFS客户端地址1(参数1,参数2,...) 客户端地址2(参
 
 cd /tmp
 
-read -n 1 -p "按任意键安装Docker组件. 按 [Ctrl + C] 取消安装."
+#read -n 1 -p "按任意键安装Docker组件. 按 [Ctrl + C] 取消安装."
 
 selectCmd

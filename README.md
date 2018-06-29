@@ -176,7 +176,7 @@ chmod +x centos7-docker-install.sh
 ```
 cd /tmp
 rm -f ubuntu-docker-install.sh
-wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/ubuntu-docker-install.sh
+wget https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/ubuntu-docker-install.sh
 chmod +x ubuntu-docker-install.sh
 ./ubuntu-docker-install.sh
 
