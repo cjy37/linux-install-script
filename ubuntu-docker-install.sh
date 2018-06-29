@@ -4,7 +4,7 @@
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
-set -e
+# set -e
 
 showMenu() {
 	clear
