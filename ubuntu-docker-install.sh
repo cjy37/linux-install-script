@@ -104,7 +104,7 @@ selectCmd() {
 
 setupDocker() {
 
-    sudo rm -rf /var/lib/dpkg/info && sudo mkdir /var/lib/dpkg/info
+    sudo rm -rf /var/lib/dpkg/info/*
     
     sudo apt-get update --fix-missing -y && sudo apt-get autoremove -y && sudo apt-get clean && sudo apt-get install -f
     
@@ -130,7 +130,7 @@ EOF
     # 安装依赖
 	sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
 
-    sudo rm -rf /var/lib/dpkg/info /etc/init.d/docker && sudo mkdir /var/lib/dpkg/info
+    sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker
     # 安装Docker
     curl https://releases.rancher.com/install-docker/17.03.sh | sh
     
@@ -268,6 +268,7 @@ setupHaproxy() {
 setupNFS() {
 	echo "install nfs"
 	echo "------------------------------------"
+    sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker
 	sudo apt-get install -y nfs-kernel-server
     
     mkdir -p cd /wwwroot
@@ -275,7 +276,7 @@ setupNFS() {
     echo "启动NFS服务"
     echo "/wwwroot 172.16.7.0/24(rw,sync,all_squash,anonuid=0,anongid=0)" > /etc/exports
     sudo exportfs -rv
-    sudo service nfs-kernel-server restar
+    sudo service nfs-kernel-server restart
     
     #查看NFS的运行状态
     sudo nfsstat
