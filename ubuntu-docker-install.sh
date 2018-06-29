@@ -105,12 +105,24 @@ function selectCmd()
 
 function setupDocker()
 {
-
+    #sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+    sudo tee /etc/apt/sources.list <<-'EOF'
+deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+EOF
     # 删除旧的组件
-	sudo apt-get remove docker docker-engine docker-ce docker.io
-    sudo apt-get update -y
+	sudo apt-get update -y
+    sudo apt-get remove docker docker-engine docker-ce docker.io
     # 安装依赖
-	sudo apt-get install \
+	sudo apt install \
       apt-transport-https \
       ca-certificates \
       curl \
