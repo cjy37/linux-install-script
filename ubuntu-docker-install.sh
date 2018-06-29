@@ -104,6 +104,10 @@ selectCmd() {
 
 setupDocker() {
 
+    sudo rm -rf /var/lib/dpkg/info && sudo mkdir /var/lib/dpkg/info
+    
+    sudo apt-get update --fix-missing -y && sudo apt-get autoremove -y && sudo apt-get clean && sudo apt-get install -f
+    
     #sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 
     sudo tee /etc/apt/sources.list <<-'EOF'
@@ -119,7 +123,6 @@ deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe 
 deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
 EOF
 
-    sudo rm -rf /var/lib/dpkg/info && sudo mkdir /var/lib/dpkg/info
     # 删除旧的组件
 	sudo apt-get update -y
     sudo apt-get remove -y docker docker-engine docker-ce docker.io
