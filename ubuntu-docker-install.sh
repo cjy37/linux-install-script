@@ -4,9 +4,9 @@
 #      copyright https://github.com/cjy37
 #      email: rocky.cn@foxmail.com
 #------------------------------------------
+set -e
 
-function showMenu()
-{
+showMenu() {
 	clear
 	echo
 	echo "--------------------------------------------------------------"
@@ -29,8 +29,7 @@ function showMenu()
 	return 0
 }
 
-function selectCmd()
-{
+selectCmd() {
 	alias cp='cp'
 	showMenu
 	echo "请选择要安装的字母序号 [a-x]:"
@@ -103,8 +102,7 @@ function selectCmd()
 	return 0
 }
 
-function setupDocker()
-{
+setupDocker() {
     #sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
     sudo tee /etc/apt/sources.list <<-'EOF'
 deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
@@ -150,8 +148,7 @@ EOF
 	return $?
 }
 
-function setupRancher()
-{
+setupRancher() {
 	echo "install rancher"
 	echo "------------------------------------"
 	
@@ -161,8 +158,7 @@ function setupRancher()
 }
 
 
-function setupMysql()
-{
+setupMysql() {
 	echo "安装 mysql"
 	echo "------------------------------------"
 	
@@ -189,8 +185,7 @@ gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 	return $?
 }
 
-function setupMongodb()
-{
+setupMongodb() {
 	echo "install Mongodb"
 	echo "------------------------------------"
 	yum -y install mongodb mongodb-server
@@ -201,8 +196,7 @@ function setupMongodb()
 }
 
 
-function setupMosquitto()
-{
+setupMosquitto() {
 	echo "install Mosquitto"
 	echo "------------------------------------"
 	
@@ -223,8 +217,7 @@ enabled=1
 	return $?
 }
 
-function setupRedis()
-{
+setupRedis() {
 	echo "install redis"
 	echo "------------------------------------"
 	yum -y install redis
@@ -235,8 +228,7 @@ function setupRedis()
 }
 
 
-function setupNginx()
-{
+setupNginx() {
 
 	echo "install nginx"
 	echo "------------------------------------"
@@ -254,8 +246,7 @@ enabled=1' > /etc/yum.repos.d/nginx.repo
 	return $?
 }
 
-function setupHaproxy()
-{
+setupHaproxy() {
 	echo "install haproxy"
 	echo "------------------------------------"
 	yum -y install haproxy
@@ -265,8 +256,7 @@ function setupHaproxy()
 	return $?
 }
 
-function setupNFS()
-{
+setupNFS() {
 	echo "install nfs"
 	echo "------------------------------------"
 	sudo apt-get install -y nfs-kernel-server
@@ -310,4 +300,5 @@ NFS共享的目录 NFS客户端地址1(参数1,参数2,...) 客户端地址2(参
 cd /tmp
 
 read -n 1 -p "按任意键安装Docker组件. 按 [Ctrl + C] 取消安装."
+
 selectCmd
