@@ -103,7 +103,9 @@ selectCmd() {
 }
 
 setupDocker() {
+
     #sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+
     sudo tee /etc/apt/sources.list <<-'EOF'
 deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
@@ -116,6 +118,8 @@ deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe m
 deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
 deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
 EOF
+
+    sudo rm -rf /var/lib/dpkg/info && sudo mkdir /var/lib/dpkg/info
     # 删除旧的组件
 	sudo apt-get update -y
     sudo apt-get remove -y docker docker-engine docker-ce docker.io
@@ -137,6 +141,7 @@ EOF
     sudo apt-get -y install docker-ce=17.03.2~ce-0~ubuntu-xenial
     
     sudo mkdir -p /etc/docker
+    
     sudo tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": ["https://y1q9bgae.mirror.aliyuncs.com"]
