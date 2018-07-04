@@ -15,6 +15,7 @@ showMenu() {
 	echo "|------------------------------------------------------------|"
 	echo "|      a. 安装 Docker 运行环境                               |"
 	echo "|      b. 安装 Rancher (Docker控制台)                        |"
+	echo "|      c. 安装 OpenSSH7.6                                    |"
 	#echo "|      # c. 安装 MySQL   服务  (不推荐, 建议Docker方式)     |"
 	#echo "|      # d. 安装 MongoDB 服务  (不推荐, 建议Docker方式)     |"
 	#echo "|      # e. 安装 MQTT    服务  (不推荐, 建议Docker方式)     |"
@@ -51,6 +52,12 @@ selectCmd() {
 		setupRancher
 		read -n 1 -p "按 <Enter> 继续..."
 
+	elif [ "$M" = "c" ]; then
+		echo "安装 OpenSSH7.6"
+		echo "------------------------------------"
+		installSshD
+		read -n 1 -p "按 <Enter> 继续..."
+		
 	#elif [ "$M" = "c" ]; then
 	#	echo "安装 MySQL 服务"
 	#	echo "------------------------------------"
@@ -102,8 +109,19 @@ selectCmd() {
 	return 0
 }
 
-setupDocker() {
+installSshD() {
+    echo "install OpenSSH7.6"
+    echo "------------------------------------"
+    # https://packages.ubuntu.com/bionic/amd64/openssh-server/download
+    cat "deb http://cz.archive.ubuntu.com/ubuntu bionic main" >>  /etc/apt/sources.list
+    apt update
+    rm -rf /var/lib/dpkg/info/*
+    apt install openssh-server
+}
 
+setupDocker() {
+    echo "install Docker"
+    echo "------------------------------------"
     sudo rm -rf /var/lib/dpkg/info/*
     
     sudo apt-get update --fix-missing -y && sudo apt-get autoremove -y && sudo apt-get clean && sudo apt-get install -f
