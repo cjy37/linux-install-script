@@ -220,6 +220,25 @@ setupRancher() {
 	
 	sudo docker run -d --restart=unless-stopped -p 8080:8080 rancher/server
 
+    cd /tmp/
+    wget https://github.com/rancher/cli/releases/download/v0.6.11-rc2/rancher-linux-amd64-v0.6.11-rc2.tar.gz
+    tar xzvf rancher-linux-amd64-v0.6.11-rc2.tar.gz
+    sudo cp rancher-v0.6.11-rc2/rancher /usr/bin/
+    rm -rf rancher-*
+    sudo rancher -v
+
+    echo "请修改 ~/.bashrc 中的 RANCHER 前缀变量"
+    echo "# export RANCHER_URL=http://127.0.0.1:8080" >> ~/.bashrc
+    echo "# export RANCHER_ACCESS_KEY=xxxx" >> ~/.bashrc
+    echo "# export RANCHER_SECRET_KEY=zzzz" >> ~/.bashrc
+    # echo "alias huake-rancher='rancher --url http://127.0.0.1:8080 --access-key xxxx --secret-key zzzz --env 1a5'" >> ~/.bashrc
+    sudo source ~/.bashrc
+    sudo rancher ps
+
+    echo "命令行帮助文档 https://rancher.com/docs/rancher/v1.6/zh/cli/commands/"
+
+    # cd /tmp/ && huake-rancher export web && cd web &&  huake-rancher up -p --force-upgrade --batch-size 99 -u -c -d && cd /tmp/ && rm -rf /tmp/web
+
 	return $?
 }
 
@@ -236,7 +255,7 @@ baseurl = http://yum.mariadb.org/10.0/centos7-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 
-	yum -y install MariaDB-server MariaDB-client MariaDB-devel
+	sudo apt-get -y install MariaDB-server MariaDB-client MariaDB-devel
 	cp /usr/share/mysql/my-innodb-heavy-4G.cnf /etc/my.cnf
 	#sudo sed -i 's/# generic configuration options/user = mysql/g' /etc/my.cnf
 	sudo sed -i '/\[mysqld\]/a user = mysql' /etc/my.cnf
@@ -254,7 +273,7 @@ gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
 setupMongodb() {
 	echo "install Mongodb"
 	echo "------------------------------------"
-	yum -y install mongodb mongodb-server
+	sudo apt-get -y install mongodb mongodb-server
 	echo "Install mongodb completed. info:"
 	mongod --version
 	echo "------------------------------------"
@@ -275,7 +294,7 @@ gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS
 enabled=1
 ' > /etc/yum.repos.d/Mosquitto.repo
 
-	yum -y install mosquitto mosquitto-clients libmosquitto1 libmosquitto-devel libmosquittopp1 libmosquittopp-devel python-mosquitto
+	sudo apt-get -y install mosquitto mosquitto-clients libmosquitto1 libmosquitto-devel libmosquittopp1 libmosquittopp-devel python-mosquitto
 
 	mosquitto -h
 	echo "------------------------------------"
@@ -286,7 +305,7 @@ enabled=1
 setupRedis() {
 	echo "install redis"
 	echo "------------------------------------"
-	yum -y install redis
+	sudo apt-get -y install redis
 	echo "Install Redis completed. info:"
 	redis-server -v
 	echo "------------------------------------"
@@ -304,7 +323,7 @@ name=nginx repo
 baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
 gpgcheck=0
 enabled=1' > /etc/yum.repos.d/nginx.repo
-	yum -y install nginx
+	sudo apt-get -y install nginx
 	chkconfig --level 2345 nginx on
 	service nginx start
 	nginx -v
@@ -315,7 +334,7 @@ enabled=1' > /etc/yum.repos.d/nginx.repo
 setupHaproxy() {
 	echo "install haproxy"
 	echo "------------------------------------"
-	yum -y install haproxy
+	sudo apt-get -y install haproxy
 	echo "Install haproxy completed. info:"
 	haproxy -v
 	echo "------------------------------------"
@@ -328,7 +347,7 @@ setupNFS() {
     sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker
 	sudo apt-get install -y nfs-kernel-server
     
-    mkdir -p cd /wwwroot
+    sudo mkdir -p cd /wwwroot
     
     echo "启动NFS服务"
     echo "/wwwroot 172.16.7.0/24(rw,sync,all_squash,anonuid=0,anongid=0)" > /etc/exports
