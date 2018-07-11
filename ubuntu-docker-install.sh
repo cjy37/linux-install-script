@@ -16,13 +16,7 @@ showMenu() {
 	echo "|      a. 安装 Docker 运行环境                               |"
 	echo "|      b. 安装 Rancher (Docker控制台)                        |"
 	echo "|      c. 安装 OpenSSH7.6                                    |"
-	#echo "|      # c. 安装 MySQL   服务  (不推荐, 建议Docker方式)     |"
-	#echo "|      # d. 安装 MongoDB 服务  (不推荐, 建议Docker方式)     |"
-	#echo "|      # e. 安装 MQTT    服务  (不推荐, 建议Docker方式)     |"
-	#echo "|      # f. 安装 Redis   服务  (不推荐, 建议Docker方式)     |"
-	#echo "|      # g. 安装 Nginx   服务  (不推荐, 建议Docker方式)     |"
-	#echo "|      # h. 安装 Haproxy 服务  (不推荐, 建议Docker方式)     |"
-	echo "|      i. 安装 NFS 共享存储                                  |"
+	echo "|      d. 安装 NFS 共享存储                                  |"
 	echo "|      x. 退出                                               |"
 	echo "--------------------------------------------------------------"
 	echo
@@ -57,44 +51,8 @@ selectCmd() {
 		echo "------------------------------------"
 		installSshD
 		read -n 1 -p "按 <Enter> 继续..."
-		
-	#elif [ "$M" = "c" ]; then
-	#	echo "安装 MySQL 服务"
-	#	echo "------------------------------------"
-	#	setupMysql
-	#	read -n 1 -p "按 <Enter> 继续..."
-    #
-	#elif [ "$M" = "d" ]; then
-	#	echo "安装 MongoDB 服务"
-	#	echo "------------------------------------"
-	#	setupMongodb
-	#	read -n 1 -p "按 <Enter> 继续..."
-	#	
-	#elif [ "$M" = "e" ]; then
-	#	echo "安装 MQTT 服务（Mosquitto）"
-	#	echo "------------------------------------"
-	#	setupMosquitto
-	#	read -n 1 -p "按 <Enter> 继续..."
-    #
-    #elif [ "$M" = "f" ]; then
-	#	echo "安装 Redis 服务"
-	#	echo "------------------------------------"
-	#	setupRedis
-	#	read -n 1 -p "按 <Enter> 继续..."
-	#
-    #elif [ "$M" = "g" ]; then
-	#	echo "安装 Nginx 服务"
-	#	echo "------------------------------------"
-	#	setupNginx
-	#	read -n 1 -p "按 <Enter> 继续..."
-    #
-	#elif [ "$M" = "h" ]; then
-	#	echo "安装 Haproxy 服务"
-	#	echo "------------------------------------"
-	#	setupHaproxy
-	#	read -n 1 -p "按 <Enter> 继续..."
-    #
-	elif [ "$M" = "i" ]; then
+	
+	elif [ "$M" = "d" ]; then
 		echo "安装 NFS 共享存储"
 		echo "------------------------------------"
 		setupNFS
@@ -167,13 +125,13 @@ net.ipv4.conf.lo.arp_announce=2
 vm.swappiness=10
 vm.vfs_cache_pressure=50
 vm.overcommit_memory=1
- 
-net.core.somaxconn = 65535
-net.netfilter.nf_conntrack_max = 655350
-net.netfilter.nf_conntrack_tcp_timeout_established = 1200
+
+net.core.somaxconn=65535
+net.netfilter.nf_conntrack_max=655350
+net.netfilter.nf_conntrack_tcp_timeout_established=1200
 
 #增加NFS挂载服务并发数
-sunrpc.tcp_slot_table_entries = 128
+sunrpc.tcp_slot_table_entries=128
 
 EOF
 
@@ -187,7 +145,7 @@ EOF
     # 安装依赖
 	sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
 
-    sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker
+    sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker /etc/default/docker
     # 安装Docker
     curl https://releases.rancher.com/install-docker/17.03.sh | sh
     
@@ -231,9 +189,9 @@ setupRancher() {
     echo "# export RANCHER_URL=http://127.0.0.1:8080" >> ~/.bashrc
     echo "# export RANCHER_ACCESS_KEY=xxxx" >> ~/.bashrc
     echo "# export RANCHER_SECRET_KEY=zzzz" >> ~/.bashrc
-    # echo "alias huake-rancher='rancher --url http://127.0.0.1:8080 --access-key xxxx --secret-key zzzz --env 1a5'" >> ~/.bashrc
-    sudo source ~/.bashrc
-    sudo rancher ps
+    echo "请自行修改 ~/.bashrc 中，RANCHER_前缀的值，再执行# source ~/.bashrc" >> ~/.bashrc
+    #sudo source ~/.bashrc
+    #sudo rancher ps
 
     echo "命令行帮助文档 https://rancher.com/docs/rancher/v1.6/zh/cli/commands/"
 
@@ -242,109 +200,10 @@ setupRancher() {
 	return $?
 }
 
-
-setupMysql() {
-	echo "安装 mysql"
-	echo "------------------------------------"
-	
-	echo '# MariaDB 10.0 CentOS repository list - created 2014-10-18 16:58 UTC
-# http://mariadb.org/mariadb/repositories/
-[mariadb]
-name = MariaDB
-baseurl = http://yum.mariadb.org/10.0/centos7-amd64
-gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
-gpgcheck=1' > /etc/yum.repos.d/MariaDB.repo
-
-	sudo apt-get -y install MariaDB-server MariaDB-client MariaDB-devel
-	cp /usr/share/mysql/my-innodb-heavy-4G.cnf /etc/my.cnf
-	#sudo sed -i 's/# generic configuration options/user = mysql/g' /etc/my.cnf
-	sudo sed -i '/\[mysqld\]/a user = mysql' /etc/my.cnf
-	chkconfig --level 2345 mysql on
-	service mysql start
-	
-	mysql -V
-	echo "------------------------------------"
-	echo "Mysql: Please Ender user(root) password"
-	read -e PWD
-	mysqladmin -uroot password "$PWD"
-	return $?
-}
-
-setupMongodb() {
-	echo "install Mongodb"
-	echo "------------------------------------"
-	sudo apt-get -y install mongodb mongodb-server
-	echo "Install mongodb completed. info:"
-	mongod --version
-	echo "------------------------------------"
-	return $?
-}
-
-
-setupMosquitto() {
-	echo "install Mosquitto"
-	echo "------------------------------------"
-	
-	echo '[home_oojah_mqtt]
-name=mqtt (CentOS_CentOS-7)
-type=rpm-md
-baseurl=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-7/
-gpgcheck=1
-gpgkey=http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-7/repodata/repomd.xml.key
-enabled=1
-' > /etc/yum.repos.d/Mosquitto.repo
-
-	sudo apt-get -y install mosquitto mosquitto-clients libmosquitto1 libmosquitto-devel libmosquittopp1 libmosquittopp-devel python-mosquitto
-
-	mosquitto -h
-	echo "------------------------------------"
-
-	return $?
-}
-
-setupRedis() {
-	echo "install redis"
-	echo "------------------------------------"
-	sudo apt-get -y install redis
-	echo "Install Redis completed. info:"
-	redis-server -v
-	echo "------------------------------------"
-	return $?
-}
-
-
-setupNginx() {
-
-	echo "install nginx"
-	echo "------------------------------------"
-
-	echo '[nginx]
-name=nginx repo
-baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
-gpgcheck=0
-enabled=1' > /etc/yum.repos.d/nginx.repo
-	sudo apt-get -y install nginx
-	chkconfig --level 2345 nginx on
-	service nginx start
-	nginx -v
-	echo "------------------------------------"
-	return $?
-}
-
-setupHaproxy() {
-	echo "install haproxy"
-	echo "------------------------------------"
-	sudo apt-get -y install haproxy
-	echo "Install haproxy completed. info:"
-	haproxy -v
-	echo "------------------------------------"
-	return $?
-}
-
 setupNFS() {
 	echo "install nfs"
 	echo "------------------------------------"
-    sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker
+    sudo rm -rf /var/lib/dpkg/info/*
 	sudo apt-get install -y nfs-kernel-server
     
     sudo mkdir -p cd /wwwroot
@@ -361,12 +220,12 @@ setupNFS() {
     sudo rpcinfo
 
     # 下载配置文件
-    echo "下载配置文件"
-    cd /wwwroot/
-    wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/config.tar.bz2
-    tar xjf config.tar.bz2
-    cp -rf config/jenkins_home ./
-    rm -f config.tar.bz2
+    #echo "下载配置文件"
+    #cd /wwwroot/
+    #wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/config.tar.bz2
+    #tar xjf config.tar.bz2
+    #cp -rf config/jenkins_home ./
+    #rm -f config.tar.bz2
     
     echo "====== 后续操作： ======"
     echo "vim /etc/exports"
