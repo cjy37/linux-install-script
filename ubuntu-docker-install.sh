@@ -71,10 +71,12 @@ installSshD() {
     echo "install OpenSSH7.6"
     echo "------------------------------------"
     # https://packages.ubuntu.com/bionic/amd64/openssh-server/download
-    cat "deb http://cz.archive.ubuntu.com/ubuntu bionic main" >>  /etc/apt/sources.list
-    apt update
-    rm -rf /var/lib/dpkg/info/*
-    apt install openssh-server
+    sudo tee /etc/apt/sources.list <<-'EOF'
+deb http://cz.archive.ubuntu.com/ubuntu bionic main
+EOF
+    sudo apt-get update -y
+    sudo rm -rf /var/lib/dpkg/info/*
+    sudo apt-get install openssh-server -y
 }
 
 setupDocker() {
@@ -136,7 +138,7 @@ sunrpc.tcp_slot_table_entries=128
 EOF
 
     #使修改马上生效
-    sysctl -p
+    sudo sysctl -p
 
     # 删除旧的组件
 	sudo apt-get update -y
@@ -147,7 +149,7 @@ EOF
 
     sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker /etc/default/docker
     # 安装Docker
-    curl https://releases.rancher.com/install-docker/17.03.sh | sh
+    curl https://releases.rancher.com/install-docker/17.03.sh | sudo sh
     
     ## step 2: 安装GPG证书
     #curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
@@ -209,7 +211,9 @@ setupNFS() {
     sudo mkdir -p cd /wwwroot
     
     echo "启动NFS服务"
-    echo "/wwwroot 172.16.7.0/24(rw,sync,all_squash,anonuid=0,anongid=0)" > /etc/exports
+    sudo tee /etc/exports <<-'EOF'
+/wwwroot 172.16.7.0/24(rw,sync,all_squash,anonuid=0,anongid=0)
+EOF
     sudo exportfs -rv
     sudo service nfs-kernel-server restart
     
