@@ -87,7 +87,7 @@ setupDocker() {
     sudo apt-get update --fix-missing -y && sudo apt-get autoremove -y && sudo apt-get clean && sudo apt-get install -f
     
     #sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-
+    sudo chmod -R 1777 /tmp
     sudo tee /etc/apt/sources.list <<-'EOF'
 deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
@@ -182,9 +182,9 @@ setupRancher() {
 
     cd /tmp/
     wget https://github.com/rancher/cli/releases/download/v0.6.11-rc2/rancher-linux-amd64-v0.6.11-rc2.tar.gz
-    tar xzvf rancher-linux-amd64-v0.6.11-rc2.tar.gz
+    sudo tar xzvf rancher-linux-amd64-v0.6.11-rc2.tar.gz
     sudo cp rancher-v0.6.11-rc2/rancher /usr/bin/
-    rm -rf rancher-*
+    sudo rm -rf rancher-*
     sudo rancher -v
 
     echo "请修改 ~/.bashrc 中的 RANCHER 前缀变量"
