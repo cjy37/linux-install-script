@@ -84,6 +84,28 @@ setupDocker() {
     echo "------------------------------------"
     sudo rm -rf /var/lib/dpkg/info/*
     
+    echo "信任服务器# sudo ufw allow from 222.25.2.168"
+    # 基础端口
+    sudo ufw allow 22
+    sudo ufw allow 80
+    
+    # Rancher基础端口
+    sudo ufw allow 8080
+    sudo ufw allow 500
+    sudo ufw allow 4500
+    sudo ufw allow 4789
+    
+    # 服务基础端口
+    sudo ufw allow 9200
+    sudo ufw allow 3000
+    sudo ufw allow 9400
+    
+    # 数据库基础端口
+    sudo ufw allow 6379
+    sudo ufw allow 1883
+    sudo ufw allow 27017
+    sudo ufw allow 3306
+    
     sudo apt-get update --fix-missing -y && sudo apt-get autoremove -y && sudo apt-get clean && sudo apt-get install -f
     
     #sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
@@ -149,7 +171,9 @@ EOF
 
     sudo rm -rf /var/lib/dpkg/info/* /etc/init.d/docker /etc/default/docker
     # 安装Docker
-    curl https://releases.rancher.com/install-docker/17.03.sh | sudo sh
+    curl https://releases.rancher.com/install-docker/17.03.sh | sh
+    
+    curl https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh | sudo sh
     
     ## step 2: 安装GPG证书
     #curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
@@ -177,8 +201,17 @@ EOF
 setupRancher() {
 	echo "install rancher"
 	echo "------------------------------------"
+	echo '容器启动不了的解决方案：
+https://stackoverflow.com/questions/43925524/docker-image-fails-to-create-netlink-handle 
+sudo service  ds_agent stop
+sudo ufw disable
+可能还需要重启'
+    sudo systemctl disable ds_agent.service
+    sudo service  ds_agent stop
+    
+    sudo mkdir -p /wwwroot/rancher_db
 	
-	sudo docker run -d --restart=unless-stopped -p 8080:8080 rancher/server
+    sudo docker run -d --restart=unless-stopped -p 8080:8080 -v /wwwroot/rancher_db:/var/lib/mysql rancher/server
 
     cd /tmp/
     wget https://github.com/rancher/cli/releases/download/v0.6.11-rc2/rancher-linux-amd64-v0.6.11-rc2.tar.gz
@@ -187,11 +220,14 @@ setupRancher() {
     sudo rm -rf rancher-*
     sudo rancher -v
 
-    echo "请修改 ~/.bashrc 中的 RANCHER 前缀变量"
+    # echo "请修改 ~/.bashrc 中的 RANCHER 前缀变量"
+    echo "请自行修改 ~/.bashrc 中，RANCHER_前缀的值，再执行# source ~/.bashrc"
+    echo "" >> ~/.bashrc
+    echo "RANCHER 变量" >> ~/.bashrc
     echo "# export RANCHER_URL=http://127.0.0.1:8080" >> ~/.bashrc
     echo "# export RANCHER_ACCESS_KEY=xxxx" >> ~/.bashrc
     echo "# export RANCHER_SECRET_KEY=zzzz" >> ~/.bashrc
-    echo "请自行修改 ~/.bashrc 中，RANCHER_前缀的值，再执行# source ~/.bashrc" >> ~/.bashrc
+    
     #sudo source ~/.bashrc
     #sudo rancher ps
 
@@ -216,6 +252,17 @@ setupNFS() {
 EOF
     sudo exportfs -rv
     sudo service nfs-kernel-server restart
+    
+    # NFS服务端口
+    sudo ufw allow 111
+    sudo ufw allow 2049
+    sudo ufw allow 1001
+    
+    # NFS服务端口2
+    sudo ufw allow 32803
+    sudo ufw allow 32769
+    sudo ufw allow 892
+    sudo ufw allow 662
     
     #查看NFS的运行状态
     sudo nfsstat
