@@ -159,6 +159,18 @@ EOF
     #使修改马上生效
     sudo sysctl -p
     
+    systemctl start firewalld.service
+    # 基础端口
+    firewall-cmd --permanent --add-port=22/tcp
+    firewall-cmd --permanent --add-port=80/tcp
+    firewall-cmd --permanent --add-port=6379/tcp
+    firewall-cmd --permanent --add-port=1883/tcp
+    firewall-cmd --permanent --add-port=27017/tcp
+    firewall-cmd --permanent --add-port=9200/tcp
+    firewall-cmd --permanent --add-port=3306/tcp
+    firewall-cmd --permanent --add-port=3306/udp
+    firewall-cmd --reload
+
     # 安装Docker
     curl https://releases.rancher.com/install-docker/17.03.sh | sh
     
@@ -179,6 +191,19 @@ function setupRancher()
 	echo "install rancher"
 	echo "------------------------------------"
 	
+	systemctl start firewalld.service
+
+	    # Rancher基础端口
+	    firewall-cmd --permanent --add-port=8080/tcp
+	    firewall-cmd --permanent --add-port=500/tcp
+	    firewall-cmd --permanent --add-port=500/udp
+	    firewall-cmd --permanent --add-port=4500/tcp
+	    firewall-cmd --permanent --add-port=4500/udp
+	    firewall-cmd --permanent --add-port=4789/tcp
+	    firewall-cmd --permanent --add-port=4789/udp
+    
+    	firewall-cmd --reload
+
 	sudo docker run -d --restart=unless-stopped -p 8080:8080 -v /wwwroot/rancher_db:/var/lib/mysql rancher/server
 
 	return $?
@@ -322,21 +347,26 @@ LOCKD_UDPPORT=32769
 MOUNTD_PORT=892
 STATD_PORT=662' >> /etc/sysconfig/nfs
 
-    firewall-cmd  --permanent    --add-port=111/tcp
-    firewall-cmd  --permanent    --add-port=111/udp
-    firewall-cmd  --permanent    --add-port=2049/tcp
-    firewall-cmd  --permanent    --add-port=2049/udp
+    systemctl start firewalld.service
     
-    firewall-cmd  --permanent    --add-port  1001/tcp
-    firewall-cmd  --permanent    --add-port  1001/udp
-    firewall-cmd  --permanent    --add-port 32803/tcp
-    firewall-cmd  --permanent    --add-port 32769/udp
-    firewall-cmd  --permanent    --add-port 892/tcp
-    firewall-cmd  --permanent    --add-port 892/udp
-        
+    # NFS 基础端口
+    firewall-cmd --permanent --add-port=111/tcp
+    firewall-cmd --permanent --add-port=111/udp
+    firewall-cmd --permanent --add-port=2049/tcp
+    firewall-cmd --permanent --add-port=2049/udp
+    firewall-cmd --permanent --add-port=1001/tcp
+    firewall-cmd --permanent --add-port=1001/udp
+
+    # NFS服务端口2
+    firewall-cmd --permanent --add-port=32803/tcp
+    firewall-cmd --permanent --add-port=32803/udp
+    firewall-cmd --permanent --add-port=32769/tcp
+    firewall-cmd --permanent --add-port=32769/udp
+    firewall-cmd --permanent --add-port=892/tcp
+    firewall-cmd --permanent --add-port=892/udp
     firewall-cmd --permanent --add-port=662/tcp
     firewall-cmd --permanent --add-port=662/udp
-    
+
     firewall-cmd --reload
     
     rpcinfo -p
