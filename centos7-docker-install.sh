@@ -143,7 +143,7 @@ function setupRancher()
 	echo "install rancher"
 	echo "------------------------------------"
 	
-	sudo docker run -d --restart=unless-stopped -p 8080:8080 rancher/server
+	sudo docker run -d --restart=unless-stopped -p 8080:8080 -v /wwwroot/rancher_db:/var/lib/mysql rancher/server
 
 	return $?
 }
