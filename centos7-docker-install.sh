@@ -169,6 +169,7 @@ EOF
     firewall-cmd --permanent --add-port=9200/tcp
     firewall-cmd --permanent --add-port=3306/tcp
     firewall-cmd --permanent --add-port=3306/udp
+    #firewall-cmd --permanent --zone=public --add-service=docker-proxy
     firewall-cmd --reload
 
     # 安装Docker
@@ -366,6 +367,10 @@ STATD_PORT=662' >> /etc/sysconfig/nfs
     firewall-cmd --permanent --add-port=892/udp
     firewall-cmd --permanent --add-port=662/tcp
     firewall-cmd --permanent --add-port=662/udp
+    
+    firewall-cmd --permanent --zone=public --add-service=nfs
+    firewall-cmd --permanent --zone=public --add-service=mountd
+    firewall-cmd --permanent --zone=public --add-service=rpc-bind
 
     firewall-cmd --reload
     
