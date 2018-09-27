@@ -280,7 +280,7 @@ function setupNFS()
     
     echo '
 RQUOTAD_PORT=1001
-去掉下面语句前面的“#”号
+# 去掉下面语句前面的“#”号
 LOCKD_TCPPORT=32803
 LOCKD_UDPPORT=32769
 MOUNTD_PORT=892
