@@ -287,7 +287,7 @@ NFS共享的目录 NFS客户端地址1(参数1,参数2,...) 客户端地址2(参
 # /wwwroot 172.16.7.0/24(rw,sync,all_squash)
 
 重启服务：
-# sudo service nfs-kernel-server restar
+# sudo service nfs-kernel-server restart
 '
 
 	return $?
