@@ -199,3 +199,7 @@ chmod +x ubuntu-docker-install.sh
 |      x. 退出                                               |
 --------------------------------------------------------------
 ```
+
+```
+curl https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/ubuntu-rancher-docker.sh | bash
+```
