@@ -201,5 +201,9 @@ chmod +x ubuntu-docker-install.sh
 ```
 
 ```
-curl https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/ubuntu-rancher-docker.sh | bash
+cd /tmp
+rm -f ubuntu-docker-install.sh
+wget https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/ubuntu-rancher-docker.sh
+chmod +x ubuntu-rancher-docker.sh
+./ubuntu-rancher-docker.sh
 ```
