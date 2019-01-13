@@ -242,6 +242,7 @@ EOF
 	
 	sudo apt update && sudo apt install -y apt-transport-https
 	curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
+	rm /etc/apt/sources.list.d/kubernetes.list
 	sudo touch /etc/apt/sources.list.d/kubernetes.list
 	sudo echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 	sudo apt update
