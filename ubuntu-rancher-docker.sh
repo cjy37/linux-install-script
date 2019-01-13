@@ -101,13 +101,13 @@ setupDocker() {
 	# ufw disable ?
 	
 	# 修改时区
-	ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+	sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 	
 	# 修改系统语言环境
-	sudo echo 'LANG="en_US.UTF-8"' >> /etc/profile;source /etc/profile
+	sudo echo 'LANG="en_US.UTF-8"' >> /etc/profile; sudo source /etc/profile
 	
 	# Kernel性能调优
-	cat >> /etc/sysctl.conf<<EOF
+	sudo cat >> /etc/sysctl.conf<<EOF
 net.ipv4.ip_forward=1
 net.bridge.bridge-nf-call-iptables=1
 net.ipv4.neigh.default.gc_thresh1=4096
@@ -142,43 +142,43 @@ sunrpc.tcp_slot_table_entries=128
 EOF
 
 	# 保存配置
-	sysctl -p
+	sudo sysctl -p
 
-	modprobe br_netfilter
-	modprobe ip6_udp_tunnel
-	modprobe ip_set
-	modprobe ip_set_hash_ip
-	modprobe ip_set_hash_net
-	modprobe iptable_filter
-	modprobe iptable_nat
-	modprobe iptable_mangle
-	modprobe iptable_raw
-	modprobe nf_conntrack_netlink
-	modprobe nf_conntrack
-	modprobe nf_conntrack_ipv4
-	modprobe nf_defrag_ipv4
-	modprobe nf_nat
-	modprobe nf_nat_ipv4
-	modprobe nf_nat_masquerade_ipv4
-	modprobe nfnetlink
-	modprobe udp_tunnel
-	modprobe VETH
-	modprobe VXLAN
-	modprobe x_tables
-	modprobe xt_addrtype
-	modprobe xt_conntrack
-	modprobe xt_comment
-	modprobe xt_mark
-	modprobe xt_multiport
-	modprobe xt_nat
-	modprobe xt_recent
-	modprobe xt_set
-	modprobe xt_statistic
-	modprobe xt_tcpudp
+	sudo modprobe br_netfilter
+	sudo modprobe ip6_udp_tunnel
+	sudo modprobe ip_set
+	sudo modprobe ip_set_hash_ip
+	sudo modprobe ip_set_hash_net
+	sudo modprobe iptable_filter
+	sudo modprobe iptable_nat
+	sudo modprobe iptable_mangle
+	sudo modprobe iptable_raw
+	sudo modprobe nf_conntrack_netlink
+	sudo modprobe nf_conntrack
+	sudo modprobe nf_conntrack_ipv4
+	sudo modprobe nf_defrag_ipv4
+	sudo modprobe nf_nat
+	sudo modprobe nf_nat_ipv4
+	sudo modprobe nf_nat_masquerade_ipv4
+	sudo modprobe nfnetlink
+	sudo modprobe udp_tunnel
+	sudo modprobe VETH
+	sudo modprobe VXLAN
+	sudo modprobe x_tables
+	sudo modprobe xt_addrtype
+	sudo modprobe xt_conntrack
+	sudo modprobe xt_comment
+	sudo modprobe xt_mark
+	sudo modprobe xt_multiport
+	sudo modprobe xt_nat
+	sudo modprobe xt_recent
+	sudo modprobe xt_set
+	sudo modprobe xt_statistic
+	sudo modprobe xt_tcpudp
 	
 	# 修改系统源
 	sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-cat > /etc/apt/sources.list << EOF
+	sudo cat > /etc/apt/sources.list << EOF
 
 deb http://mirrors.aliyun.com/ubuntu/ xenial main
 deb-src http://mirrors.aliyun.com/ubuntu/ xenial main
@@ -213,7 +213,7 @@ EOF
 	sudo systemctl enable docker
 	sudo usermod -aG docker dereck
 	
-	cat > /etc/docker/daemon.json << EOF
+	sudo cat > /etc/docker/daemon.json << EOF
 {
 	"registry-mirrors": ["https://7bezldxe.mirror.aliyuncs.com/"],
 	"insecure-registries": ["docker.yingzi.com:52375"],
@@ -241,9 +241,9 @@ EOF
 	sudo ln -sf /data/rke /usr/bin/rke
 	
 	sudo apt update && sudo apt install -y apt-transport-https
-	curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+	curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
 	sudo touch /etc/apt/sources.list.d/kubernetes.list
-	echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+	sudo echo "deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 	sudo apt update
 	sudo apt install -y kubectl
 	
@@ -252,7 +252,7 @@ EOF
 
 # ========= 安装 Rancher2 ==========
 setupRancher() {
-	cat > /data/config/nginx/nginx.conf << EOF
+	sudo cat > /data/config/nginx/nginx.conf << EOF
 worker_processes 4;
 worker_rlimit_nofile 40000;
 
@@ -286,7 +286,7 @@ EOF
 	  -v /data/config/nginx/nginx.conf:/etc/nginx/nginx.conf \
 	  nginx:1.14
   
-	cat > /data/config/rancher/rancher-cluster.yml << EOF
+	sudo cat > /data/config/rancher/rancher-cluster.yml << EOF
 nodes:
   - address: 172.20.200.13
     # internal_address: 172.16.22.12
@@ -310,7 +310,7 @@ EOF
 
 	# 运行RKE命令
 	cd /data
-	rke up --config /data/config/rancher/rancher-cluster.yml
+	sudo rke up --config /data/config/rancher/rancher-cluster.yml
 	export KUBECONFIG=$(pwd)/kube_config_rancher-cluster.yml
 	sudo echo 'KUBECONFIG=$(pwd)/kube_config_rancher-cluster.yml' >> /etc/profile; source /etc/profile
 
