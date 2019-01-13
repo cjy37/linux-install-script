@@ -202,7 +202,7 @@ chmod +x ubuntu-docker-install.sh
 
 ```
 cd /tmp
-rm -f ubuntu-docker-install.sh
+rm -f ubuntu-rancher-docker.sh
 wget https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/ubuntu-rancher-docker.sh
 chmod +x ubuntu-rancher-docker.sh
 ./ubuntu-rancher-docker.sh
