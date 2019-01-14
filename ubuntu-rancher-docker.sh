@@ -196,7 +196,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security universe
 EOF
 
 	# 定义安装版本
-	export docker_version=17.03.2
+	# export docker_version=17.03.2
 	# step 1: 安装必要的一些系统工具
 	sudo apt update
 	sudo apt -y install apt-transport-https ca-certificates curl software-properties-common bash-completion
@@ -206,9 +206,9 @@ EOF
 	sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
 	# Step 4: 更新并安装 Docker-CE
 	sudo apt -y update
-	version=$(apt-cache madison docker-ce|grep ${docker_version}|awk '{print $3}')
+	# version=$(apt-cache madison docker-ce|grep ${docker_version}|awk '{print $3}')
 	# --allow-downgrades 允许降级安装
-	sudo apt -y install docker-ce=${version} --allow-downgrades
+	sudo apt -y install docker-ce --allow-downgrades
 	# 设置开机启动
 	sudo systemctl enable docker
 	sudo usermod -aG docker dereck
@@ -233,7 +233,7 @@ EOF
 	sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1  /g'  /etc/default/grub
 	sudo update-grub
 	
-	cd /data
+	cd /data && rm /data/rke
 	wget https://github.com/rancher/rke/releases/download/v0.1.15/rke_linux-amd64
 	chmod +x rke_linux-amd64
 	./rke_linux-amd64 --version
@@ -286,32 +286,12 @@ EOF
 	  -p 80:80 -p 443:443 \
 	  -v /data/config/nginx/nginx.conf:/etc/nginx/nginx.conf \
 	  nginx:1.14
-  
-	sudo cat > /data/config/rancher/rancher-cluster.yml << EOF
-nodes:
-  - address: 172.20.200.13
-    # internal_address: 172.16.22.12
-    user: dereck
-    role: [controlplane,worker,etcd]
-  - address: 172.20.200.14
-    # internal_address: 172.16.32.37
-    user: dereck
-    role: [controlplane,worker,etcd]
-  - address: 172.20.200.15
-    # internal_address: 172.16.42.73
-    user: dereck
-    role: [controlplane,worker,etcd]
-
-services:
-  etcd:
-    snapshot: true
-    creation: 6h
-    retention: 24h
-EOF
+	  
+	
 
 	# 运行RKE命令
 	cd /data
-	sudo rke up --config /data/config/rancher/rancher-cluster.yml
+	sudo rke up --config rancher-cluster.yml
 	export KUBECONFIG=$(pwd)/kube_config_rancher-cluster.yml
 	sudo echo 'KUBECONFIG=$(pwd)/kube_config_rancher-cluster.yml' >> /etc/profile; source /etc/profile
 
