@@ -180,35 +180,35 @@ EOF
 	sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 	sudo cat > /etc/apt/sources.list << EOF
 
-deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main
-deb-src http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) main
-deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main
-deb-src http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates main
-deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) universe
-deb-src http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs) universe
-deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates universe
-deb-src http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-updates universe
-deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main
-deb-src http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security main
-deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security universe
-deb-src http://mirrors.aliyun.com/ubuntu/ $(lsb_release -cs)-security universe
+deb http://mirrors.aliyun.com/ubuntu/ xenial main
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial main
+deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main
+deb http://mirrors.aliyun.com/ubuntu/ xenial universe
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial universe
+deb http://mirrors.aliyun.com/ubuntu/ xenial-updates universe
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates universe
+deb http://mirrors.aliyun.com/ubuntu/ xenial-security main
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main
+deb http://mirrors.aliyun.com/ubuntu/ xenial-security universe
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security universe
 
 EOF
 
 	# 定义安装版本
-	# export docker_version=17.03.2
+	export docker_version=17.03.2
 	# step 1: 安装必要的一些系统工具
 	sudo apt update
 	sudo apt -y install apt-transport-https ca-certificates curl software-properties-common bash-completion
 	# step 2: 安装GPG证书
 	sudo curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
 	# Step 3: 写入软件源信息
-	sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+	sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial stable"
 	# Step 4: 更新并安装 Docker-CE
 	sudo apt -y update
-	# version=$(apt-cache madison docker-ce|grep ${docker_version}|awk '{print $3}')
+	version=$(apt-cache madison docker-ce|grep ${docker_version}|awk '{print $3}')
 	# --allow-downgrades 允许降级安装
-	sudo apt -y install docker-ce --allow-downgrades
+	sudo apt -y install docker-ce=${version} --allow-downgrades
 	# 设置开机启动
 	sudo systemctl enable docker
 	sudo usermod -aG docker dereck
