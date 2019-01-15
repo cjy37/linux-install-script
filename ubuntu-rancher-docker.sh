@@ -249,6 +249,8 @@ EOF
 	sudo apt update
 	sudo apt install -y kubectl
 	
+	sudo chown -R dereck:root /data
+	
 	return $?
 }
 
