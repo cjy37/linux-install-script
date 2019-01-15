@@ -226,12 +226,13 @@ EOF
 	}
 }
 EOF
-	# 重启服务
-	sudo systemctl restart docker
 	
 	# Ubuntu\Debian系统下，默认cgroups未开启swap account功能，这样会导致设置容器内存或者swap资源限制不生效。可以通过以下命令解决
 	sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1  /g'  /etc/default/grub
 	sudo update-grub
+	
+	# 重启服务
+	sudo systemctl daemon-reload && sudo systemctl restart docker
 	
 	cd /data && rm /data/rke
 	wget https://github.com/rancher/rke/releases/download/v0.1.15/rke_linux-amd64
