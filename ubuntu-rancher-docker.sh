@@ -251,71 +251,76 @@ EOF
 	return $?
 }
 
-# ========= 安装 Rancher2 ==========
-setupRancher() {
-	sudo cat > /data/config/nginx/nginx.conf << EOF
-worker_processes 4;
-worker_rlimit_nofile 40000;
+setupKubernetes() {
+	sudo cat > /data/rancher-cluster.yml << EOF
+nodes:
+  - address: 172.20.200.13 # hostname or IP to access nodes
+    user: dereck # root user (usually 'root')
+    role: [controlplane,etcd,worker] # K8s roles for node
+    ssh_key_path: ~/.ssh/id_rsa # path to PEM file
+  - address: 172.20.200.14
+    user: dereck
+    role: [controlplane,etcd,worker]
+    ssh_key_path: ~/.ssh/id_rsa
+  - address: 172.20.200.15
+    user: dereck
+    role: [controlplane,etcd,worker]
+    ssh_key_path: ~/.ssh/id_rsa
 
-events {
-    worker_connections 8192;
-}
-
-http {
-    server {
-        listen         80;
-        return 301 https://$host$request_uri;
-    }
-}
-
-stream {
-    upstream rancher_servers {
-        least_conn;
-        server 172.20.200.13:443 max_fails=3 fail_timeout=5s;
-        server 172.20.200.14:443 max_fails=3 fail_timeout=5s;
-        server 172.20.200.15:443 max_fails=3 fail_timeout=5s;
-    }
-    server {
-        listen     443;
-        proxy_pass rancher_servers;
-    }
-}
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
 EOF
 
-	docker run -d --restart=unless-stopped \
-	  -p 80:80 -p 443:443 \
-	  -v /data/config/nginx/nginx.conf:/etc/nginx/nginx.conf \
-	  nginx:1.14
-	  
+	#docker run -d --restart=unless-stopped \
+	#  -p 80:80 -p 443:443 \
+	#  -v /data/config/nginx/nginx.conf:/etc/nginx/nginx.conf \
+	#  nginx:1.14
 	
-
-	# 运行RKE命令
+	# 运行RKE命令 安装kubernetes集群
 	cd /data
 	sudo rke up --config rancher-cluster.yml
 	export KUBECONFIG=$(pwd)/kube_config_rancher-cluster.yml
 	sudo echo 'KUBECONFIG=$(pwd)/kube_config_rancher-cluster.yml' >> /etc/profile; source /etc/profile
+}
 
-	kubectl -n kube-system create serviceaccount tiller
-	kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+# ========= 安装 Rancher2 ==========
+setupRancher() {
 
 	cd /data
-	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 	
-	# install helm server
-	helm init --service-account tiller   --tiller-image registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.11.0 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+	# install helm Client
+	kubectl -n kube-system create serviceaccount tiller
+	kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+	#curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash --version v2.12.2
+	wget https://kubernetes-helm.storage.googleapis.com/helm-v2.12.2-linux-amd64.tar.gz
+	tar -zxvf helm-v2.12.2-linux-amd64.tar.gz
+	sudo mv linux-amd64/helm /usr/local/bin/helm
+	helm help
 
+	# install helm server
+	helm init --service-account tiller   --tiller-image registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.12.2 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+
+	# 添加Chart仓库地址
 	helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+	
+	# 安装证书管理器
 	helm install stable/cert-manager \
 	  --name cert-manager \
 	  --namespace kube-system
-	  
+	
+	kubectl -n cattle-system create secret tls tls-rancher-ingress \
+	  --cert=/data/idereck.com.crt \
+	  --key=/data/idereck.com.key
+  
+	# 安装 rancher
 	helm install rancher-stable/rancher \
 	  --name rancher \
 	  --namespace cattle-system \
 	  --set hostname=rancher.idereck.com \
-	  --set ingress.tls.source=letsEncrypt \
-	  --set letsEncrypt.email=chenjingyuan@idereck.com
-    
+	  --set ingress.tls.source=secret
     
 	return $?
 }
