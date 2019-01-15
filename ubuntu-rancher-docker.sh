@@ -299,9 +299,7 @@ EOF
 	kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 
 	cd /data
-	wget https://storage.googleapis.com/kubernetes-helm/helm-v2.12.1-linux-amd64.tar.gz
-	https://storage.googleapis.com/kubernetes-helm/helm-v2.12.1-linux-amd64.tar.gz
-	sudo mv linux-amd64/helm /usr/bin/helm
+	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 	
 	# install helm server
 	helm init --service-account tiller   --tiller-image registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.11.0 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
