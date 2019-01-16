@@ -231,16 +231,6 @@ EOF
 	sudo sed -i 's/GRUB_CMDLINE_LINUX="/GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1  /g'  /etc/default/grub
 	sudo update-grub
 	
-	# 重启服务
-	sudo systemctl daemon-reload && sudo systemctl restart docker
-	
-	cd /data && rm /data/rke
-	wget https://github.com/rancher/rke/releases/download/v0.1.15/rke_linux-amd64
-	chmod +x rke_linux-amd64
-	./rke_linux-amd64 --version
-	mv rke_linux-amd64 rke
-	sudo ln -sf /data/rke /usr/bin/rke
-	
 	sudo apt update && sudo apt install -y apt-transport-https
 	curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
 	rm /etc/apt/sources.list.d/kubernetes.list
@@ -250,6 +240,16 @@ EOF
 	sudo apt install -y kubectl
 	
 	sudo chown -R dereck:root /data
+	
+	# 重启服务
+	sudo systemctl daemon-reload && sudo systemctl restart docker
+	
+	cd /data && rm /data/rke
+	wget https://github.com/rancher/rke/releases/download/v0.1.15/rke_linux-amd64
+	chmod +x rke_linux-amd64
+	./rke_linux-amd64 --version
+	mv rke_linux-amd64 rke
+	sudo ln -sf /data/rke /usr/bin/rke
 	
 	return $?
 }
