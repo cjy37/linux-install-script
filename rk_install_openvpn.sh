@@ -8,9 +8,9 @@ cd /tmp
 
 apt update
 apt install -y openvpn
-apt remove -y openvpn
-wget http://ftp.cn.debian.org/debian/pool/main/o/openvpn/openvpn_2.4.0-6+deb9u3_arm64.deb
-dpkg -i openvpn_2.4.0-6+deb9u3_arm64.deb
+# apt remove -y openvpn
+# wget http://ftp.cn.debian.org/debian/pool/main/o/openvpn/openvpn_2.4.0-6+deb9u3_arm64.deb
+# dpkg -i openvpn_2.4.0-6+deb9u3_arm64.deb
 
 if [ ! -f "/etc/openvpn/pwd.conf" ]; then
 sudo cat > /etc/openvpn/pwd.conf<<EOF
@@ -140,5 +140,7 @@ cfe7e249b30bef85d31e23672552d97b
 EOF
 fi
 
-echo 'Please change /etc/openvpn/pwd.conf username and password'
-echo 'Please change /etc/rc.local put this shell in: openvpn --daemon --config /etc/openvpn/client.ovpn --log /tmp/openvpn-client.log'
+echo '*********************************************************************************************************'
+echo 'Please modify "username" and "password" in "/etc/openvpn/pwd.conf"'
+echo 'Please modify "/etc/rc.local" to add: "openvpn --daemon --config /etc/openvpn/client.ovpn --log /tmp/openvpn-client.log"'
+echo '*********************************************************************************************************'
