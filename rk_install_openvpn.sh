@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 #
-# Please run it on the root!
+# Please run as root!
 #
 
 cd /tmp
