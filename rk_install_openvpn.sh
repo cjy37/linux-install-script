@@ -5,23 +5,26 @@ set -e
 #
 
 cd /tmp
+
 apt update
 apt install -y openvpn
 apt remove -y openvpn
 wget http://ftp.cn.debian.org/debian/pool/main/o/openvpn/openvpn_2.4.0-6+deb9u3_arm64.deb
 dpkg -i openvpn_2.4.0-6+deb9u3_arm64.deb
 
+if [ ! -f "/etc/openvpn/pwd.conf" ]; then
 sudo cat > /etc/openvpn/pwd.conf<<EOF
 username
 password
 EOF
+fi
 
+if [ ! -f "/etc/openvpn/client.ovpn" ]; then
 sudo cat > /etc/openvpn/client.ovpn<<EOF
 client
 nobind
 dev tun
 remote-cert-tls server
-
 remote ov.idereck.com 11194 udp
 
 # cjy add
@@ -133,10 +136,9 @@ c9d10d8b15bc7c416327a2b5bb1d1f4c
 cfe7e249b30bef85d31e23672552d97b
 -----END OpenVPN Static key V1-----
 </tls-auth>
-
 #redirect-gateway def1
-
 EOF
+fi
 
 echo 'Please change /etc/openvpn/pwd.conf username and password'
 echo 'Please change /etc/rc.local put this shell in: openvpn --daemon --config /etc/openvpn/client.ovpn --log /tmp/openvpn-client.log'
