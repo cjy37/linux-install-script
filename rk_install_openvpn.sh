@@ -7,8 +7,11 @@ set -e
 cd /tmp
 
 apt update
+# install old version:
 apt install -y openvpn
+# remove old version:
 apt remove -y openvpn
+# install new version:
 wget http://ftp.cn.debian.org/debian/pool/main/o/openvpn/openvpn_2.4.0-6+deb9u3_arm64.deb
 dpkg -i openvpn_2.4.0-6+deb9u3_arm64.deb
 
