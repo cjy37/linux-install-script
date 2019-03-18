@@ -8,9 +8,9 @@ cd /tmp
 
 apt update
 apt install -y openvpn
-# apt remove -y openvpn
-# wget http://ftp.cn.debian.org/debian/pool/main/o/openvpn/openvpn_2.4.0-6+deb9u3_arm64.deb
-# dpkg -i openvpn_2.4.0-6+deb9u3_arm64.deb
+apt remove -y openvpn
+wget http://ftp.cn.debian.org/debian/pool/main/o/openvpn/openvpn_2.4.0-6+deb9u3_arm64.deb
+dpkg -i openvpn_2.4.0-6+deb9u3_arm64.deb
 
 if [ ! -f "/etc/openvpn/pwd.conf" ]; then
 sudo cat > /etc/openvpn/pwd.conf<<EOF
