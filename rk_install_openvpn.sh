@@ -14,6 +14,7 @@ apt remove -y openvpn
 # install new version:
 wget http://ftp.cn.debian.org/debian/pool/main/o/openvpn/openvpn_2.4.0-6+deb9u3_arm64.deb
 dpkg -i openvpn_2.4.0-6+deb9u3_arm64.deb
+rm -f openvpn_2.4.0-6+deb9u3_arm64.deb
 
 if [ ! -f "/etc/openvpn/pwd.conf" ]; then
 sudo cat > /etc/openvpn/pwd.conf<<EOF
