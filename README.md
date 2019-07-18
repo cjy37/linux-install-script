@@ -1,8 +1,8 @@
 ###  linux-asp.net-installScript
 
-自动安装 MONO (asp.net linux runtime) | Jexus (asp.net linux server) | mysql | redis | haproxy | mongodb | nginx | Node.js | mosquitto (MQTT server)
+自动安装 auto install Docker | rancher | k8s | mysql | redis | haproxy | mongodb | nginx | Node.js | mosquitto (MQTT server)
 
-###   [WIKI](https://github.com/cjy37/linux-asp.net-installScript/wiki)
+###   [WIKI](https://github.com/cjy37/linux-install-script/wiki)
 
 ###     1. [Ubuntu v12.04 安装 ](#11-ubuntu1204)
 ###     2. [Centos v5/v6 安装 ](#12-centos56)
@@ -21,7 +21,7 @@
 ```
 cd /tmp
 rm -f ubuntu-installScript
-wget https://github.com/cjy37/linux-asp.net-installScript/raw/master/ubuntu-installScript
+wget https://github.com/cjy37/linux-install-script/raw/master/ubuntu-installScript
 chmod +x ubuntu-installScript
 sudo ./ubuntu-installScript
 
