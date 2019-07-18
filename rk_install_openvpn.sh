@@ -29,7 +29,7 @@ client
 nobind
 dev tun
 remote-cert-tls server
-remote ov.idereck.com 11194 udp
+remote ov.abc.com 11194 udp
 
 # cjy add
 resolv-retry infinite
