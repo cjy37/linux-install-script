@@ -47,7 +47,7 @@ sudo ./ubuntu-installScript
 |      x. 退出                                               |
 --------------------------------------------------------------
 ```
-
+<img src="https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/tar/xcx.jpg" width="200">
 
 ### 1.2 Centos5/6: 
 运行linux脚本：
@@ -81,6 +81,8 @@ chmod +x centos-installScript
 --------------------------------------------------------------
 ```
 
+<img src="https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/tar/zfb.jpg" width="200">
+
 ### 1.3 Centos7: 
 运行linux脚本：
 ```
@@ -110,6 +112,8 @@ chmod +x centos7-installScript
 |      x. 退出                                               |
 --------------------------------------------------------------
 ```
+
+<img src="https://raw.githubusercontent.com/cjy37/linux-asp.net-installScript/master/tar/wx.jpg" width="200">
 
 ### 1.4 Fedora19/20: 
 运行linux脚本：
