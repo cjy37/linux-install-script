@@ -451,9 +451,9 @@ EOF
 	helm install rancher-stable/rancher \
 	  --name rancher \
 	  --namespace cattle-system \
-	  --set hostname=rancher.idereck.com \
+	  --set hostname=rancher.abc.com \
 	  --set ingress.tls.source=letsEncrypt \
-	  --set letsEncrypt.email=chenjingyuan@idereck.com
+	  --set letsEncrypt.email=chenjingyuan@abc.com
 }
 
 setupRancher() {
