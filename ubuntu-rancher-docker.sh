@@ -315,14 +315,14 @@ setupRancher() {
 	  --namespace kube-system
 	
 	kubectl -n cattle-system create secret tls tls-rancher-ingress \
-	  --cert=/data/idereck.com.crt \
-	  --key=/data/idereck.com.key
+	  --cert=/data/abc.com.crt \
+	  --key=/data/abc.com.key
   
 	# 安装 rancher
 	helm install rancher-stable/rancher \
 	  --name rancher \
 	  --namespace cattle-system \
-	  --set hostname=rancher.idereck.com \
+	  --set hostname=rancher.abc.com \
 	  --set ingress.tls.source=secret
     
 	return $?
